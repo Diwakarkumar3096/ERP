@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="128" fill="#0F172A"/>
+  <circle cx="256" cy="256" r="180" fill="#1E293B"/>
+  <!-- Graduation Cap -->
+  <path d="M256 120 L400 190 L256 260 L112 190 Z" fill="#4F46E5"/>
+  <path d="M360 210 V280 C360 286 365 290 370 290 C375 290 380 286 380 280 V210" stroke="#F59E0B" stroke-width="8" stroke-linecap="round"/>
+  <!-- Open Book Base -->
+  <path d="M140 280 H240 V380 H140 C120 380 120 280 140 280 Z" fill="#F8FAFC"/>
+  <path d="M372 280 H272 V380 H372 C392 380 392 280 372 280 Z" fill="#F8FAFC"/>
+  <path d="M256 280 V380" stroke="#10B981" stroke-width="12" stroke-linecap="round"/>
+  <path d="M140 374 C180 374 220 380 248 384" stroke="#CBD5E1" stroke-width="4"/>
+  <path d="M372 374 C332 374 292 380 264 384" stroke="#CBD5E1" stroke-width="4"/>
+</svg>

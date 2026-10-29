@@ -1,0 +1,2332 @@
+# PHASE 20 — ADVANCED TEACHER PORTAL, TEACHER WORKSPACE & ACADEMIC OPERATIONS
+
+## IMPORTANT CONTEXT
+
+This is PHASE 20 of an already-developed, production-oriented, multi-school School ERP.
+
+DO NOT create a new application.
+
+DO NOT rebuild the ERP from scratch.
+
+DO NOT create a second Teacher Management System.
+
+DO NOT create duplicate Teacher, Employee, Attendance, Examination, Homework, Timetable, HR, Communication, or Student databases.
+
+First inspect the complete existing codebase, database schema, authentication, RBAC, school isolation, Teacher & Staff module, Attendance, Examination, Timetable, Homework, Student, Parent, Communication, HR/Payroll, Student Portal, Parent Portal, Student Lifecycle, Documents, Certificates, MIS/Analytics, Mobile/PWA and existing APIs.
+
+Then extend the existing architecture safely.
+
+Reuse existing:
+
+- Teacher/Employee records
+- User accounts
+- Roles
+- Schools
+- Academic sessions
+- Classes
+- Sections
+- Subjects
+- Student records
+- Attendance
+- Examination
+- Marks
+- Timetable
+- Homework
+- Study materials
+- Communication
+- Leave
+- HR/Payroll
+- Notifications
+- Calendar
+- Reports
+- Audit logs
+- Mobile/PWA
+- Parent/Student portals
+
+Do not duplicate existing business logic.
+
+---
+
+# 1. PRIMARY OBJECTIVE
+
+Build a professional:
+
+# ADVANCED TEACHER PORTAL + TEACHER WORKSPACE + ACADEMIC OPERATIONS SYSTEM
+
+The Teacher Portal should become the daily working environment for teachers.
+
+A teacher should be able to manage, from one place:
+
+- Dashboard
+- My Classes
+- My Students
+- My Subjects
+- Timetable
+- Attendance
+- Homework
+- Study Materials
+- Lesson Planning
+- Classroom Activities
+- Exams
+- Marks
+- Results
+- Student Performance
+- Parent Communication
+- Notices
+- Leave
+- Meetings
+- Events
+- Tasks
+- Academic Calendar
+- Reports
+- Profile
+- Notifications
+
+All actions must respect the teacher's actual school, class, section, subject and assignment permissions.
+
+---
+
+# 2. TEACHER PORTAL ARCHITECTURE
+
+Create a unified Teacher Portal using the existing application architecture.
+
+Possible route:
+
+/teacher
+
+or the existing route convention.
+
+Do not create a separate authentication system.
+
+The system must determine teacher permissions server-side.
+
+Never trust:
+
+- teacherId
+- schoolId
+- classId
+- sectionId
+- subjectId
+
+provided by the browser.
+
+Always verify ownership/assignment on the server.
+
+---
+
+# 3. TEACHER DASHBOARD
+
+Create a professional teacher dashboard.
+
+Show:
+
+- Teacher name
+- Profile photo
+- School
+- Academic session
+- Today's timetable
+- Current/next period
+- Classes assigned
+- Subjects assigned
+- Students assigned
+- Attendance pending
+- Homework pending
+- Marks entry pending
+- Upcoming exams
+- Recent notices
+- Unread messages
+- Pending leave
+- Meetings
+- Events
+- Important tasks
+
+Example:
+
+TODAY
+
+Period 1 — Mathematics — Class 6-A
+
+Period 2 — Mathematics — Class 7-B
+
+Period 3 — Free
+
+Period 4 — Class 8-A
+
+Do not create fake timetable data.
+
+Use the existing Timetable module.
+
+---
+
+# 4. TEACHER PROFILE
+
+Integrate with existing Teacher & Staff / HR module.
+
+Display:
+
+- Employee ID
+- Teacher name
+- Photo
+- Designation
+- Department
+- Qualification
+- Experience
+- Joining date
+- School
+- Assigned subjects
+- Assigned classes
+- Class teacher assignments
+
+Allow permitted profile updates through the existing profile/update workflow.
+
+Do not duplicate employee records.
+
+---
+
+# 5. MY CLASSES
+
+Create:
+
+## My Classes
+
+Show only classes/sections assigned to the teacher.
+
+Example:
+
+Class 5-A
+
+Class 6-B
+
+Class 8-A
+
+Each class should show:
+
+- Class
+- Section
+- Subject
+- Student count
+- Class teacher status
+- Today's timetable
+- Attendance
+- Homework
+- Exams
+- Performance
+
+---
+
+# 6. MY SUBJECTS
+
+Show subjects assigned to the teacher.
+
+For each subject:
+
+- Subject name
+- Classes
+- Sections
+- Students
+- Timetable
+- Homework
+- Lesson plans
+- Exams
+- Marks
+- Study materials
+
+A teacher must not see unrelated subjects unless authorized.
+
+---
+
+# 7. MY STUDENTS
+
+Create a teacher-specific student directory.
+
+Only show students belonging to:
+
+- Assigned class
+- Assigned section
+- Assigned subject
+- Authorized academic responsibility
+
+Display:
+
+- Student name
+- Admission number
+- Roll number
+- Photo
+- Class
+- Section
+- Attendance
+- Academic performance
+- Homework status
+- Relevant remarks
+
+Do not expose sensitive information unnecessarily.
+
+---
+
+# 8. STUDENT PROFILE — TEACHER VIEW
+
+Allow teachers to open a limited student profile.
+
+Possible information:
+
+- Name
+- Photo
+- Admission number
+- Class
+- Section
+- Roll number
+- Attendance summary
+- Subject performance
+- Homework
+- Teacher remarks
+- Relevant academic history
+
+Do not expose:
+
+- Parent private information
+- Financial information
+- Aadhaar/identity documents
+- Private medical records
+- Hostel sensitive information
+- Confidential administrative notes
+
+unless explicitly authorized.
+
+---
+
+# 9. TODAY'S TEACHER WORKSPACE
+
+Create a dedicated:
+
+## Today's Work
+
+section.
+
+Show:
+
+- Today's classes
+- Attendance pending
+- Homework due
+- Upcoming exam tasks
+- Marks pending
+- Messages
+- Meetings
+- Tasks
+- Notices
+
+Allow teachers to complete routine tasks directly from this screen.
+
+---
+
+# 10. TIMETABLE INTEGRATION
+
+Integrate with existing Timetable Management.
+
+Teacher should see:
+
+- Daily timetable
+- Weekly timetable
+- Subject
+- Class
+- Section
+- Room
+- Period
+- Start time
+- End time
+
+Support:
+
+- Current period
+- Next period
+- Free periods
+- Substitution periods
+
+---
+
+# 11. TEACHER SUBSTITUTION
+
+Integrate with existing substitution functionality.
+
+Show:
+
+- Substitution date
+- Period
+- Class
+- Section
+- Subject
+- Original teacher
+- Reason
+
+Allow authorized teachers to view assigned substitution duties.
+
+Do not allow teachers to self-assign substitutions.
+
+---
+
+# 12. MOBILE TEACHER WORKSPACE
+
+Optimize teacher workflows for mobile.
+
+A teacher should be able to complete common tasks from a phone:
+
+- Mark attendance
+- View timetable
+- Create homework
+- Upload study material
+- Enter marks
+- View student performance
+- Send class announcement
+- Check messages
+- Submit leave
+- View notices
+
+Use Phase 16 responsive/PWA architecture.
+
+---
+
+# 13. ATTENDANCE WORKSPACE
+
+Integrate with Phase 5 Attendance.
+
+Teachers should be able to mark attendance for their assigned classes.
+
+Support:
+
+- Present
+- Absent
+- Late
+- Half-day where configured
+- Leave
+
+Show:
+
+- Student list
+- Roll number
+- Photo
+- Attendance status
+
+Provide:
+
+## Mark All Present
+
+Then allow individual changes.
+
+Do not automatically mark attendance without teacher action unless an existing approved device integration supports it.
+
+---
+
+# 14. ATTENDANCE VALIDATION
+
+Before saving attendance:
+
+Verify:
+
+- Teacher assignment
+- Class
+- Section
+- Date
+- Academic session
+- School
+
+Prevent teachers from marking attendance for unrelated classes.
+
+---
+
+# 15. ATTENDANCE LOCKING
+
+Respect existing attendance locking rules.
+
+After attendance is locked:
+
+- Teacher cannot edit directly
+- Correction must use existing correction workflow
+- Approval must be required where configured
+
+Do not bypass attendance locks.
+
+---
+
+# 16. ATTENDANCE SUMMARY
+
+Teacher dashboard should show:
+
+- Today's attendance percentage
+- Class attendance
+- Student attendance
+- Students below configured threshold
+- Attendance trends
+
+Integrate with MIS where appropriate.
+
+Do not duplicate attendance calculations unnecessarily.
+
+---
+
+# 17. LOW ATTENDANCE ALERTS
+
+Show teachers students whose attendance is below configured school thresholds.
+
+Example:
+
+Student A — 68%
+
+Student B — 72%
+
+Allow teacher to:
+
+- View attendance history
+- Add academic remark if permitted
+- Notify relevant parent through approved Communication workflow where authorized
+
+Do not automatically make disciplinary decisions.
+
+---
+
+# 18. HOMEWORK WORKSPACE
+
+Integrate with existing Homework module.
+
+Teachers should be able to:
+
+- Create homework
+- Edit draft homework
+- Publish homework
+- Assign to class
+- Assign to section
+- Assign to subject
+- Set due date
+- Add instructions
+- Attach files
+- Add links where permitted
+
+---
+
+# 19. HOMEWORK ASSIGNMENT
+
+Support:
+
+- Entire class
+- Section
+- Selected students where authorized
+
+Show:
+
+- Assigned date
+- Due date
+- Submission type
+- Maximum marks if applicable
+
+Prevent assignment to students outside teacher permissions.
+
+---
+
+# 20. HOMEWORK SUBMISSION MANAGEMENT
+
+Teacher should see:
+
+- Total students
+- Submitted
+- Pending
+- Late
+- Not submitted
+- Evaluated
+
+Open individual submission.
+
+Support:
+
+- Review
+- Marks
+- Feedback
+- Return for correction
+
+---
+
+# 21. HOMEWORK EVALUATION
+
+Allow configurable evaluation:
+
+- Marks
+- Grade
+- Comments
+- Rubric where supported
+
+Do not confuse homework marks with official examination marks unless explicitly configured.
+
+---
+
+# 22. STUDY MATERIAL MANAGEMENT
+
+Teachers should be able to upload:
+
+- PDF
+- DOC/DOCX
+- PPT/PPTX
+- Images
+- Worksheets
+- Notes
+- Reference materials
+
+Attach materials to:
+
+- Subject
+- Class
+- Section
+- Topic
+- Lesson
+
+Use secure file storage.
+
+---
+
+# 23. FILE SECURITY
+
+Validate:
+
+- File type
+- File size
+- File ownership
+- School
+- Teacher permission
+
+Do not allow executable files unless explicitly supported and securely handled.
+
+Do not expose private file storage URLs publicly.
+
+---
+
+# 24. LESSON PLANNING
+
+Create:
+
+# Lesson Planner
+
+Teachers should be able to create lesson plans.
+
+Fields:
+
+- Subject
+- Class
+- Section
+- Topic
+- Chapter
+- Date
+- Period
+- Learning objectives
+- Teaching methodology
+- Activities
+- Teaching materials
+- Homework
+- Assessment method
+- Notes
+
+Support:
+
+- Draft
+- Planned
+- Completed
+- Rescheduled
+
+---
+
+# 25. LESSON PLAN CALENDAR
+
+Show lesson plans in:
+
+- Daily
+- Weekly
+- Monthly
+
+calendar views.
+
+Integrate with:
+
+- Timetable
+- Academic calendar
+- Exam schedule
+- Holidays
+
+Do not allow scheduling on invalid school holidays unless explicitly permitted.
+
+---
+
+# 26. LESSON COMPLETION
+
+After teaching a lesson, teacher may mark:
+
+Completed
+
+Partially Completed
+
+Rescheduled
+
+Not Conducted
+
+Require reason for:
+
+- Rescheduled
+- Not Conducted
+
+Maintain history.
+
+---
+
+# 27. SYLLABUS TRACKING
+
+Create a teacher-facing syllabus tracker where the existing academic architecture supports it.
+
+Track:
+
+- Subject
+- Class
+- Chapter
+- Topic
+- Planned date
+- Completed date
+- Status
+- Teacher remarks
+
+Possible statuses:
+
+- Not Started
+- In Progress
+- Completed
+- Revision
+- Deferred
+
+---
+
+# 28. SYLLABUS PROGRESS
+
+Show:
+
+- Total topics
+- Completed
+- In progress
+- Pending
+- Completion percentage
+
+Use actual records.
+
+Do not generate artificial progress percentages.
+
+---
+
+# 29. CLASSROOM ACTIVITY LOG
+
+Allow teachers to record:
+
+- Activity
+- Date
+- Subject
+- Class
+- Topic
+- Description
+- Student participation
+- Outcome
+- Attachments
+
+Possible activities:
+
+- Group work
+- Practical
+- Quiz
+- Discussion
+- Presentation
+- Project
+- Experiment
+- Revision
+
+---
+
+# 30. STUDENT PARTICIPATION
+
+Where appropriate, allow teacher to record:
+
+- Participated
+- Did not participate
+- Excellent
+- Good
+- Needs support
+
+Do not convert subjective teacher observations into official academic grades automatically.
+
+---
+
+# 31. EXAM WORKSPACE
+
+Integrate with Phase 7 Examination.
+
+Teacher should see:
+
+- Assigned exams
+- Assigned subjects
+- Exam timetable
+- Marks entry tasks
+- Pending marks
+- Submitted marks
+- Returned for correction
+- Approved marks
+
+---
+
+# 32. MARKS ENTRY
+
+Allow teachers to enter marks only for:
+
+- Assigned examination
+- Assigned subject
+- Assigned class
+- Assigned section
+
+Support:
+
+- Student list
+- Maximum marks
+- Obtained marks
+- Absent
+- Exempt where configured
+- Remarks
+
+Validate all marks server-side.
+
+---
+
+# 33. MARKS VALIDATION
+
+Prevent:
+
+- Marks above maximum
+- Negative marks where not allowed
+- Invalid student
+- Wrong exam
+- Wrong subject
+- Wrong class
+- Duplicate mark records
+
+Use database constraints and server validation.
+
+---
+
+# 34. MARKS WORKFLOW
+
+Respect existing workflow:
+
+Draft
+
+→ Submitted
+
+→ Review
+
+→ Approved
+
+→ Published
+
+Teacher should not be able to publish final results unless explicitly authorized.
+
+---
+
+# 35. MARKS CORRECTION
+
+If submitted marks need correction:
+
+Use existing correction/reopen workflow.
+
+Require:
+
+- Reason
+- User
+- Timestamp
+- Previous value
+- New value
+- Approval where configured
+
+Do not silently overwrite marks.
+
+---
+
+# 36. EXAMINATION TASK DASHBOARD
+
+Show:
+
+- Marks pending
+- Marks submitted
+- Marks returned
+- Exams upcoming
+- Exam duties
+- Invigilation duties where configured
+
+---
+
+# 37. INVIGILATION MANAGEMENT
+
+If the school uses invigilation scheduling:
+
+Teachers should see:
+
+- Exam
+- Date
+- Time
+- Room
+- Class
+- Duty type
+
+Only authorized administrators can assign duties.
+
+---
+
+# 38. STUDENT PERFORMANCE DASHBOARD
+
+Teacher should have a class performance dashboard.
+
+Show:
+
+- Average marks
+- Highest marks
+- Lowest marks
+- Pass rate
+- Grade distribution
+- Subject performance
+- Student performance
+
+Do not expose comparative data beyond the teacher's authorized scope.
+
+---
+
+# 39. STUDENT PERFORMANCE PROFILE
+
+For each student, show:
+
+- Subject marks
+- Exam history
+- Attendance
+- Homework completion
+- Teacher observations
+- Trend
+
+Do not claim causality between attendance and marks.
+
+Use analytics as descriptive information only.
+
+---
+
+# 40. EARLY ACADEMIC SUPPORT
+
+Identify configurable indicators such as:
+
+- Low attendance
+- Repeated low marks
+- Missing homework
+- Declining performance
+
+Create:
+
+## Academic Support Flag
+
+Teacher can recommend:
+
+- Extra practice
+- Remedial support
+- Parent communication
+- Counseling referral where configured
+
+Do not automatically label a child as a problem student.
+
+---
+
+# 41. STUDENT REMARKS
+
+Teachers may record structured academic remarks.
+
+Examples:
+
+- Needs practice
+- Excellent participation
+- Needs reading support
+- Good improvement
+
+Remarks should be:
+
+- Date-stamped
+- Teacher-owned
+- Class/subject scoped
+
+Do not allow teachers to edit historical official remarks without an authorized correction mechanism.
+
+---
+
+# 42. PARENT COMMUNICATION
+
+Integrate with Phase 14 and Phase 19.
+
+Teachers should be able to:
+
+- Message parents of assigned students
+- Send class announcements
+- Send homework notifications
+- Send academic updates
+
+Do not expose personal contact information.
+
+Use the ERP's internal communication system.
+
+---
+
+# 43. CLASS ANNOUNCEMENTS
+
+Allow teachers to publish announcements to:
+
+- Assigned class
+- Assigned section
+- Subject group
+
+Possible content:
+
+- Homework reminder
+- Exam reminder
+- Assignment instruction
+- Class activity
+- Study material notification
+
+Announcements must follow school moderation rules if configured.
+
+---
+
+# 44. PARENT COMMUNICATION HISTORY
+
+Teacher should see relevant conversation history with authorized parents.
+
+Do not show conversations unrelated to the teacher's assigned students.
+
+---
+
+# 45. COMMUNICATION RESTRICTIONS
+
+Do not allow teachers to:
+
+- Contact unrelated students
+- Contact unrelated parents
+- Broadcast to entire school unless authorized
+- Share private personal contact information
+- Bypass school communication policies
+
+---
+
+# 46. TEACHER LEAVE
+
+Integrate with Phase 12 HR/Leave.
+
+Teacher should be able to:
+
+- View leave balance
+- Apply leave
+- Select leave type
+- Select dates
+- Provide reason
+- Upload supporting document
+- Track approval status
+
+Workflow should use existing HR leave system.
+
+Do not create a duplicate leave ledger.
+
+---
+
+# 47. LEAVE CALENDAR
+
+Teacher can view:
+
+- Own leave
+- School holidays
+- Assigned events
+- Meetings
+- Examination duties
+- Timetable commitments
+
+Do not expose confidential leave details of other employees.
+
+---
+
+# 48. TEACHER ATTENDANCE
+
+Integrate with existing staff attendance.
+
+Teacher can view:
+
+- Today's attendance
+- Monthly attendance
+- Attendance history
+- Leave
+- Late records where applicable
+
+Do not allow teachers to edit their own official attendance unless an existing correction workflow allows it.
+
+---
+
+# 49. MEETINGS
+
+Integrate with Phase 15.
+
+Teacher should see:
+
+- Meetings
+- Parent meetings
+- Staff meetings
+- Department meetings
+- Academic meetings
+
+Show:
+
+- Date
+- Time
+- Location
+- Participants
+- Agenda
+- Meeting link where configured
+
+---
+
+# 50. MEETING PARTICIPATION
+
+Allow:
+
+- RSVP
+- Accept
+- Decline
+- Maybe
+- Add response
+
+Do not allow teachers to modify meeting details unless authorized.
+
+---
+
+# 51. EVENTS
+
+Integrate with school administration/event system.
+
+Teacher should see:
+
+- Events
+- Duties
+- Responsibilities
+- Venue
+- Date/time
+- Participants
+
+Allow teachers to access assigned event tasks.
+
+---
+
+# 52. TEACHER TASK MANAGEMENT
+
+Create a simple academic task system.
+
+Tasks may include:
+
+- Marks entry
+- Homework review
+- Lesson plan
+- Parent communication
+- Meeting
+- Exam duty
+- Event duty
+- Academic report
+
+Support:
+
+- Pending
+- In Progress
+- Completed
+
+Do not create a complex project-management platform unless required by existing architecture.
+
+---
+
+# 53. ACADEMIC CALENDAR
+
+Integrate with Phase 15.
+
+Show:
+
+- Holidays
+- Exams
+- Events
+- Assessments
+- Meetings
+- Important academic dates
+
+---
+
+# 54. TEACHER NOTIFICATION CENTER
+
+Integrate with Phase 14.
+
+Show notifications for:
+
+- New timetable
+- Timetable changes
+- Substitution
+- Homework reminders
+- Exam tasks
+- Marks returned
+- Parent messages
+- Meetings
+- Events
+- Leave decisions
+- Administrative notices
+
+---
+
+# 55. TEACHER NOTIFICATION PREFERENCES
+
+Where allowed:
+
+- In-app
+- Email
+- SMS
+- Push
+
+Mandatory school notices cannot be disabled if policy requires them.
+
+Do not fake delivery.
+
+---
+
+# 56. TEACHER DOCUMENTS
+
+Integrate with HR/Staff document system.
+
+Teacher can view permitted:
+
+- Appointment documents
+- Payslips where authorized
+- Leave documents
+- HR documents
+- Training certificates
+
+Do not expose confidential HR documents unnecessarily.
+
+---
+
+# 57. TEACHER PAYSLIP ACCESS
+
+If HR/Payroll permissions allow:
+
+Teacher may view:
+
+- Payslips
+- Salary period
+- Net salary
+- Deductions
+- Payment status
+
+Use existing Payroll.
+
+Do not create another salary system.
+
+---
+
+# 58. PROFESSIONAL DEVELOPMENT
+
+Create a lightweight teacher development section.
+
+Track existing records for:
+
+- Training
+- Workshop
+- Seminar
+- Certification
+- Professional development activity
+
+Where HR already stores these records, reuse them.
+
+Do not duplicate qualifications.
+
+---
+
+# 59. TEACHER PERFORMANCE
+
+Integrate with HR if a performance-review system exists.
+
+Possible view:
+
+- Goals
+- Reviews
+- Feedback
+- Training
+- Achievements
+
+Do not expose confidential management evaluations unless authorized.
+
+---
+
+# 60. TEACHER RESOURCE LIBRARY
+
+Create access to teaching resources.
+
+Resources may include:
+
+- Lesson plans
+- Worksheets
+- Question papers
+- Study material
+- School templates
+- Academic documents
+
+Use secure access and existing file storage.
+
+---
+
+# 61. QUESTION PAPER WORKSPACE
+
+Where examination architecture permits, provide teacher tools for:
+
+- Question paper creation
+- Question bank access
+- Question selection
+- Marks allocation
+- Difficulty level
+- Exam association
+
+Do not expose unpublished question papers to unauthorized students/parents.
+
+---
+
+# 62. QUESTION BANK
+
+If not already implemented, create an extensible question bank architecture.
+
+Fields:
+
+- Subject
+- Class
+- Chapter
+- Topic
+- Question
+- Question type
+- Difficulty
+- Marks
+- Answer/solution
+- Tags
+
+Possible types:
+
+- MCQ
+- Short answer
+- Long answer
+- Fill in the blanks
+- True/False
+
+Do not duplicate an existing examination question-bank system.
+
+---
+
+# 63. QUESTION PAPER SECURITY
+
+Draft/unpublished question papers must be private.
+
+Access only to authorized teachers/admins.
+
+Log:
+
+- Creation
+- Editing
+- Download
+- Publication
+- Revision
+
+Do not expose question papers through public URLs.
+
+---
+
+# 64. CLASS DIARY
+
+Create a digital class diary.
+
+Teacher can record:
+
+- Date
+- Class
+- Section
+- Subject
+- Topic taught
+- Homework
+- Attendance
+- Activities
+- Remarks
+
+Use existing attendance/homework/lesson data wherever possible.
+
+Do not duplicate records unnecessarily.
+
+---
+
+# 65. CLASS TEACHER WORKSPACE
+
+If a teacher is a class teacher, provide additional tools:
+
+- Class overview
+- Student list
+- Attendance
+- Parent contacts through portal only
+- Class performance
+- Homework overview
+- Class announcements
+- Student concerns
+- Class activities
+- Certificates/requests status where authorized
+
+A class teacher must not automatically gain access to unrelated financial or confidential data.
+
+---
+
+# 66. CLASS TEACHER REPORT
+
+Show:
+
+- Student count
+- Attendance
+- Homework completion
+- Academic performance
+- Pending documents
+- Important academic alerts
+
+Use existing module data.
+
+---
+
+# 67. ACADEMIC REPORTING
+
+Teachers should have reports for their authorized scope.
+
+Examples:
+
+- Attendance report
+- Homework report
+- Marks report
+- Class performance
+- Student performance
+- Syllabus progress
+- Lesson completion
+- Academic support list
+
+Export where permitted:
+
+- PDF
+- Excel
+- CSV
+
+Use existing reporting infrastructure.
+
+---
+
+# 68. MIS INTEGRATION
+
+Integrate with Phase 17.
+
+Teacher-level analytics should show only authorized data.
+
+Do not give teachers access to school-wide confidential financial/HR analytics.
+
+Possible KPIs:
+
+- Classes taught
+- Students
+- Attendance
+- Homework completion
+- Marks pending
+- Average performance
+- Syllabus completion
+
+---
+
+# 69. PORTAL INTEGRATION
+
+Integrate with Phase 19.
+
+Teacher actions should automatically reflect in:
+
+### Parent Portal
+
+- Homework
+- Notices
+- Attendance
+- Results when published
+- Messages
+
+### Student Portal
+
+- Homework
+- Study materials
+- Notices
+- Attendance
+- Results
+- Timetable
+
+Do not create separate copies of these records.
+
+---
+
+# 70. WORKFLOW AUTOMATION
+
+Where appropriate, trigger existing notifications when:
+
+- Homework published
+- Homework due
+- Marks returned
+- Attendance marked
+- Class announcement published
+- Parent message received
+- Exam task assigned
+- Meeting scheduled
+- Leave approved/rejected
+
+Use Phase 14 notification infrastructure.
+
+Do not create another notification engine.
+
+---
+
+# 71. TEACHER DASHBOARD ALERTS
+
+Display actionable alerts:
+
+- Attendance not marked
+- Homework pending evaluation
+- Marks pending
+- Exam approaching
+- Lesson plans overdue
+- Parent messages unread
+- Meeting starting soon
+- Leave response received
+
+Alerts must be based on real data.
+
+---
+
+# 72. ROLE-BASED ACCESS CONTROL
+
+Use existing RBAC.
+
+Possible teacher permissions:
+
+- View assigned classes
+- View assigned students
+- Mark attendance
+- Edit attendance through correction workflow
+- Create homework
+- Evaluate homework
+- Upload materials
+- Create lesson plans
+- View exam assignments
+- Enter marks
+- Submit marks
+- View published results
+- Communicate with parents
+- View timetable
+- View class reports
+- Manage class announcements
+
+Additional permissions:
+
+- Class Teacher
+- Head Teacher
+- Department Head
+- Examination Coordinator
+- Academic Coordinator
+
+Do not assume all teachers have the same permissions.
+
+---
+
+# 73. SERVER-SIDE AUTHORIZATION
+
+Every teacher API must verify:
+
+1. User authentication
+2. Teacher account
+3. School
+4. Academic session
+5. Teacher assignment
+6. Class
+7. Section
+8. Subject
+9. Resource ownership
+
+Do not rely on UI hiding.
+
+---
+
+# 74. MULTI-SCHOOL ISOLATION
+
+Teacher from School A must never access:
+
+- School B students
+- School B attendance
+- School B exams
+- School B homework
+- School B messages
+- School B documents
+- School B reports
+
+Enforce school isolation server-side.
+
+---
+
+# 75. DATA PRIVACY
+
+Teachers should only access information necessary for their duties.
+
+Protect:
+
+- Parent contact information
+- Financial data
+- Identity documents
+- Medical information
+- Hostel confidential data
+- HR records
+- Payroll
+- Administrative notes
+
+Use least-privilege access.
+
+---
+
+# 76. AUDIT LOGGING
+
+Use existing Audit Log.
+
+Track important teacher actions:
+
+- Attendance changes
+- Homework creation
+- Homework publication
+- Homework evaluation
+- Study material upload
+- Lesson plan changes
+- Marks entry
+- Marks submission
+- Marks correction
+- Student remarks
+- Parent messages
+- Class announcements
+- Question paper changes
+- Profile changes
+
+Do not log sensitive content unnecessarily.
+
+---
+
+# 77. DATABASE DESIGN
+
+Reuse existing entities wherever possible.
+
+Potential new entities only if not already available:
+
+- LessonPlan
+- LessonPlanTopic
+- SyllabusProgress
+- ClassroomActivity
+- TeacherTask
+- StudentAcademicRemark
+- QuestionBankItem
+- QuestionPaper
+- QuestionPaperItem
+- TeacherPortalPreference
+
+Before creating any entity, inspect the existing schema.
+
+Do not create duplicates.
+
+---
+
+# 78. DATABASE CONSTRAINTS
+
+Implement appropriate:
+
+- Foreign keys
+- School ownership
+- Teacher assignment constraints
+- Class/section constraints
+- Subject constraints
+- Exam constraints
+- Unique relationships
+- Indexes
+
+Prevent:
+
+- Teacher marking another school's class
+- Duplicate homework
+- Duplicate question paper entries
+- Invalid marks
+- Unauthorized student access
+
+---
+
+# 79. TRANSACTION SAFETY
+
+Use transactions for:
+
+- Bulk attendance
+- Marks submission
+- Marks correction
+- Homework publication where related records are created
+- Question paper generation
+- Student remark creation where necessary
+
+Use idempotency where external integrations exist.
+
+---
+
+# 80. MOBILE OPTIMIZATION
+
+The most common teacher workflows must work exceptionally well on mobile:
+
+### Attendance
+
+Open class
+
+→ Mark all present
+
+→ Change absentees
+
+→ Save
+
+### Homework
+
+Select class
+
+→ Enter homework
+
+→ Attach file
+
+→ Publish
+
+### Marks
+
+Select exam
+
+→ Select subject
+
+→ Enter marks
+
+→ Validate
+
+→ Save Draft
+
+→ Submit
+
+### Lesson Plan
+
+Select class
+
+→ Select topic
+
+→ Add plan
+
+→ Save
+
+Use large touch targets and minimal navigation.
+
+---
+
+# 81. CAMERA / FILE UPLOAD
+
+Where browser/device permissions allow, support:
+
+- Camera document capture
+- Image upload
+- Worksheet upload
+- Classroom activity photos
+
+Respect school privacy policies.
+
+Do not automatically publish photographs of students without appropriate authorization.
+
+---
+
+# 82. PERFORMANCE
+
+Optimize for teachers with large classes.
+
+Support:
+
+- 40–100+ students in a class
+- Fast attendance marking
+- Fast marks entry
+- Pagination where appropriate
+- Search
+- Keyboard navigation
+- Optimized API calls
+
+Avoid unnecessary full-page reloads.
+
+---
+
+# 83. BULK OPERATIONS
+
+Support safe bulk operations:
+
+- Attendance
+- Homework assignment
+- Marks import where permitted
+- Student remarks where appropriate
+- Class announcements
+
+Require confirmation before destructive or high-impact actions.
+
+---
+
+# 84. IMPORT / EXPORT
+
+Where existing architecture supports it:
+
+Allow authorized teachers to:
+
+- Export class list
+- Export attendance
+- Export marks
+- Export homework status
+- Export performance reports
+
+Do not allow teachers to export data outside their authorization scope.
+
+---
+
+# 85. TEACHER SEARCH
+
+Teacher portal search should allow search within authorized data:
+
+- Student
+- Class
+- Section
+- Subject
+- Homework
+- Lesson
+- Exam
+- Message
+
+Do not provide unrestricted global student search.
+
+---
+
+# 86. ERROR HANDLING
+
+Use clear messages.
+
+Examples:
+
+"Attendance has already been locked."
+
+"You are not assigned to this class."
+
+"These marks exceed the maximum allowed."
+
+"This examination has already been submitted."
+
+"You do not have permission to view this student."
+
+Do not expose technical stack traces or database errors.
+
+---
+
+# 87. NO FAKE INTEGRATIONS
+
+Do not fake:
+
+- Attendance devices
+- Biometric systems
+- GPS
+- SMS
+- WhatsApp
+- Email
+- Push notifications
+- Payment systems
+- AI-generated academic decisions
+
+Use existing provider abstractions.
+
+If an external integration is unavailable, clearly show it as not configured.
+
+---
+
+# 88. OPTIONAL GEMINI AI FEATURES
+
+If Gemini is already configured in the ERP, AI may assist teachers with:
+
+- Lesson plan suggestions
+- Homework question suggestions
+- Worksheet ideas
+- Question generation
+- Topic explanations
+- Teaching activity suggestions
+- Summary of class performance
+- Draft parent communication
+- Draft remarks
+
+AI must not automatically:
+
+- Grade students without configured human review
+- Make promotion decisions
+- Diagnose learning disabilities
+- Make disciplinary decisions
+- Make admission decisions
+- Send sensitive communications without authorization
+- Modify official marks
+
+AI-generated content must be clearly distinguishable and reviewable before publication.
+
+---
+
+# 89. AI DATA PRIVACY
+
+Do not send unnecessary sensitive student data to AI services.
+
+Before using AI:
+
+- Minimize data
+- Remove unnecessary identifiers
+- Respect school configuration
+- Do not send private documents unless explicitly supported and authorized
+
+Do not expose confidential student information in AI prompts unnecessarily.
+
+---
+
+# 90. TEACHER PORTAL SETTINGS
+
+Allow teachers to manage permitted settings:
+
+- Notification preferences
+- Language
+- Theme if supported
+- Dashboard layout if supported
+- Time format
+
+Do not allow teachers to change:
+
+- School
+- Role
+- Class assignments
+- Subject assignments
+- Salary
+- Permissions
+
+unless authorized through existing administration workflows.
+
+---
+
+# 91. TEACHER HELP CENTER
+
+Provide a simple help section.
+
+Include configurable:
+
+- Attendance instructions
+- Marks entry instructions
+- Homework instructions
+- Parent communication guidelines
+- Exam procedures
+- School policies
+- Technical support
+
+Do not create a separate knowledge base if an existing system already exists.
+
+---
+
+# 92. TEACHER ONBOARDING
+
+If the architecture supports it, provide a simple first-login checklist:
+
+- Complete profile
+- Verify contact
+- Review assigned classes
+- Review timetable
+- Review school policies
+- Review communication guidelines
+
+Do not block access unnecessarily unless required by school policy.
+
+---
+
+# 93. ADMIN TEACHER MONITORING
+
+Authorized academic administrators should be able to monitor:
+
+- Attendance completion
+- Homework activity
+- Marks submission
+- Lesson planning
+- Syllabus progress
+- Pending academic tasks
+
+Do not use these metrics as automatic employment/performance decisions.
+
+---
+
+# 94. ACADEMIC OPERATIONS DASHBOARD
+
+For Principal/Academic Coordinator/Department Head, show:
+
+- Classes active
+- Attendance completion
+- Homework activity
+- Marks submission
+- Syllabus progress
+- Exam readiness
+- Teacher workload
+- Pending academic tasks
+
+Use existing MIS infrastructure.
+
+---
+
+# 95. TEACHER WORKLOAD
+
+Show authorized teacher workload:
+
+- Classes
+- Subjects
+- Periods
+- Substitution duties
+- Exam duties
+- Meetings
+- Assigned tasks
+
+Do not automatically alter teacher schedules.
+
+---
+
+# 96. CONFLICT DETECTION
+
+Use existing timetable conflict logic.
+
+Detect:
+
+- Teacher double booking
+- Class double booking
+- Room conflict
+- Exam conflict
+- Invigilation conflict
+
+Teachers should see warnings where relevant.
+
+Only authorized administrators can resolve schedule conflicts.
+
+---
+
+# 97. TEACHER COMMUNICATION PRIVACY
+
+Internal communication should use school-managed channels.
+
+Do not expose:
+
+- Personal phone number
+- Personal email
+- Private social media
+- Private messaging details
+
+unless explicitly configured by the school.
+
+---
+
+# 98. SECURITY TESTING
+
+Perform tests for:
+
+### Authorization
+
+- Teacher A → Teacher B class
+- Teacher → unrelated student
+- Teacher → unrelated school
+- Teacher → another subject
+- Teacher → another exam
+
+### Marks
+
+- Modify submitted marks
+- Enter excessive marks
+- Change student ID
+- Change exam ID
+- Change school ID
+
+### Attendance
+
+- Mark another class
+- Mark future date where prohibited
+- Modify locked attendance
+
+### Homework
+
+- Assign outside class
+- Access another teacher's private draft
+- Modify after deadline without permission
+
+### Files
+
+- Unauthorized download
+- Cross-school access
+- Invalid file upload
+
+Fix all vulnerabilities before completion.
+
+---
+
+# 99. ACCEPTANCE TEST — TEACHER DAILY WORKFLOW
+
+Test:
+
+1. Login as teacher.
+
+2. Open Teacher Dashboard.
+
+3. Verify today's timetable.
+
+4. Open assigned Class 6-A.
+
+5. View students.
+
+6. Mark attendance.
+
+7. Save attendance.
+
+8. Verify attendance appears in authorized reports.
+
+9. Create homework.
+
+10. Attach study material.
+
+11. Publish homework.
+
+12. Verify parent/student portal receives the homework.
+
+13. Open homework submissions.
+
+14. Evaluate one submission.
+
+15. Add feedback.
+
+16. Open lesson planner.
+
+17. Create today's lesson plan.
+
+18. Mark lesson completed.
+
+19. Update syllabus progress.
+
+20. Open exam workspace.
+
+21. Enter marks.
+
+22. Save as draft.
+
+23. Submit marks.
+
+24. Verify approval workflow.
+
+25. Open student performance.
+
+26. Add an academic remark.
+
+27. Send a permitted parent message.
+
+28. View upcoming meeting.
+
+29. Submit a leave request.
+
+30. View notification center.
+
+31. Open teacher report.
+
+32. Export an authorized report.
+
+33. Test the same workflow on mobile.
+
+---
+
+# 100. CLASS TEACHER ACCEPTANCE TEST
+
+For a teacher assigned as Class Teacher:
+
+1. Open class dashboard.
+
+2. View complete class roster.
+
+3. Check attendance.
+
+4. Check homework completion.
+
+5. Check academic performance.
+
+6. View low-attendance students.
+
+7. View academic support flags.
+
+8. Publish class announcement.
+
+9. Review parent messages.
+
+10. View class calendar.
+
+11. View class reports.
+
+Verify that the class teacher does not automatically gain unauthorized financial, HR, or confidential data.
+
+---
+
+# 101. MULTI-SCHOOL ACCEPTANCE TEST
+
+Use:
+
+School A
+
+School B
+
+Teacher A belongs to School A.
+
+Teacher B belongs to School B.
+
+Test:
+
+Teacher A attempts to access School B:
+
+- Students
+- Attendance
+- Homework
+- Exams
+- Marks
+- Messages
+- Reports
+- Documents
+
+All unauthorized attempts must fail.
+
+---
+
+# 102. REGRESSION TESTING
+
+After Phase 20, verify:
+
+- Authentication
+- RBAC
+- Multi-school management
+- Students
+- Parents
+- Admissions
+- Attendance
+- Fees
+- Accounts
+- Examinations
+- Timetable
+- Homework
+- Transport
+- Library
+- Hostel
+- HR/Payroll
+- Inventory
+- Communication
+- Administration
+- Student Lifecycle
+- Certificates
+- Parent Portal
+- Student Portal
+- Mobile/PWA
+- MIS/Analytics
+
+Do not break existing workflows.
+
+---
+
+# 103. DATABASE MIGRATION SAFETY
+
+Use safe migrations only.
+
+NEVER:
+
+- Drop tables
+- Truncate data
+- Delete students
+- Delete teachers
+- Delete marks
+- Delete attendance
+- Reset database
+- Rebuild existing modules
+
+Preserve all existing production data.
+
+---
+
+# 104. TESTING REQUIREMENTS
+
+Run:
+
+- TypeScript type checking
+- Lint
+- Unit tests
+- Integration tests
+- API tests
+- RBAC tests
+- Multi-school isolation tests
+- Attendance tests
+- Homework tests
+- Marks tests
+- File upload tests
+- Portal integration tests
+- Mobile responsive tests
+- Security tests
+- Regression tests
+- Production build
+
+Fix errors before declaring Phase 20 complete.
+
+---
+
+# 105. FINAL IMPLEMENTATION REPORT
+
+At completion, provide:
+
+1. Teacher Portal implemented features
+2. Teacher dashboard
+3. My Classes
+4. My Subjects
+5. My Students
+6. Attendance workspace
+7. Homework workspace
+8. Study materials
+9. Lesson planner
+10. Syllabus tracker
+11. Classroom activity log
+12. Exam workspace
+13. Marks entry
+14. Marks approval integration
+15. Student performance
+16. Parent communication
+17. Teacher leave integration
+18. Meetings/events
+19. Teacher tasks
+20. Question bank/question paper features if implemented
+21. Class teacher workspace
+22. Reports
+23. MIS integration
+24. Mobile/PWA improvements
+25. AI features if implemented
+26. Database changes
+27. API changes
+28. RBAC changes
+29. Security testing
+30. Multi-school testing
+31. Regression testing
+32. Build result
+33. Known limitations
+34. External integrations required
+35. Recommended Phase 21
+
+IMPORTANT:
+
+Do not claim features are complete unless they are actually implemented and tested.
+
+If a feature depends on an external provider or configuration that is unavailable, clearly state the limitation.
+
+Never create fake integrations or mock production functionality.
+
+The final result must be a production-ready extension of the existing multi-school School ERP.

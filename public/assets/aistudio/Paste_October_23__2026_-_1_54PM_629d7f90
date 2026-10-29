@@ -1,0 +1,1574 @@
+# PHASE 14 — COMMUNICATION, NOTIFICATION & PARENT ENGAGEMENT SYSTEM
+
+You are continuing development of an existing Multi-School School ERP.
+
+The ERP already contains and must continue to preserve:
+
+- Authentication
+- RBAC / Permissions
+- Multi-School Management
+- Academic Sessions
+- Classes & Sections
+- Student Management
+- Parent/Guardian Management
+- Admissions
+- Teacher & Staff Management
+- Attendance
+- Fees & Accounts
+- Examination & Results
+- Timetable
+- Homework & Classroom Management
+- Transport & Vehicle Management
+- Library Management
+- Hostel / Residential Management
+- HR / Payroll
+- Inventory / Assets / Procurement
+- Audit Logs
+- Existing Notification infrastructure
+
+Now implement:
+
+# PHASE 14 — COMMUNICATION, NOTIFICATION & PARENT ENGAGEMENT SYSTEM
+
+Build a professional communication system that allows schools to communicate securely with:
+
+- Students
+- Parents/Guardians
+- Teachers
+- Staff
+- School Administrators
+- Principals
+- Department Heads
+- Transport users
+- Hostel users
+- Other authorized users
+
+The system must integrate with existing ERP modules.
+
+---
+
+# 1. CRITICAL IMPLEMENTATION RULES
+
+This is an EXISTING ERP.
+
+DO NOT create a new project.
+
+DO NOT rebuild the ERP.
+
+DO NOT delete, reset, truncate, drop or overwrite existing data.
+
+Before implementation:
+
+1. Inspect the existing codebase.
+2. Inspect the existing database schema.
+3. Inspect existing notification infrastructure.
+4. Inspect existing users and roles.
+5. Inspect existing Student and Parent relationships.
+6. Inspect existing school/session structure.
+7. Inspect existing dashboards.
+8. Inspect existing file storage.
+9. Inspect existing audit logs.
+
+Reuse existing architecture wherever possible.
+
+Do not create duplicate:
+
+- User system
+- Student system
+- Parent system
+- Teacher/staff system
+- Notification system
+- Authentication system
+- File storage system
+
+Use safe database migrations.
+
+Do not create mock production messages.
+
+---
+
+# 2. COMMUNICATION DASHBOARD
+
+Create a Communication Dashboard.
+
+Show:
+
+- Total messages sent
+- Messages today
+- Scheduled messages
+- Draft messages
+- Failed messages
+- Pending notifications
+- Unread parent messages
+- Unread staff messages
+- Announcements
+- Circulars
+- Recent conversations
+- Delivery statistics
+
+Quick actions:
+
+- New Announcement
+- New Circular
+- Send Message
+- Schedule Message
+- Create Notice
+- Send Class Message
+- Send Parent Message
+- Send Staff Message
+- View Conversations
+
+---
+
+# 3. ANNOUNCEMENT MANAGEMENT
+
+Create school announcements.
+
+Announcements should support:
+
+- Title
+- Description
+- Attachment
+- School
+- Academic session
+- Audience
+- Class
+- Section
+- Department
+- Publish date
+- Expiry date
+- Priority
+- Status
+
+Status:
+
+- Draft
+- Scheduled
+- Published
+- Expired
+- Archived
+
+---
+
+# 4. TARGET AUDIENCE
+
+Allow authorized users to select:
+
+- Entire School
+- Students
+- Parents
+- Teachers
+- Staff
+- Specific Class
+- Specific Section
+- Specific Student
+- Specific Parent
+- Specific Department
+- Hostel Students
+- Transport Students
+
+Do not allow users to send messages to audiences outside their permissions.
+
+---
+
+# 5. CIRCULAR MANAGEMENT
+
+Create formal school circulars.
+
+A circular should support:
+
+- Circular number
+- Title
+- Content
+- Date
+- Issued by
+- Department
+- Target audience
+- Attachment
+- Publish date
+- Expiry date
+- Acknowledgement required
+
+Allow printable/downloadable circulars where existing document infrastructure supports it.
+
+---
+
+# 6. NOTICE BOARD
+
+Create digital notice boards.
+
+Support:
+
+- School notices
+- Class notices
+- Department notices
+- Hostel notices
+- Transport notices
+- Examination notices
+- Fee notices
+- Holiday notices
+- Emergency notices
+
+Integrate with existing modules.
+
+Do not create duplicate Transport, Hostel or Examination notice systems if equivalent functionality already exists.
+
+Instead, centralize them through this communication layer.
+
+---
+
+# 7. INTERNAL MESSAGING
+
+Create secure internal messaging.
+
+Users should be able to communicate according to permissions.
+
+Examples:
+
+Parent ↔ School
+
+Teacher ↔ Parent
+
+Teacher ↔ Student
+
+Teacher ↔ Administration
+
+Staff ↔ Administration
+
+Principal ↔ Teachers
+
+Department Head ↔ Department Staff
+
+Do not allow unrestricted user-to-user messaging.
+
+Permissions must determine who can contact whom.
+
+---
+
+# 8. CONVERSATIONS
+
+Create conversation threads.
+
+Each conversation contains:
+
+- Conversation ID
+- Participants
+- School
+- Subject
+- Created date
+- Last activity
+- Status
+
+Messages contain:
+
+- Sender
+- Receiver/conversation
+- Message
+- Attachments
+- Timestamp
+- Read status
+- Delivery status
+- Edited status where supported
+
+---
+
+# 9. MESSAGE STATUS
+
+Support:
+
+- Draft
+- Queued
+- Sent
+- Delivered
+- Read
+- Failed
+
+Only show "Delivered" or "Read" when the underlying communication channel actually provides that information.
+
+Never fabricate delivery status.
+
+---
+
+# 10. PARENT-TEACHER COMMUNICATION
+
+Create a parent-teacher communication workspace.
+
+Parents can:
+
+- View teacher messages
+- Reply where permitted
+- Ask questions
+- Receive academic updates
+- Receive homework-related communication
+- Receive attendance-related communication
+- Receive result-related communication
+
+Teachers can:
+
+- Contact linked parents
+- Send class updates
+- Send student-specific messages
+- Respond to parent queries
+
+Protect student privacy.
+
+A teacher must not access unrelated students or parents.
+
+---
+
+# 11. PARENT PORTAL COMMUNICATION CENTER
+
+Add a Communication Center to the Parent Portal.
+
+Show:
+
+- Announcements
+- Circulars
+- Notices
+- Messages
+- Important alerts
+- School events
+- Fee notifications
+- Attendance alerts
+- Homework alerts
+- Exam/result notifications
+- Transport notices
+- Hostel notices where applicable
+
+Use existing module data rather than duplicating records.
+
+---
+
+# 12. STUDENT COMMUNICATION CENTER
+
+Students should see permitted:
+
+- Announcements
+- Notices
+- Homework notifications
+- Exam notifications
+- Results notifications
+- Teacher messages
+- School circulars
+- Events
+
+Respect age/role and school permissions.
+
+---
+
+# 13. TEACHER COMMUNICATION CENTER
+
+Teachers should see:
+
+- School announcements
+- Staff notices
+- Parent messages
+- Class notices
+- Timetable changes
+- Exam notifications
+- Meeting notices
+- Administrative messages
+- Homework-related notifications
+
+---
+
+# 14. STAFF COMMUNICATION CENTER
+
+Staff should receive relevant:
+
+- HR notifications
+- Payroll notifications
+- Administrative notices
+- School announcements
+- Department notices
+- Meeting notices
+- Emergency alerts
+
+Use existing HR and Payroll data.
+
+Do not duplicate HR records.
+
+---
+
+# 15. NOTIFICATION CENTER
+
+Create a centralized notification center.
+
+Notification categories:
+
+- Academic
+- Attendance
+- Fees
+- Examination
+- Homework
+- Transport
+- Hostel
+- Library
+- HR
+- Payroll
+- Inventory
+- Procurement
+- Administration
+- Emergency
+- General
+
+Each notification should contain:
+
+- Title
+- Message
+- Category
+- Priority
+- Target user
+- Related entity
+- Related module
+- Created time
+- Read status
+- Action link where applicable
+
+---
+
+# 16. IN-APP NOTIFICATIONS
+
+Implement:
+
+- Notification bell
+- Unread count
+- Notification dropdown
+- Full notification page
+- Mark as read
+- Mark all as read
+- Notification filtering
+
+Clicking a notification should open the related ERP record when the user has permission.
+
+Example:
+
+Fee notification → Fee page
+
+Attendance notification → Attendance page
+
+Homework notification → Homework page
+
+Result notification → Result page
+
+Transport notification → Transport page
+
+---
+
+# 17. NOTIFICATION PREFERENCES
+
+Allow users to configure available notification preferences.
+
+Possible channels:
+
+- In-App
+- Email
+- SMS
+- WhatsApp
+- Push Notification
+
+However:
+
+DO NOT implement fake external delivery.
+
+Only activate a channel when the required provider/API is actually configured.
+
+---
+
+# 18. EMAIL INTEGRATION ARCHITECTURE
+
+Prepare email notification support.
+
+Allow configuration of:
+
+- SMTP or supported email provider
+- Sender name
+- Sender address
+- Templates
+
+Do not expose credentials in frontend code.
+
+Store secrets only in secure environment/configuration.
+
+---
+
+# 19. SMS INTEGRATION ARCHITECTURE
+
+Prepare an SMS provider interface.
+
+The system should support a provider abstraction.
+
+Example:
+
+Notification Service
+
+→ SMS Provider Interface
+
+→ Actual Provider
+
+Do not hardcode one provider into all business logic.
+
+Do not send real SMS unless credentials/configuration exist.
+
+---
+
+# 20. WHATSAPP INTEGRATION ARCHITECTURE
+
+Prepare a WhatsApp provider interface.
+
+Do not implement unofficial WhatsApp automation.
+
+Use only an officially supported provider/API when configured.
+
+Messages should not be sent automatically without proper authorization and configuration.
+
+---
+
+# 21. PUSH NOTIFICATIONS
+
+If the existing application architecture supports web/mobile push notifications, implement a provider abstraction.
+
+Support:
+
+- Device registration
+- Device removal
+- Notification delivery
+- Read/open tracking where available
+
+Do not claim push delivery without an actual push provider.
+
+---
+
+# 22. NOTIFICATION TEMPLATES
+
+Create configurable templates.
+
+Examples:
+
+- Fee Due
+- Fee Payment Confirmation
+- Attendance Alert
+- Leave Approval
+- Leave Rejection
+- Exam Schedule
+- Result Published
+- Homework Assigned
+- Homework Reminder
+- Transport Change
+- Transport Delay
+- Hostel Notice
+- Library Due Reminder
+- Payroll Published
+- Document Expiry
+- Purchase Approval
+
+Templates should support safe variables.
+
+Example:
+
+{{student_name}}
+
+{{class_name}}
+
+{{amount}}
+
+{{due_date}}
+
+{{school_name}}
+
+Do not allow arbitrary executable content in templates.
+
+---
+
+# 23. AUTOMATED NOTIFICATIONS
+
+Connect notifications to existing modules.
+
+Examples:
+
+### Attendance
+
+If configured:
+
+Student absent → Parent notification
+
+### Fees
+
+Fee due → Parent notification
+
+Payment received → Receipt notification
+
+### Examination
+
+Exam schedule published → Student/Parent notification
+
+Result published → Student/Parent notification
+
+### Homework
+
+Homework assigned → Student notification
+
+### Library
+
+Book due → Student/Parent reminder
+
+### Transport
+
+Route changed → Parent notification
+
+### Hostel
+
+Leave approved → Parent/student notification
+
+### HR
+
+Payroll published → Employee notification
+
+### Inventory
+
+Purchase approval → Authorized user notification
+
+Only generate notifications when the relevant event actually occurs.
+
+---
+
+# 24. NOTIFICATION QUEUE
+
+Implement a reliable notification queue where appropriate.
+
+Each queued notification should have:
+
+- Notification ID
+- Channel
+- Recipient
+- Payload/template reference
+- Status
+- Attempt count
+- Created time
+- Sent time
+- Error information
+- Provider message ID where available
+
+Support retry for temporary failures.
+
+Avoid infinite retry loops.
+
+---
+
+# 25. IDEMPOTENCY
+
+Prevent duplicate notifications.
+
+For example:
+
+The same fee event should not create multiple identical notifications because of repeated background processing.
+
+Use an appropriate idempotency key/event reference.
+
+---
+
+# 26. SCHEDULED MESSAGES
+
+Allow authorized users to schedule messages.
+
+Fields:
+
+- Message
+- Audience
+- Schedule date
+- Schedule time
+- Channel
+- Status
+
+Statuses:
+
+- Draft
+- Scheduled
+- Processing
+- Sent
+- Cancelled
+- Failed
+
+Validate that scheduled messages belong to the correct school.
+
+---
+
+# 27. MESSAGE PRIORITY
+
+Support:
+
+- Normal
+- Important
+- Urgent
+- Emergency
+
+Emergency messages should have stricter permissions.
+
+Do not allow every user to create emergency broadcasts.
+
+---
+
+# 28. EMERGENCY BROADCAST
+
+Create controlled emergency communication.
+
+Examples:
+
+- School closure
+- Natural disaster
+- Transport emergency
+- Security incident
+- Weather emergency
+- Urgent parent communication
+
+Emergency broadcast should:
+
+- Require special permission
+- Require confirmation
+- Be audit logged
+- Clearly display priority
+- Record target audience
+- Record timestamp
+
+Do not claim external channels were delivered unless provider confirms it.
+
+---
+
+# 29. ACKNOWLEDGEMENT
+
+Allow selected announcements/circulars to require acknowledgement.
+
+Users can:
+
+- Acknowledge
+- View acknowledgement status
+
+Administrators can see:
+
+- Total recipients
+- Viewed
+- Acknowledged
+- Pending
+
+Do not treat a message as acknowledged merely because it was delivered.
+
+---
+
+# 30. POLLS / SURVEYS
+
+Create basic communication polls.
+
+Support:
+
+- Question
+- Options
+- Target audience
+- Start date
+- End date
+- Anonymous/non-anonymous configuration
+- Response count
+
+Examples:
+
+- Parent meeting availability
+- Event participation
+- School feedback
+- Transport feedback
+
+Do not implement a full survey platform.
+
+---
+
+# 31. FEEDBACK SYSTEM
+
+Allow parents/students/staff to submit feedback.
+
+Feedback fields:
+
+- Category
+- Subject
+- Message
+- Priority
+- Attachment
+- Submitted by
+- Status
+
+Statuses:
+
+- New
+- Under Review
+- In Progress
+- Resolved
+- Closed
+
+Authorized administrators can respond.
+
+Maintain complete history.
+
+---
+
+# 32. COMPLAINT / GRIEVANCE COMMUNICATION
+
+Provide a controlled grievance channel.
+
+Do not expose complaints publicly.
+
+Allow:
+
+- Complaint submission
+- Assigned department
+- Priority
+- Status
+- Response
+- Resolution
+- Attachments
+- Audit trail
+
+Access must be restricted.
+
+---
+
+# 33. EVENT COMMUNICATION
+
+Integrate with existing academic/school calendar.
+
+For events, allow:
+
+- Announcement
+- Reminder
+- Target audience
+- Date/time
+- Location
+- Attachments
+
+Do not create a duplicate event calendar if one already exists.
+
+---
+
+# 34. MESSAGE SEARCH
+
+Authorized users should be able to search messages by:
+
+- Sender
+- Recipient
+- Subject
+- Date
+- Category
+- Status
+- School
+- Class
+- Message type
+
+Do not expose restricted messages through global search.
+
+---
+
+# 35. ATTACHMENTS
+
+Support secure attachments.
+
+Examples:
+
+- PDF
+- Images
+- Documents
+
+Use existing secure file storage.
+
+Validate:
+
+- File type
+- File size
+- User permissions
+
+Do not expose private files through public URLs.
+
+---
+
+# 36. SCHOOL-WISE COMMUNICATION
+
+Every communication must respect school isolation.
+
+School A users must not receive:
+
+- School B announcements
+- School B messages
+- School B notices
+- School B circulars
+
+unless explicitly authorized at organization level.
+
+---
+
+# 37. ROLE-BASED ACCESS CONTROL
+
+Use existing RBAC.
+
+Possible permissions:
+
+- View communication
+- Send communication
+- Send class communication
+- Send parent communication
+- Send staff communication
+- Create announcement
+- Publish announcement
+- Send emergency broadcast
+- Manage templates
+- Manage notification settings
+- View delivery reports
+- Manage grievances
+- Manage feedback
+
+Do not create unnecessary new roles.
+
+---
+
+# 38. PRIVACY
+
+Communication is sensitive.
+
+Implement:
+
+- Server-side authorization
+- School isolation
+- Participant validation
+- Access checks on every message
+- Secure attachments
+- Audit logging
+
+A parent must only see messages related to their linked child/children.
+
+A teacher must only see parent/student communication they are authorized to access.
+
+---
+
+# 39. AUDIT LOGGING
+
+Log:
+
+- Announcement creation
+- Announcement publication
+- Message sent
+- Message edited where applicable
+- Message deleted/archived
+- Circular published
+- Emergency broadcast
+- Template changes
+- Notification configuration changes
+- Feedback updates
+- Grievance updates
+- Permission-sensitive actions
+
+Include:
+
+- User
+- School
+- Timestamp
+- Entity
+- Action
+- Relevant metadata
+
+---
+
+# 40. DATABASE DESIGN
+
+Inspect the existing schema first.
+
+Potential entities:
+
+- announcements
+- circulars
+- communication_messages
+- conversations
+- conversation_participants
+- notifications
+- notification_preferences
+- notification_templates
+- notification_queue
+- notification_delivery_logs
+- scheduled_messages
+- message_attachments
+- acknowledgements
+- polls
+- poll_options
+- poll_responses
+- feedback
+- grievances
+
+DO NOT blindly create all these tables.
+
+If an equivalent notification entity already exists, extend it.
+
+Avoid duplicate notification tables.
+
+Use proper indexes.
+
+---
+
+# 41. PERFORMANCE
+
+Communication can generate large amounts of data.
+
+Use:
+
+- Pagination
+- Indexed queries
+- Lazy loading
+- Efficient notification queries
+- Background processing where supported
+- Archived historical messages where appropriate
+
+Do not load thousands of notifications at once.
+
+---
+
+# 42. RETENTION
+
+Where appropriate, support configurable retention/archive policies.
+
+Do not permanently delete communication records automatically unless the organization has explicitly configured a compliant retention policy.
+
+Important audit/communication records should remain traceable.
+
+---
+
+# 43. SECURITY TESTING
+
+Test:
+
+- Parent cannot see another parent's messages.
+- Teacher cannot access unrelated student communication.
+- School A cannot access School B communication.
+- Unauthorized users cannot broadcast.
+- Unauthorized users cannot send emergency messages.
+- Private attachments cannot be accessed directly.
+- Notification links cannot bypass permissions.
+- API endpoints enforce authorization.
+
+---
+
+# 44. INTEGRATION WITH EXISTING MODULES
+
+Integrate with:
+
+### Student Management
+Student-specific communication.
+
+### Parent Management
+Parent messaging.
+
+### Attendance
+Attendance alerts.
+
+### Fees & Accounts
+Fee reminders and payment notifications.
+
+### Examination
+Exam/result notifications.
+
+### Timetable
+Timetable changes.
+
+### Homework
+Homework notifications.
+
+### Transport
+Transport changes and alerts.
+
+### Library
+Due-date reminders.
+
+### Hostel
+Hostel notices.
+
+### HR/Payroll
+Employee notifications.
+
+### Inventory/Procurement
+Approval notifications.
+
+Do not duplicate data from these modules.
+
+---
+
+# 45. UI STRUCTURE
+
+Add:
+
+# Communication
+
+- Dashboard
+- Inbox
+- Conversations
+- Announcements
+- Circulars
+- Notices
+- Scheduled Messages
+- Templates
+- Notifications
+- Polls
+- Feedback
+- Grievances
+- Delivery Reports
+- Settings
+
+Use the existing ERP design system.
+
+---
+
+# 46. PARENT PORTAL UI
+
+Add:
+
+# Communication Center
+
+Tabs:
+
+- Announcements
+- Messages
+- Notices
+- Notifications
+- Circulars
+- Feedback
+
+Show unread counts.
+
+---
+
+# 47. TEACHER PORTAL UI
+
+Add:
+
+- Messages
+- Parent Communication
+- Class Announcements
+- School Notices
+- Notifications
+
+---
+
+# 48. ADMIN COMMUNICATION UI
+
+Admin should be able to:
+
+- Create message
+- Select audience
+- Preview
+- Schedule
+- Publish
+- Track delivery
+- Track acknowledgement
+- View failures
+- Retry failed notifications where supported
+
+---
+
+# 49. MESSAGE COMPOSER
+
+Create a professional message composer.
+
+Fields:
+
+- Audience
+- Class/section
+- Subject
+- Message
+- Attachment
+- Priority
+- Channel
+- Schedule
+- Require acknowledgement
+
+Before sending:
+
+Show a confirmation summary:
+
+Recipients:
+
+X students
+
+X parents
+
+X staff
+
+Channels:
+
+In-App
+
+Email
+
+SMS
+
+etc.
+
+Do not send until user confirms.
+
+---
+
+# 50. NOTIFICATION DELIVERY REPORT
+
+Show:
+
+- Total recipients
+- Sent
+- Delivered
+- Read
+- Failed
+- Pending
+
+Only use delivery/read values provided by the actual communication channel.
+
+---
+
+# 51. EXPORT
+
+Allow authorized administrators to export:
+
+- Announcement history
+- Message history
+- Notification logs
+- Delivery reports
+- Acknowledgement reports
+- Feedback reports
+- Grievance reports
+
+Use existing export infrastructure.
+
+---
+
+# 52. MOBILE RESPONSIVENESS
+
+Communication must be highly mobile-friendly.
+
+Optimize:
+
+- Inbox
+- Message composer
+- Notifications
+- Parent portal
+- Teacher portal
+- Announcement reading
+- Emergency messages
+
+---
+
+# 53. ACCESSIBILITY
+
+Maintain:
+
+- Keyboard navigation
+- Clear labels
+- Accessible forms
+- Screen-reader-friendly controls
+- Read/unread visual distinction
+- Clear status indicators
+
+---
+
+# 54. TESTING
+
+Create automated tests where supported.
+
+Test:
+
+### Announcements
+
+- Create
+- Publish
+- Schedule
+- Expire
+- Target audience
+
+### Messaging
+
+- Create conversation
+- Send message
+- Read message
+- Attachment permission
+
+### Notifications
+
+- Create notification
+- Mark read
+- Notification link authorization
+
+### Scheduling
+
+- Schedule message
+- Cancel message
+- Process scheduled message
+
+### Acknowledgement
+
+- Require acknowledgement
+- Record acknowledgement
+- Generate report
+
+### Feedback
+
+- Submit
+- Assign
+- Respond
+- Resolve
+
+### Grievance
+
+- Submit
+- Assign
+- Update
+- Close
+
+### Security
+
+- Parent isolation
+- Teacher isolation
+- School isolation
+- RBAC
+- Attachment security
+
+---
+
+# 55. REGRESSION TESTING
+
+After Phase 14, verify:
+
+- Authentication
+- RBAC
+- School management
+- Students
+- Parents
+- Admissions
+- Staff
+- HR
+- Attendance
+- Fees
+- Accounts
+- Exams
+- Results
+- Timetable
+- Homework
+- Transport
+- Library
+- Hostel
+- Inventory
+- Assets
+- Procurement
+- Audit logs
+
+No existing functionality should be broken.
+
+---
+
+# 56. IMPLEMENTATION ORDER
+
+Implement in this order:
+
+## Step 1
+Inspect existing notification and messaging infrastructure.
+
+## Step 2
+Identify reusable entities.
+
+## Step 3
+Create safe migrations.
+
+## Step 4
+Implement centralized notification center.
+
+## Step 5
+Implement announcements.
+
+## Step 6
+Implement circulars and notices.
+
+## Step 7
+Implement internal messaging.
+
+## Step 8
+Implement parent-teacher communication.
+
+## Step 9
+Implement notification preferences.
+
+## Step 10
+Implement notification templates.
+
+## Step 11
+Implement scheduled messages.
+
+## Step 12
+Implement delivery queue.
+
+## Step 13
+Implement acknowledgements.
+
+## Step 14
+Implement polls.
+
+## Step 15
+Implement feedback.
+
+## Step 16
+Implement grievance management.
+
+## Step 17
+Integrate notifications with existing ERP modules.
+
+## Step 18
+Implement delivery reports.
+
+## Step 19
+Implement security and school isolation.
+
+## Step 20
+Run complete testing and production build.
+
+---
+
+# 57. END-TO-END ACCEPTANCE TEST
+
+Test the following:
+
+Create school announcement.
+
+→ Target Class 5 parents.
+
+→ Preview announcement.
+
+→ Publish.
+
+→ Verify parent receives in-app notification.
+
+→ Parent opens announcement.
+
+→ Notification becomes read.
+
+→ Create circular requiring acknowledgement.
+
+→ Parent acknowledges.
+
+→ Admin verifies acknowledgement.
+
+→ Teacher sends permitted message to a parent.
+
+→ Parent replies.
+
+→ Teacher receives reply.
+
+→ Create fee notification from existing Fees & Accounts event.
+
+→ Verify notification appears.
+
+→ Create homework notification.
+
+→ Verify student receives it.
+
+→ Create transport notice.
+
+→ Verify relevant transport parents receive it.
+
+→ Schedule an announcement.
+
+→ Verify it is not published before scheduled time.
+
+→ Verify it becomes available after scheduled time.
+
+→ Create feedback.
+
+→ Assign it to administrator.
+
+→ Resolve feedback.
+
+→ Create grievance.
+
+→ Verify restricted access.
+
+→ Send an emergency announcement using authorized account.
+
+→ Verify audit log.
+
+→ Attempt unauthorized cross-school access.
+
+→ Verify access denied.
+
+---
+
+# 58. FINAL QUALITY CHECK
+
+Run:
+
+- TypeScript typecheck
+- Lint
+- Unit tests
+- Integration tests
+- Database migration validation
+- Production build
+- RBAC tests
+- Multi-school isolation tests
+- Notification tests
+- Attachment security tests
+- Regression tests
+
+Fix all critical issues.
+
+Do not leave core features as TODO.
+
+Do not use mock messages as a replacement for real functionality.
+
+---
+
+# 59. FINAL IMPLEMENTATION REPORT
+
+After implementation provide:
+
+1. Files created
+2. Files modified
+3. Database migrations
+4. New/extended entities
+5. APIs/server actions
+6. Notification services
+7. UI pages
+8. RBAC permissions
+9. Integrations completed
+10. Tests completed
+11. Typecheck result
+12. Lint result
+13. Production build result
+14. Provider configuration required
+15. Remaining limitations
+16. Future integration points
+
+Do not claim external SMS, WhatsApp, email or push delivery is working unless the actual provider is configured and tested.
+
+---
+
+# FINAL INSTRUCTION
+
+Implement Phase 14 directly into the existing Multi-School School ERP.
+
+DO NOT rebuild the ERP.
+
+DO NOT delete existing data.
+
+DO NOT create duplicate:
+
+- Student systems
+- Parent systems
+- Staff systems
+- Notification systems
+- Authentication systems
+- File storage
+- Accounting systems
+
+Use safe migrations.
+
+Maintain strict school isolation.
+
+Maintain server-side RBAC.
+
+Maintain audit logging.
+
+Use existing modules as the source of truth.
+
+The final result must be a professional, secure, scalable Communication, Notification and Parent Engagement System integrated throughout the entire School ERP.

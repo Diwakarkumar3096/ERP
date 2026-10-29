@@ -1,0 +1,2532 @@
+# PHASE 21 — ADVANCED ACADEMIC PLANNING, CURRICULUM, SYLLABUS & LEARNING MANAGEMENT SYSTEM (LMS)
+
+## ROLE
+
+You are a senior full-stack architect and education ERP engineer working on an EXISTING production-oriented multi-school School ERP.
+
+This is **PHASE 21** of an already developed School ERP.
+
+The system already contains modules for:
+
+- Authentication
+- Users and RBAC
+- Multi-school management
+- Academic sessions
+- Classes and sections
+- Students and parents
+- Admissions
+- Teachers and staff
+- Attendance
+- Fees and Accounts
+- Examination and Results
+- Timetable
+- Homework and Classroom Management
+- Transport
+- Library
+- Hostel
+- HR and Payroll
+- Inventory and Procurement
+- Communication and Notifications
+- School Administration
+- Events and Meetings
+- MIS and Analytics
+- Student Lifecycle
+- Certificates and Documents
+- Parent and Student Portal
+- Advanced Teacher Portal
+- Mobile/PWA support
+
+The goal of this phase is to build a professional:
+
+# ADVANCED ACADEMIC PLANNING, CURRICULUM, SYLLABUS, LESSON PLANNING & LEARNING MANAGEMENT SYSTEM
+
+Do NOT create a new application.
+
+Do NOT rebuild the ERP.
+
+Do NOT replace existing modules.
+
+Do NOT create duplicate student, teacher, class, subject, timetable, homework, examination, or portal systems.
+
+Extend the existing architecture cleanly.
+
+---
+
+# 1. FIRST: INSPECT THE EXISTING ERP
+
+Before writing or modifying code:
+
+1. Inspect the complete existing codebase.
+2. Identify the current:
+   - framework
+   - frontend architecture
+   - backend/API architecture
+   - database
+   - ORM
+   - authentication
+   - authorization
+   - school isolation
+   - academic session structure
+   - class/section structure
+   - subject structure
+   - teacher assignments
+   - timetable
+   - homework
+   - examinations
+   - question bank if already implemented
+   - study materials
+   - teacher portal
+   - student portal
+   - parent portal
+   - communication system
+   - notification system
+   - MIS/reporting
+   - file storage
+   - audit logging
+3. Reuse existing entities wherever possible.
+4. Reuse existing UI components.
+5. Reuse existing API patterns.
+6. Reuse existing authentication and RBAC.
+7. Reuse existing school/session/class/section/subject relationships.
+8. Reuse existing homework and examination infrastructure.
+9. Reuse existing document/file storage.
+10. Reuse existing notification infrastructure.
+
+Do not create duplicate entities when an existing entity can be extended.
+
+---
+
+# 2. NON-NEGOTIABLE DEVELOPMENT RULES
+
+Follow these rules throughout this phase:
+
+- Existing ERP only.
+- No rebuild from scratch.
+- No new parallel ERP.
+- No duplicate systems.
+- No database reset.
+- No DROP DATABASE.
+- No DROP TABLE for existing production tables.
+- No TRUNCATE.
+- No deletion of existing production data.
+- Use safe database migrations.
+- Preserve existing functionality.
+- Maintain backward compatibility.
+- Do not break previous phases.
+- Do not use mock production data.
+- Do not hardcode school IDs.
+- Do not hardcode academic sessions.
+- Do not hardcode classes or subjects.
+- Use server-side authorization.
+- UI hiding alone is NOT security.
+- Enforce school isolation server-side.
+- Enforce academic-session authorization.
+- Protect student information.
+- Protect teacher information.
+- Protect uploaded documents.
+- Add audit logging for important actions.
+- Use transactions for multi-step operations.
+- Prevent duplicate records.
+- Prevent race conditions.
+- Use idempotency where required.
+- Validate all input server-side.
+- Do not expose sensitive database fields unnecessarily.
+- Do not expose raw SQL execution to users.
+- Do not allow arbitrary SQL through report/LMS builders.
+- Do not fake external integrations.
+- Do not claim a feature is complete unless it actually works.
+
+---
+
+# 3. PHASE 21 OBJECTIVE
+
+Build an integrated academic planning ecosystem connecting:
+
+Curriculum
+→ Academic Year
+→ Terms
+→ Subjects
+→ Units
+→ Chapters
+→ Topics
+→ Learning Outcomes
+→ Lesson Plans
+→ Teaching Resources
+→ Classroom Activities
+→ Homework
+→ Assessments
+→ Question Bank
+→ Student Progress
+→ Remedial/Enrichment
+→ Parent/Student Portal
+→ Teacher Portal
+→ Academic Coordinator Dashboard
+→ Principal Dashboard
+→ MIS Analytics
+
+The system should provide a complete academic planning and delivery lifecycle.
+
+---
+
+# 4. ACADEMIC PLANNING DASHBOARD
+
+Create:
+
+## Academic Planning Dashboard
+
+Display:
+
+- Total academic sessions
+- Active academic session
+- Total curriculum frameworks
+- Total subjects
+- Total curriculum units
+- Total chapters
+- Total topics
+- Teachers assigned
+- Lesson plans created
+- Lesson plans completed
+- Syllabus completion percentage
+- Classes on schedule
+- Classes behind schedule
+- Homework assigned
+- Assessments conducted
+- Students requiring academic support
+- Remedial plans
+- Enrichment plans
+- Pending curriculum approvals
+- Pending lesson plan approvals if enabled
+
+Provide charts for:
+
+- Syllabus completion
+- Subject-wise progress
+- Class-wise progress
+- Teacher-wise progress
+- Monthly teaching progress
+- Planned vs completed lessons
+- Assessment performance
+- Learning outcome achievement
+
+All metrics must be calculated from actual database records.
+
+---
+
+# 5. CURRICULUM MANAGEMENT
+
+Create a centralized Curriculum Management system.
+
+Curriculum should support:
+
+School
+→ Academic Session
+→ Class
+→ Subject
+→ Term
+→ Unit
+→ Chapter
+→ Topic
+
+Allow schools to define curriculum independently.
+
+Example:
+
+Academic Session:
+2026–27
+
+Class:
+Class 6
+
+Subject:
+Mathematics
+
+Term:
+Term 1
+
+Unit:
+Number System
+
+Chapter:
+Whole Numbers
+
+Topics:
+
+- Place Value
+- Number Comparison
+- Operations
+- Properties of Numbers
+- Word Problems
+
+---
+
+# 6. CURRICULUM FRAMEWORK
+
+Create curriculum framework management.
+
+Fields may include:
+
+- Curriculum ID
+- School
+- Academic Session
+- Curriculum Name
+- Curriculum Code
+- Applicable Classes
+- Applicable Subjects
+- Description
+- Version
+- Status
+- Effective From
+- Effective To
+- Created By
+- Approved By
+- Approval Date
+- Created At
+- Updated At
+
+Status:
+
+- Draft
+- Under Review
+- Approved
+- Published
+- Archived
+
+Only authorized academic administrators should approve curriculum.
+
+---
+
+# 7. CURRICULUM VERSIONING
+
+Implement curriculum version control.
+
+A curriculum may have multiple versions.
+
+Example:
+
+Mathematics Class 6
+Version 1
+Version 2
+
+Requirements:
+
+- Never overwrite important historical curriculum data destructively.
+- Preserve previous versions.
+- Record change history.
+- Show who changed it.
+- Show when it changed.
+- Show reason for revision.
+- Allow administrators to compare versions.
+- Published curriculum should be protected from unauthorized modification.
+- New revisions should create a controlled version.
+
+---
+
+# 8. SUBJECT CURRICULUM MAPPING
+
+Connect existing subjects to curriculum.
+
+For each:
+
+School
+Session
+Class
+Section if applicable
+Subject
+
+Allow:
+
+- Curriculum assignment
+- Teacher assignment
+- Coordinator assignment
+- Weekly periods
+- Planned lessons
+- Planned teaching hours
+- Assessment plan
+
+Do not create a duplicate Subject table if one already exists.
+
+Use the existing subject master.
+
+---
+
+# 9. ACADEMIC YEAR AND TERM PLANNING
+
+Integrate with the existing academic session and school calendar.
+
+Support:
+
+- Academic session
+- Terms
+- Quarters
+- Months
+- Teaching weeks
+- Holidays
+- Examination periods
+- Vacation periods
+- Events
+- School closures
+
+The planning engine must recognize holidays and non-teaching days.
+
+Do not schedule lessons automatically on school holidays unless an authorized administrator explicitly allows it.
+
+---
+
+# 10. UNIT, CHAPTER AND TOPIC MANAGEMENT
+
+Create hierarchical academic content:
+
+Subject
+→ Unit
+→ Chapter
+→ Topic
+→ Sub-topic
+
+Each topic may contain:
+
+- Title
+- Code
+- Description
+- Learning objectives
+- Learning outcomes
+- Competencies
+- Estimated teaching time
+- Difficulty level
+- Recommended resources
+- Recommended activities
+- Assessment mapping
+- Homework mapping
+- Prerequisites
+- Status
+
+Statuses may include:
+
+- Planned
+- In Progress
+- Completed
+- Deferred
+- Revised
+- Archived
+
+---
+
+# 11. LEARNING OUTCOMES AND COMPETENCIES
+
+Create Learning Outcome management.
+
+Support:
+
+- Learning outcome code
+- Outcome title
+- Description
+- Subject
+- Class
+- Topic
+- Competency category
+- Expected level
+- Assessment mapping
+
+Examples:
+
+- Knowledge
+- Understanding
+- Application
+- Analysis
+- Problem solving
+- Communication
+- Practical skills
+- Critical thinking
+
+Allow multiple topics to map to the same learning outcome.
+
+Allow one topic to map to multiple outcomes.
+
+---
+
+# 12. LESSON PLANNING SYSTEM
+
+Build a professional Lesson Planner.
+
+Teachers should be able to create:
+
+- Lesson title
+- Subject
+- Class
+- Section
+- Topic
+- Date
+- Period
+- Duration
+- Learning objectives
+- Learning outcomes
+- Teaching methodology
+- Required resources
+- Classroom activities
+- Homework
+- Assessment
+- Differentiation strategy
+- Remedial strategy
+- Enrichment activity
+- Teacher notes
+
+Lesson status:
+
+- Draft
+- Planned
+- Published
+- In Progress
+- Completed
+- Deferred
+- Cancelled
+
+---
+
+# 13. LESSON PLAN TEMPLATES
+
+Allow teachers/coordinators to create reusable templates.
+
+Example template:
+
+1. Learning Objective
+2. Previous Knowledge
+3. Introduction
+4. Teaching Activity
+5. Student Activity
+6. Practice
+7. Assessment
+8. Homework
+9. Reflection
+
+Teachers should be able to save and reuse templates.
+
+Templates can be:
+
+- Personal
+- Department
+- School-wide
+
+Respect permissions.
+
+---
+
+# 14. LESSON PLAN WORKFLOW
+
+Support:
+
+Draft
+→ Review
+→ Approved/Published
+→ Teaching
+→ Completed
+
+Where review is enabled.
+
+Allow academic coordinators to review lesson plans.
+
+Allow comments and revision requests.
+
+Do not make approval mandatory if the school configuration says it is not required.
+
+---
+
+# 15. TEACHER PORTAL INTEGRATION
+
+Integrate deeply with Phase 20.
+
+Teacher Portal should provide:
+
+## My Academic Planning
+
+- Today's lessons
+- Upcoming lessons
+- Pending lesson plans
+- Completed lessons
+- Deferred lessons
+- Syllabus progress
+- Topics remaining
+- Homework linked to lessons
+- Assessments linked to lessons
+- Teaching resources
+- Academic calendar
+
+Add a quick action:
+
+# Create Lesson Plan
+
+Teachers should be able to create lesson plans directly from:
+
+- Timetable
+- Class
+- Subject
+- Topic
+- Syllabus
+- Previous lesson
+
+---
+
+# 16. TIMETABLE INTEGRATION
+
+Use the existing timetable.
+
+A teacher should be able to select:
+
+Today's Period 2
+→ Class 6A
+→ Mathematics
+→ Current Topic
+
+Then create/open the lesson plan.
+
+Do not create a second timetable.
+
+If a teacher has no timetable assignment, prevent unauthorized lesson creation unless the role has appropriate permission.
+
+---
+
+# 17. SYLLABUS PLANNING
+
+Create syllabus planning.
+
+For every class + subject:
+
+Show:
+
+- Total units
+- Total chapters
+- Total topics
+- Completed topics
+- In-progress topics
+- Deferred topics
+- Remaining topics
+- Completion percentage
+- Planned completion date
+- Actual completion date
+- Expected progress
+- Actual progress
+- Delay days
+
+Formula:
+
+Syllabus Completion %
+
+=
+Completed Topics / Total Applicable Topics × 100
+
+If a more accurate weighted model is used, document the calculation clearly.
+
+---
+
+# 18. SYLLABUS PROGRESS TRACKING
+
+Teachers can update topic progress.
+
+Allow:
+
+- Start topic
+- Mark in progress
+- Complete topic
+- Defer topic
+- Revise topic
+- Add teacher notes
+- Record completion date
+- Record actual teaching time
+
+Prevent unauthorized backdating.
+
+If backdating is allowed for administrators, log it in the audit system.
+
+---
+
+# 19. PLANNED VS ACTUAL ACADEMIC PROGRESS
+
+Create comparison analytics.
+
+Example:
+
+Planned:
+
+60% completed by September 30
+
+Actual:
+
+52%
+
+Difference:
+
+-8%
+
+Display:
+
+- On Track
+- Slightly Behind
+- Significantly Behind
+- Ahead
+
+Thresholds should be configurable.
+
+Do not automatically label a teacher as underperforming solely based on syllabus progress.
+
+Consider:
+
+- Holidays
+- Exams
+- School events
+- Approved leave
+- Timetable changes
+- Curriculum changes
+- Deferred lessons
+
+---
+
+# 20. ACADEMIC PROGRESS CALENDAR
+
+Create a calendar showing:
+
+- Planned lessons
+- Completed lessons
+- Deferred lessons
+- Exams
+- Homework deadlines
+- Assessments
+- School holidays
+- Events
+
+Integrate with existing school calendar.
+
+---
+
+# 21. TEACHING RESOURCE MANAGEMENT
+
+Create an academic resource repository.
+
+Resources may include:
+
+- PDF
+- DOC/DOCX
+- PPT/PPTX
+- Images
+- Worksheets
+- Videos
+- Links
+- Notes
+- Presentations
+- Activity sheets
+
+Each resource can be mapped to:
+
+- School
+- Session
+- Class
+- Subject
+- Unit
+- Chapter
+- Topic
+- Learning outcome
+
+---
+
+# 22. SECURE RESOURCE STORAGE
+
+Use the existing secure file storage system.
+
+Requirements:
+
+- Access control
+- School isolation
+- Teacher permissions
+- Student/parent permissions
+- File size validation
+- File type validation
+- Secure download
+- No public exposure of private documents
+- Malware/security scanning architecture if supported
+- Audit download/access where appropriate
+
+Do not expose private file storage URLs unnecessarily.
+
+---
+
+# 23. RESOURCE VISIBILITY
+
+Allow resources to be:
+
+- Private teacher resource
+- Department resource
+- School resource
+- Class resource
+- Student-visible
+- Parent-visible
+
+Teachers should not be able to publish resources to students outside their authorized classes/subjects.
+
+---
+
+# 24. HOMEWORK INTEGRATION
+
+Integrate with the existing Homework module.
+
+Allow a lesson plan to create or link homework.
+
+Example:
+
+Lesson:
+Fractions
+
+Homework:
+10 fraction problems
+
+Students receive the homework through the existing student/parent portal.
+
+Do not create another homework system.
+
+---
+
+# 25. ASSESSMENT INTEGRATION
+
+Integrate with the existing Examination/Assessment module.
+
+Allow lesson plans/topics to map to:
+
+- Formative assessment
+- Quiz
+- Class test
+- Assignment
+- Practical
+- Unit test
+- Summative examination
+
+Do not duplicate the examination engine.
+
+---
+
+# 26. QUESTION BANK INTEGRATION
+
+If Phase 20 question bank exists, connect questions to:
+
+- Subject
+- Class
+- Unit
+- Chapter
+- Topic
+- Learning outcome
+- Difficulty
+- Question type
+
+Example:
+
+Question:
+
+What is 25 × 4?
+
+Mapping:
+
+Class 5
+Mathematics
+Number System
+Multiplication
+Learning Outcome: Apply multiplication
+
+---
+
+# 27. LEARNING OBJECTIVE MAPPING
+
+Each lesson should optionally map:
+
+- Learning objectives
+- Learning outcomes
+- Competencies
+- Assessment criteria
+
+Allow teachers to see whether a topic's learning outcomes have been assessed.
+
+---
+
+# 28. FORMATIVE ASSESSMENT TRACKING
+
+Create lightweight formative assessment tracking without replacing the main Examination module.
+
+Teachers may record:
+
+- Activity assessment
+- Quiz result
+- Observation
+- Class participation
+- Assignment performance
+- Practical activity
+- Oral assessment
+
+Support configurable performance levels such as:
+
+- Beginning
+- Developing
+- Proficient
+- Advanced
+
+Do not use these labels as fixed global rules.
+
+---
+
+# 29. STUDENT LEARNING PROGRESS
+
+Create a Student Learning Progress profile.
+
+Display:
+
+- Subjects
+- Topics completed
+- Topics pending
+- Learning outcomes
+- Assessment performance
+- Homework completion
+- Participation
+- Areas requiring support
+- Remedial plans
+- Enrichment activities
+
+Avoid creating medical/psychological diagnoses.
+
+Do not automatically diagnose learning disabilities.
+
+---
+
+# 30. REMEDIAL EDUCATION MANAGEMENT
+
+Create a structured remedial planning system.
+
+Teachers can identify students needing additional academic support.
+
+Record:
+
+- Student
+- Subject
+- Topic
+- Reason
+- Support plan
+- Start date
+- Review date
+- Assigned teacher
+- Activities
+- Progress
+- Outcome
+- Follow-up
+
+Statuses:
+
+- Planned
+- Active
+- Under Review
+- Completed
+- Closed
+
+Use careful terminology such as:
+
+"Academic Support Required"
+
+rather than automatic diagnostic labels.
+
+---
+
+# 31. ENRICHMENT / ADVANCED LEARNING
+
+Support students requiring advanced activities.
+
+Examples:
+
+- Advanced worksheets
+- Olympiad preparation
+- Projects
+- Research
+- Reading programs
+- Competitions
+- Extension activities
+
+Allow teachers to create enrichment plans.
+
+---
+
+# 32. CLASS ACADEMIC DASHBOARD
+
+Create:
+
+# Class Academic Progress
+
+Show:
+
+- Class
+- Section
+- Subject
+- Teacher
+- Syllabus %
+- Lessons planned
+- Lessons completed
+- Homework completion
+- Assessment performance
+- Learning outcome progress
+- Remedial students
+- Enrichment students
+
+Provide drill-down:
+
+Class
+→ Subject
+→ Chapter
+→ Topic
+→ Student
+
+Respect permissions at every level.
+
+---
+
+# 33. SUBJECT ACADEMIC DASHBOARD
+
+For each subject show:
+
+- Total classes
+- Total lessons
+- Planned lessons
+- Completed lessons
+- Syllabus %
+- Topic completion
+- Assessment performance
+- Homework completion
+- Learning outcome progress
+- Delayed topics
+
+---
+
+# 34. TEACHER ACADEMIC DASHBOARD
+
+For authorized coordinators/admins:
+
+Show:
+
+- Assigned subjects
+- Assigned classes
+- Lessons planned
+- Lessons completed
+- Syllabus progress
+- Pending lesson plans
+- Deferred topics
+- Homework status
+- Assessment status
+
+Do not use analytics to make automatic employment or disciplinary decisions.
+
+---
+
+# 35. ACADEMIC COORDINATOR DASHBOARD
+
+Create an Academic Coordinator workspace.
+
+Include:
+
+- Curriculum management
+- Curriculum approvals
+- Subject progress
+- Class progress
+- Teacher progress
+- Lesson plan review
+- Syllabus delay alerts
+- Assessment planning
+- Academic calendar
+- Remedial plans
+- Enrichment programs
+- Resource library
+- Academic reports
+
+---
+
+# 36. PRINCIPAL / MANAGEMENT DASHBOARD
+
+Provide high-level academic indicators:
+
+- Overall syllabus completion
+- Class-wise progress
+- Subject-wise progress
+- Academic performance
+- Learning outcome progress
+- Homework completion
+- Assessment completion
+- Remedial program status
+- Enrichment program status
+
+Allow drill-down only according to permissions.
+
+---
+
+# 37. STUDENT PORTAL INTEGRATION
+
+Students should see:
+
+- Current syllabus
+- Topics completed
+- Topics upcoming
+- Study materials
+- Lesson resources
+- Homework
+- Assessments
+- Academic calendar
+- Teacher-shared resources
+- Academic progress where school policy permits
+
+Do not expose internal teacher notes.
+
+---
+
+# 38. PARENT PORTAL INTEGRATION
+
+Parents should see:
+
+- Child's syllabus
+- Current academic topics
+- Completed topics
+- Upcoming topics
+- Homework
+- Study materials
+- Academic progress
+- Upcoming assessments
+- Teacher-shared notices
+- Remedial support information where permitted
+
+Do not expose confidential teacher notes or internal staff comments.
+
+---
+
+# 39. PARENT/STUDENT PRIVACY
+
+Parent users must only see their authorized children.
+
+A parent must never be able to manipulate:
+
+- student ID
+- school ID
+- child relationship
+- class
+- section
+- marks
+- teacher assignments
+- academic progress
+
+from client-side requests.
+
+Verify relationships server-side.
+
+---
+
+# 40. ACADEMIC CONTENT REPOSITORY
+
+Create a centralized academic content repository.
+
+Allow searching by:
+
+- School
+- Session
+- Class
+- Subject
+- Unit
+- Chapter
+- Topic
+- Teacher
+- Resource type
+- Learning outcome
+- Keyword
+
+Use the existing search infrastructure if available.
+
+---
+
+# 41. LMS-STYLE STRUCTURE
+
+Introduce LMS-style organization without creating unnecessary duplication.
+
+Structure:
+
+Course
+→ Module
+→ Lesson
+→ Resource
+→ Activity
+→ Assignment
+→ Assessment
+
+Where possible, map:
+
+Course → Existing Class + Subject
+
+Module → Existing Unit/Chapter
+
+Lesson → Existing Lesson Plan
+
+Assignment → Existing Homework
+
+Assessment → Existing Examination/Assessment
+
+Do not duplicate existing records.
+
+Use mapping/relationship tables where necessary.
+
+---
+
+# 42. COURSE ACCESS
+
+Course access should be derived from:
+
+- School
+- Academic Session
+- Class
+- Section
+- Subject
+- Student enrollment
+- Teacher assignment
+
+Do not create a separate student enrollment database if class enrollment already exists.
+
+---
+
+# 43. ONLINE CONTENT PUBLISHING
+
+Allow teachers to publish learning content.
+
+Content status:
+
+- Draft
+- Published
+- Unpublished
+- Archived
+
+Students can only see published content they are authorized to access.
+
+---
+
+# 44. ACADEMIC ANNOUNCEMENTS
+
+Allow teachers/coordinators to publish academic announcements to:
+
+- Class
+- Section
+- Subject
+- Group
+
+Use Phase 14 communication/notification infrastructure.
+
+Do not create a separate messaging engine.
+
+---
+
+# 45. NOTIFICATION INTEGRATION
+
+Use the existing Notification System.
+
+Possible notifications:
+
+- New lesson published
+- Homework assigned
+- Assessment scheduled
+- Resource published
+- Syllabus update
+- Academic announcement
+- Remedial support assigned
+- Upcoming assessment
+- Lesson deferred
+- Curriculum published
+
+Respect notification preferences.
+
+Do not send duplicate notifications.
+
+---
+
+# 46. ACADEMIC CALENDAR INTEGRATION
+
+Integrate with Phase 15.
+
+Academic planning must recognize:
+
+- Holidays
+- Exams
+- Events
+- Meetings
+- School closures
+- Vacations
+- Special academic days
+
+Use the existing calendar as the source of truth.
+
+---
+
+# 47. MIS INTEGRATION
+
+Integrate with Phase 17 MIS.
+
+Add reports:
+
+## Curriculum Reports
+
+- Curriculum coverage
+- Curriculum version history
+- Subject curriculum report
+
+## Syllabus Reports
+
+- Class-wise syllabus progress
+- Subject-wise syllabus progress
+- Teacher-wise teaching progress
+- Planned vs actual
+- Delayed topics
+
+## Lesson Reports
+
+- Planned lessons
+- Completed lessons
+- Deferred lessons
+- Completion rate
+
+## Learning Outcome Reports
+
+- Outcome coverage
+- Outcome assessment
+- Outcome progress
+
+## Remedial Reports
+
+- Students receiving support
+- Subject-wise support
+- Support progress
+
+---
+
+# 48. ADVANCED ANALYTICS
+
+Provide analytics such as:
+
+- Planned vs actual teaching
+- Syllabus completion trend
+- Subject progress trend
+- Class progress trend
+- Learning outcome achievement
+- Homework vs academic progress
+- Assessment vs syllabus progress
+
+Do not claim causality from correlations.
+
+Example:
+
+Do NOT state:
+
+"Homework caused higher marks."
+
+Instead state:
+
+"Students with higher homework completion showed higher average assessment performance."
+
+---
+
+# 49. ACADEMIC ALERTS
+
+Create configurable academic alerts.
+
+Examples:
+
+- Syllabus significantly behind schedule
+- Too many deferred topics
+- Lesson plans missing
+- Assessment pending
+- Learning outcomes not assessed
+- Homework backlog
+- Remedial plan overdue
+
+Alerts should be configurable by school.
+
+---
+
+# 50. ACADEMIC INTERVENTION WORKFLOW
+
+Allow administrators to create intervention actions when academic progress is behind.
+
+Workflow:
+
+Identify Issue
+→ Review
+→ Action Plan
+→ Assign Responsibility
+→ Monitor
+→ Review
+→ Close
+
+Examples:
+
+- Additional class
+- Revision session
+- Teacher support
+- Resource update
+- Student remedial session
+- Parent communication
+
+Do not automatically penalize teachers or students.
+
+---
+
+# 51. CURRICULUM APPROVAL WORKFLOW
+
+Support configurable workflow:
+
+Draft
+→ Submitted
+→ Under Review
+→ Changes Requested
+→ Approved
+→ Published
+→ Archived
+
+Record:
+
+- Reviewer
+- Date
+- Comments
+- Decision
+- Version
+
+---
+
+# 52. ACADEMIC RESOURCE APPROVAL
+
+If school policy requires approval, support:
+
+Draft
+→ Review
+→ Approved
+→ Published
+
+Allow configuration:
+
+- Teacher can publish directly
+- Coordinator approval required
+- Principal approval required
+
+---
+
+# 53. SEARCH
+
+Implement global academic search.
+
+Search:
+
+- Curriculum
+- Subjects
+- Units
+- Chapters
+- Topics
+- Lesson plans
+- Resources
+- Homework
+- Assessments
+- Learning outcomes
+- Students where authorized
+
+Respect school and role boundaries.
+
+---
+
+# 54. FILTERING
+
+Provide filters:
+
+- School
+- Academic Session
+- Class
+- Section
+- Subject
+- Teacher
+- Term
+- Unit
+- Chapter
+- Topic
+- Status
+- Date range
+
+---
+
+# 55. BULK OPERATIONS
+
+Support safe bulk operations where appropriate:
+
+- Import curriculum
+- Import topics
+- Assign curriculum
+- Publish resources
+- Update topic status
+- Export academic plans
+
+Every bulk operation must:
+
+- Validate rows
+- Show errors
+- Provide preview
+- Require confirmation for important actions
+- Use transactions
+- Record audit information
+
+---
+
+# 56. CURRICULUM IMPORT
+
+Provide CSV/Excel import if the existing ERP supports spreadsheet processing.
+
+Example columns:
+
+- School
+- Academic Session
+- Class
+- Subject
+- Term
+- Unit
+- Chapter
+- Topic
+- Learning Outcome
+- Estimated Hours
+
+Provide:
+
+- Template download
+- Preview
+- Validation
+- Error report
+- Duplicate detection
+- Import confirmation
+
+Never silently overwrite existing curriculum.
+
+---
+
+# 57. EXPORT
+
+Support:
+
+- Curriculum export
+- Syllabus progress export
+- Lesson plan export
+- Teacher academic report
+- Class academic report
+- Subject report
+- Learning outcome report
+
+Use existing Export Center where available.
+
+---
+
+# 58. CERTIFICATE / DOCUMENT RELATIONSHIP
+
+If academic certificates or documents depend on academic completion data, use existing Phase 18 data.
+
+Do not create duplicate student academic records.
+
+---
+
+# 59. DATABASE DESIGN
+
+Before creating new tables, inspect existing schema.
+
+Only create entities that do not already exist.
+
+Potential entities if genuinely required:
+
+- CurriculumFramework
+- CurriculumVersion
+- CurriculumSubjectMap
+- AcademicTerm
+- CurriculumUnit
+- CurriculumChapter
+- CurriculumTopic
+- LearningOutcome
+- TopicLearningOutcome
+- LessonPlan
+- LessonPlanTemplate
+- LessonPlanResource
+- SyllabusProgress
+- AcademicResource
+- AcademicResourceAccess
+- FormativeAssessment
+- StudentLearningProgress
+- AcademicSupportPlan
+- EnrichmentPlan
+- AcademicIntervention
+- CourseMapping
+- AcademicContentPublication
+- CurriculumApproval
+- AcademicAlert
+
+Do not blindly create all of these.
+
+Use existing entities wherever possible.
+
+---
+
+# 60. DATABASE RELATIONSHIPS
+
+Ensure relationships support:
+
+School
+→ Academic Session
+→ Curriculum
+→ Class
+→ Subject
+→ Unit
+→ Chapter
+→ Topic
+→ Learning Outcome
+→ Lesson
+→ Resource
+→ Homework
+→ Assessment
+
+Also support:
+
+Student
+→ Class/Section
+→ Subject
+→ Academic Progress
+
+Teacher
+→ Subject
+→ Class/Section
+→ Lesson Plan
+→ Academic Progress
+
+---
+
+# 61. DATA INTEGRITY
+
+Add constraints where appropriate:
+
+- Unique curriculum code per school/session/version
+- Unique topic ordering
+- Valid school/session relationships
+- Valid class/subject relationships
+- Valid teacher assignment
+- No duplicate lesson plan for the same planned slot unless explicitly allowed
+- Valid resource ownership
+- Valid student access
+- Valid curriculum version
+- Valid approval state transitions
+
+---
+
+# 62. CONCURRENCY
+
+Protect against:
+
+- Two admins editing the same curriculum
+- Two teachers updating the same topic
+- Duplicate lesson creation
+- Duplicate curriculum import
+- Simultaneous publishing
+- Simultaneous approval
+
+Use:
+
+- Transactions
+- Unique constraints
+- Optimistic locking where appropriate
+- Idempotency
+
+---
+
+# 63. AUDIT LOGGING
+
+Audit important actions:
+
+- Curriculum created
+- Curriculum edited
+- Curriculum approved
+- Curriculum published
+- Curriculum archived
+- Topic created
+- Topic edited
+- Topic status changed
+- Lesson plan created
+- Lesson plan edited
+- Lesson plan published
+- Lesson completed
+- Resource uploaded
+- Resource published
+- Syllabus progress changed
+- Academic support plan created
+- Academic intervention created
+- Bulk import executed
+
+Audit record should include:
+
+- User
+- Role
+- School
+- Action
+- Entity
+- Entity ID
+- Timestamp
+- Relevant change metadata
+
+Do not store sensitive content unnecessarily.
+
+---
+
+# 64. RBAC
+
+Integrate with existing permissions.
+
+Potential permissions:
+
+- academic.view
+- academic.create
+- academic.edit
+- academic.delete
+- curriculum.view
+- curriculum.create
+- curriculum.edit
+- curriculum.approve
+- curriculum.publish
+- syllabus.view
+- syllabus.update
+- lesson.view
+- lesson.create
+- lesson.edit
+- lesson.publish
+- resource.view
+- resource.create
+- resource.publish
+- academic_reports.view
+- academic_intervention.manage
+
+Use the existing permission framework rather than creating a second RBAC system.
+
+---
+
+# 65. ROLE ACCESS
+
+Typical access:
+
+### Super Admin
+Full authorized access across schools.
+
+### School Admin
+Access to assigned school.
+
+### Principal
+Academic oversight for assigned school.
+
+### Academic Coordinator
+Curriculum, syllabus, lesson plan and academic progress management.
+
+### Teacher
+Own assigned classes/subjects and authorized academic content.
+
+### Student
+Own academic content and authorized learning resources.
+
+### Parent
+Authorized child's academic information.
+
+### Other Staff
+Only explicitly granted permissions.
+
+All authorization must be enforced server-side.
+
+---
+
+# 66. MULTI-SCHOOL ISOLATION
+
+This is mandatory.
+
+Every academic record must be scoped to the correct school.
+
+School A must never see School B's:
+
+- Curriculum
+- Subjects
+- Topics
+- Lesson plans
+- Resources
+- Student progress
+- Teacher progress
+- Academic reports
+
+Test cross-school access intentionally.
+
+Do not rely only on frontend school selectors.
+
+---
+
+# 67. MOBILE/PWA
+
+Integrate with Phase 16.
+
+Teacher mobile experience should support:
+
+- Today's lesson
+- Create lesson plan
+- Start lesson
+- Complete lesson
+- Update topic progress
+- Upload resource
+- Assign homework
+- Record formative assessment
+- View student progress
+- View timetable
+
+Student mobile experience:
+
+- View syllabus
+- View lessons
+- View resources
+- Homework
+- Assessments
+- Progress
+
+Parent mobile experience:
+
+- Child progress
+- Homework
+- Syllabus
+- Resources
+- Assessments
+
+Use touch-friendly controls.
+
+Do not create fake offline academic submissions.
+
+---
+
+# 68. PERFORMANCE
+
+Optimize for large schools.
+
+Avoid loading entire curriculum trees unnecessarily.
+
+Use:
+
+- Pagination
+- Lazy loading
+- Server-side filtering
+- Indexed queries
+- Cached read-heavy data where safe
+- Background processing for heavy exports
+- Efficient aggregation
+- Virtualized lists where appropriate
+
+Do not cache sensitive information in unsafe client-side storage.
+
+---
+
+# 69. ACCESSIBILITY
+
+Implement:
+
+- Keyboard navigation
+- Screen-reader labels
+- Accessible forms
+- Proper focus handling
+- Accessible tables
+- Accessible charts
+- Sufficient contrast
+- Touch-friendly controls
+- Error messages understandable to users
+
+Charts must have text/data alternatives.
+
+---
+
+# 70. INTERNATIONALIZATION
+
+Prepare academic content for:
+
+- English
+- Hindi
+
+Do not hardcode UI strings.
+
+Use the existing localization architecture if present.
+
+Academic content itself may remain school-configurable.
+
+---
+
+# 71. GEMINI AI INTEGRATION
+
+If Gemini integration already exists, optionally add AI-assisted academic tools.
+
+Possible features:
+
+### Lesson Plan Assistant
+
+Generate a draft based on:
+
+- Class
+- Subject
+- Topic
+- Learning outcome
+- Duration
+- Teaching methodology
+
+### Activity Suggestions
+
+Suggest:
+
+- Classroom activities
+- Discussion prompts
+- Practice activities
+- Revision ideas
+
+### Worksheet Suggestions
+
+Generate draft worksheet ideas.
+
+### Question Suggestions
+
+Suggest questions linked to topic and learning outcome.
+
+### Differentiation Suggestions
+
+Suggest:
+
+- Support activity
+- Standard activity
+- Advanced activity
+
+IMPORTANT:
+
+AI output must always be treated as a draft.
+
+Teacher/authorized user must review before publishing.
+
+AI must NOT:
+
+- Automatically publish lesson plans
+- Automatically assign final grades
+- Change official marks
+- Decide student promotion
+- Diagnose learning disabilities
+- Automatically discipline students
+- Decide teacher employment actions
+- Make admission decisions
+- Make financial decisions
+
+Minimize student personal data sent to AI services.
+
+Do not send unnecessary PII.
+
+---
+
+# 72. AI CONTENT SAFETY
+
+AI-generated content should show:
+
+"AI-generated draft — review before use."
+
+Provide:
+
+- Regenerate
+- Edit
+- Accept
+- Reject
+
+Store AI-generated content separately if necessary.
+
+Record who approved/published the final content.
+
+---
+
+# 73. FILE SECURITY
+
+For uploaded educational resources:
+
+- Validate file type
+- Validate file size
+- Secure storage
+- Authorization checks
+- Download authorization
+- School isolation
+- Malware scanning architecture if supported
+- Prevent executable uploads unless explicitly allowed
+- Prevent unsafe public URLs
+
+---
+
+# 74. ERROR HANDLING
+
+Provide professional error handling.
+
+Examples:
+
+- Invalid curriculum
+- Topic not found
+- Unauthorized teacher
+- Invalid class assignment
+- Resource upload failure
+- Duplicate lesson
+- Curriculum version conflict
+- Invalid school
+- Invalid academic session
+
+Do not expose stack traces or internal database details to users.
+
+Log technical errors securely.
+
+---
+
+# 75. API DESIGN
+
+Use existing API conventions.
+
+Create clean endpoints/services for:
+
+- Curriculum
+- Curriculum versions
+- Terms
+- Units
+- Chapters
+- Topics
+- Learning outcomes
+- Lesson plans
+- Resources
+- Syllabus progress
+- Academic support
+- Enrichment
+- Academic interventions
+- Academic analytics
+
+Validate all requests server-side.
+
+Do not expose unrestricted CRUD endpoints.
+
+---
+
+# 76. UI STRUCTURE
+
+Add navigation under:
+
+# Academic Management
+
+Possible submenu:
+
+- Academic Dashboard
+- Curriculum
+- Curriculum Versions
+- Academic Calendar
+- Subjects
+- Units & Chapters
+- Topics
+- Learning Outcomes
+- Lesson Planner
+- Syllabus Progress
+- Teaching Resources
+- Assessments
+- Academic Support
+- Enrichment
+- Academic Interventions
+- Academic Reports
+- Academic Settings
+
+For teachers:
+
+# My Academic Workspace
+
+- Today's Lessons
+- Lesson Plans
+- My Syllabus
+- Resources
+- Homework
+- Assessments
+- Student Progress
+- Academic Support
+
+For students:
+
+# Learning
+
+- My Courses
+- Syllabus
+- Lessons
+- Resources
+- Homework
+- Assessments
+- Progress
+
+For parents:
+
+# Child Learning
+
+- Syllabus
+- Lessons
+- Homework
+- Resources
+- Assessments
+- Progress
+
+---
+
+# 77. DASHBOARD UX
+
+Use professional cards, charts, filters and tables.
+
+Do not overcrowd the screen.
+
+Use:
+
+- Summary cards
+- Progress bars
+- Charts
+- Tables
+- Drill-down drawers/pages
+- Status badges
+- Timeline views
+- Calendar views
+
+Maintain existing ERP design language.
+
+---
+
+# 78. RESPONSIVE DESIGN
+
+All new pages must work on:
+
+- Mobile
+- Tablet
+- Laptop
+- Desktop
+- Large screens
+
+Do not create desktop-only academic management screens.
+
+---
+
+# 79. SECURITY TESTING
+
+Test:
+
+- Unauthorized curriculum access
+- Cross-school access
+- Cross-class access
+- Cross-teacher access
+- Parent viewing another child
+- Student viewing another student
+- Unauthorized resource download
+- Unauthorized syllabus modification
+- Unauthorized curriculum approval
+- Unauthorized publishing
+- IDOR vulnerabilities
+- API manipulation
+- Bulk import authorization
+- File upload abuse
+
+---
+
+# 80. TESTING REQUIREMENTS
+
+Implement:
+
+### Unit Tests
+
+For:
+
+- Curriculum calculations
+- Syllabus percentage
+- Progress calculation
+- Permission checks
+- Topic status transitions
+- Versioning
+- Duplicate prevention
+
+### Integration Tests
+
+Test:
+
+- Curriculum + class
+- Curriculum + subject
+- Lesson + timetable
+- Lesson + homework
+- Lesson + assessment
+- Resource + portal
+- Progress + MIS
+- Notifications
+
+### End-to-End Tests
+
+Test complete academic workflow.
+
+---
+
+# 81. REQUIRED END-TO-END ACCEPTANCE TEST
+
+Perform this workflow:
+
+1. Create academic session.
+2. Create curriculum framework.
+3. Create curriculum version.
+4. Add Class 6.
+5. Map Mathematics.
+6. Create Term 1.
+7. Create Unit.
+8. Create Chapter.
+9. Create Topics.
+10. Create learning outcomes.
+11. Approve curriculum.
+12. Publish curriculum.
+13. Assign teacher.
+14. Open teacher timetable.
+15. Create lesson plan.
+16. Map topic.
+17. Map learning outcomes.
+18. Add teaching resources.
+19. Publish lesson.
+20. Complete lesson.
+21. Update syllabus progress.
+22. Assign homework.
+23. Conduct formative assessment.
+24. Link assessment to learning outcome.
+25. Update student progress.
+26. Identify student needing academic support.
+27. Create remedial plan.
+28. Create enrichment activity for another student.
+29. Verify student portal.
+30. Verify parent portal.
+31. Verify teacher portal.
+32. Verify academic coordinator dashboard.
+33. Verify principal dashboard.
+34. Verify MIS reports.
+35. Verify notification flow.
+36. Verify audit logs.
+37. Verify School B cannot access School A data.
+38. Verify mobile responsiveness.
+
+All steps must work using real application data.
+
+---
+
+# 82. REGRESSION TESTING
+
+After implementing Phase 21, verify that these existing modules still work:
+
+- Authentication
+- RBAC
+- Schools
+- Academic sessions
+- Students
+- Parents
+- Admissions
+- Teachers
+- Staff
+- Attendance
+- Fees
+- Accounts
+- Exams
+- Results
+- Timetable
+- Homework
+- Transport
+- Library
+- Hostel
+- HR
+- Inventory
+- Communication
+- Administration
+- Events
+- MIS
+- Student Lifecycle
+- Certificates
+- Parent Portal
+- Student Portal
+- Teacher Portal
+- Mobile/PWA
+
+Do not mark Phase 21 complete if previous modules are broken.
+
+---
+
+# 83. DATABASE MIGRATION REQUIREMENTS
+
+Create safe migrations.
+
+Before migration:
+
+- Inspect existing schema.
+- Detect existing tables.
+- Detect existing columns.
+- Detect existing relationships.
+- Avoid duplicate structures.
+
+Migration must:
+
+- Be reversible where practical.
+- Preserve existing records.
+- Add indexes where necessary.
+- Add foreign keys carefully.
+- Avoid destructive operations.
+- Support existing data.
+
+---
+
+# 84. PRODUCTION READINESS
+
+Before completion:
+
+Run:
+
+- TypeScript typecheck
+- Lint
+- Unit tests
+- Integration tests
+- End-to-end tests
+- Database migration validation
+- Production build
+- Security checks
+- Permission checks
+- Multi-school isolation tests
+- Mobile responsive tests
+
+Fix all critical errors.
+
+Do not leave TODO placeholders for core Phase 21 functionality.
+
+---
+
+# 85. CODE QUALITY
+
+Use:
+
+- Strong TypeScript types
+- Reusable components
+- Service-layer separation
+- Validation schemas
+- Proper error handling
+- Secure API patterns
+- Reusable academic utilities
+- Clear naming
+- No unnecessary duplication
+
+Avoid:
+
+- giant components
+- duplicated business logic
+- hardcoded IDs
+- unsafe casts
+- unnecessary dependencies
+- fake API responses
+- fake progress
+- fake AI responses
+
+---
+
+# 86. NO MOCK DATA IN PRODUCTION
+
+Do not create fake academic records and present them as real.
+
+If test fixtures are required:
+
+- Keep them separate.
+- Clearly label them.
+- Never seed them into production automatically.
+
+---
+
+# 87. IMPLEMENTATION ORDER
+
+Implement in this order:
+
+### Step 1
+Inspect existing ERP.
+
+### Step 2
+Design academic data model.
+
+### Step 3
+Create safe database migrations.
+
+### Step 4
+Implement curriculum framework.
+
+### Step 5
+Implement curriculum versioning.
+
+### Step 6
+Implement units, chapters and topics.
+
+### Step 7
+Implement learning outcomes.
+
+### Step 8
+Implement syllabus planning.
+
+### Step 9
+Implement lesson planning.
+
+### Step 10
+Integrate timetable.
+
+### Step 11
+Implement academic resources.
+
+### Step 12
+Integrate homework.
+
+### Step 13
+Integrate examinations/assessments.
+
+### Step 14
+Implement learning progress.
+
+### Step 15
+Implement remedial/enrichment plans.
+
+### Step 16
+Implement academic dashboards.
+
+### Step 17
+Integrate Teacher Portal.
+
+### Step 18
+Integrate Student Portal.
+
+### Step 19
+Integrate Parent Portal.
+
+### Step 20
+Integrate Notifications.
+
+### Step 21
+Integrate MIS.
+
+### Step 22
+Add optional Gemini AI assistance.
+
+### Step 23
+Implement security and audit verification.
+
+### Step 24
+Run regression tests.
+
+### Step 25
+Run production build.
+
+---
+
+# 88. FINAL DELIVERABLES
+
+At completion provide an implementation report containing:
+
+## Implemented
+
+List every Phase 21 feature actually implemented.
+
+## Database Changes
+
+List:
+
+- New tables
+- Extended tables
+- New fields
+- New indexes
+- New relationships
+- Migration names
+
+## APIs
+
+List new/updated endpoints or server actions.
+
+## Permissions
+
+List new permissions.
+
+## Integrations
+
+List integration points with:
+
+- Timetable
+- Homework
+- Examination
+- Teacher Portal
+- Student Portal
+- Parent Portal
+- Communication
+- MIS
+- Calendar
+- File storage
+
+## AI Features
+
+Clearly identify:
+
+- Implemented AI features
+- Configuration required
+- Human approval requirements
+
+## Testing
+
+Report:
+
+- Typecheck
+- Lint
+- Unit tests
+- Integration tests
+- E2E tests
+- Security tests
+- Multi-school tests
+- Mobile tests
+- Production build
+
+## Known Limitations
+
+Clearly list anything not implemented.
+
+Do not claim incomplete features as complete.
+
+---
+
+# 89. FINAL QUALITY STANDARD
+
+The completed Phase 21 should feel like a professional modern school academic management and LMS platform rather than a collection of disconnected CRUD pages.
+
+The complete academic lifecycle should work:
+
+Academic Session
+→ Curriculum
+→ Subject
+→ Unit
+→ Chapter
+→ Topic
+→ Learning Outcome
+→ Lesson Plan
+→ Teaching Resource
+→ Classroom Delivery
+→ Syllabus Progress
+→ Homework
+→ Assessment
+→ Student Progress
+→ Remedial/Enrichment
+→ Parent/Student Visibility
+→ MIS Analytics
+
+Everything must remain integrated with the existing School ERP.
+
+The system must be:
+
+- Secure
+- Multi-school
+- Role-based
+- Mobile-friendly
+- Scalable
+- Auditable
+- Production-ready
+- Maintainable
+- Accessible
+- Data-consistent
+
+Most importantly:
+
+**DO NOT REBUILD THE EXISTING ERP. EXTEND IT.**
+
+**DO NOT CREATE DUPLICATE SYSTEMS. INTEGRATE WITH EXISTING MODULES.**
+
+**DO NOT DELETE OR RESET EXISTING DATA.**
+
+**DO NOT USE FAKE PRODUCTION DATA OR FAKE INTEGRATIONS.**
+
+**DO NOT CLAIM COMPLETION UNTIL THE FEATURES ACTUALLY WORK.**

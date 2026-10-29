@@ -1,0 +1,2437 @@
+# PHASE 19 — ADVANCED PARENT & STUDENT PORTAL + ONLINE SCHOOL SERVICES
+
+## IMPORTANT CONTEXT
+
+This is PHASE 19 of an already-developed, production-oriented, multi-school School ERP.
+
+DO NOT create a new application.
+
+DO NOT rebuild the ERP from scratch.
+
+DO NOT create a second Parent Portal or Student Portal.
+
+DO NOT duplicate existing modules.
+
+You must first inspect the existing codebase, database schema, authentication system, RBAC, school isolation, Student Management, Parent Management, Admissions, Attendance, Fees, Examination, Homework, Timetable, Transport, Hostel, Library, HR, Communication, Administration, Student Lifecycle, Certificate Management, Mobile/PWA and MIS modules.
+
+Then extend the existing architecture.
+
+Reuse existing:
+
+- Student records
+- Parent/Guardian records
+- User accounts
+- Authentication
+- Roles and permissions
+- School relationships
+- Academic sessions
+- Attendance
+- Fees & Accounts
+- Examination & Results
+- Homework
+- Timetable
+- Transport
+- Hostel
+- Library
+- Communication
+- Student Documents
+- Certificates
+- Student Lifecycle
+- Notifications
+- Reports
+- File storage
+- Audit logs
+- Mobile/PWA architecture
+
+Do not introduce duplicate databases or parallel business logic.
+
+---
+
+# 1. PRIMARY OBJECTIVE
+
+Transform the existing Parent and Student portals into a professional:
+
+## Digital School Portal + Online School Services Platform
+
+The portal should provide a unified digital experience for:
+
+### Parents/Guardians
+
+### Students
+
+### Teachers where applicable
+
+### School Administrators
+
+The portal must allow authorized users to access school services, academic information, documents, communication, payments, requests, applications and school activities from one place.
+
+The system must be:
+
+- Mobile-first
+- Secure
+- Multi-school
+- Role-based
+- Accessible
+- Fast
+- Easy to use
+- Production-ready
+
+---
+
+# 2. PORTAL ARCHITECTURE
+
+Do not create separate unrelated portals.
+
+Use a common portal architecture with role-aware experiences.
+
+Example:
+
+/portal
+
+/portal/parent
+
+/portal/student
+
+The actual route structure should follow the existing application's architecture.
+
+The system should determine the user's role and permitted resources server-side.
+
+Never trust URL parameters alone for authorization.
+
+---
+
+# 3. PARENT PORTAL DASHBOARD
+
+Create a comprehensive parent dashboard.
+
+Show:
+
+- Parent profile
+- Children
+- School
+- Academic session
+- Current class
+- Section
+- Attendance
+- Fees
+- Homework
+- Upcoming exams
+- Recent results
+- Timetable
+- School notices
+- Messages
+- Notifications
+- Transport
+- Hostel if applicable
+- Library
+- Certificates
+- Documents
+- Service requests
+- Events
+- Appointments
+- Leave requests
+- Important alerts
+
+Use cards and summarized information.
+
+Every card must link to the actual existing module.
+
+Do not create fake dashboard numbers.
+
+---
+
+# 4. MULTI-CHILD PARENT ACCOUNT
+
+A parent may have multiple children.
+
+Implement a secure:
+
+## Child Switcher
+
+Example:
+
+Child 1 — Class 5-A
+
+Child 2 — Class 8-B
+
+Child 3 — Class 10-A
+
+When switching children:
+
+- All child-specific data must change
+- Attendance must change
+- Fees must change
+- Homework must change
+- Results must change
+- Timetable must change
+- Documents must change
+- Transport must change
+- Hostel must change
+- Certificates must change
+- Requests must change
+
+Never allow a parent to manually modify a student ID in the URL to access another student.
+
+Server-side parent-student relationship validation is mandatory.
+
+---
+
+# 5. PARENT PROFILE
+
+Allow parents to view and, where permitted, update:
+
+- Name
+- Phone
+- Email
+- Address
+- Occupation
+- Emergency contact
+- Relationship with student
+- Profile photo
+
+Sensitive or official fields may require school approval.
+
+Create:
+
+Profile Update Request
+
+workflow where appropriate.
+
+Do not immediately overwrite verified information if approval is required.
+
+---
+
+# 6. FAMILY PROFILE
+
+Create a family-level view where appropriate.
+
+Show:
+
+- Parent/guardian information
+- Children
+- Emergency contacts
+- Authorized pickup persons
+- Communication preferences
+- Billing relationships where configured
+
+Do not expose information belonging to unrelated students/families.
+
+---
+
+# 7. STUDENT PORTAL DASHBOARD
+
+Create a student-focused dashboard.
+
+Show:
+
+- Student profile
+- Class
+- Section
+- Attendance
+- Timetable
+- Homework
+- Study materials
+- Upcoming exams
+- Results
+- Certificates
+- Documents
+- Notices
+- Messages
+- Events
+- Library
+- Transport
+- Hostel if applicable
+- Service requests
+- Notifications
+
+The student should only see information allowed by school policy and role permissions.
+
+---
+
+# 8. STUDENT PROFILE
+
+Allow students to view:
+
+- Name
+- Admission number
+- Class
+- Section
+- Roll number
+- Academic session
+- House if configured
+- Profile photo
+- Basic permitted personal information
+- Academic history
+- Certificates
+- Lifecycle history where appropriate
+
+Do not expose sensitive administrative information unnecessarily.
+
+---
+
+# 9. ATTENDANCE PORTAL
+
+Integrate with the existing Attendance module.
+
+Parent/student should be able to view:
+
+- Today's attendance
+- Monthly attendance
+- Attendance percentage
+- Present
+- Absent
+- Late
+- Half-day where supported
+- Leave
+- Attendance calendar
+
+Allow filters:
+
+- Date range
+- Academic session
+- Month
+
+Do not allow parents/students to edit attendance.
+
+---
+
+# 10. ABSENCE INFORMATION
+
+Where supported by existing attendance workflows, display:
+
+- Date
+- Status
+- Subject/period where available
+- Reason if recorded
+- Remarks
+
+If the school supports absence notifications, integrate with Phase 14.
+
+Do not generate false attendance alerts.
+
+---
+
+# 11. LEAVE REQUESTS
+
+Integrate with existing leave functionality.
+
+Parents/students may submit:
+
+- Leave request
+- Date from
+- Date to
+- Reason
+- Supporting document
+- Emergency leave where configured
+
+Workflow:
+
+Draft
+
+→ Submitted
+
+→ Under Review
+
+→ Approved
+
+or
+
+→ Rejected
+
+Show:
+
+- Request status
+- Approval date
+- Reviewer
+- Remarks
+
+---
+
+# 12. FEE PORTAL
+
+Integrate completely with the existing Fees & Accounts module.
+
+Parents should be able to view:
+
+- Fee summary
+- Total fee
+- Paid
+- Outstanding
+- Upcoming installments
+- Late fees
+- Concessions
+- Scholarships
+- Advance balance
+- Payment history
+- Receipts
+
+Do not create a new payment ledger.
+
+---
+
+# 13. ONLINE FEE PAYMENT
+
+If an online payment gateway is configured, allow:
+
+- Pay now
+- Select installment
+- Partial payment if permitted
+- Payment confirmation
+- Receipt generation
+
+Use the existing payment infrastructure.
+
+Implement:
+
+- Idempotency
+- Duplicate payment prevention
+- Secure callback validation
+- Transaction status handling
+
+Never mark a payment as successful only because the frontend says it succeeded.
+
+---
+
+# 14. FEE RECEIPTS
+
+Allow parents to:
+
+- View receipts
+- Download receipts
+- Print receipts
+
+Receipt data must come from the existing Fees & Accounts module.
+
+Do not create duplicate receipt numbers.
+
+---
+
+# 15. EXAMINATION PORTAL
+
+Integrate with the existing Examination module.
+
+Parents/students should be able to view:
+
+- Exam schedule
+- Exam timetable
+- Subjects
+- Exam date
+- Exam time
+- Room/venue if configured
+- Results
+- Marks
+- Grades
+- Percentage
+- Result status
+- Report card
+- Teacher remarks where permitted
+
+Do not expose draft/unpublished results.
+
+---
+
+# 16. RESULT ACCESS CONTROL
+
+Only show results after the existing examination workflow marks them as:
+
+Published
+
+or another configured final status.
+
+Never expose:
+
+- Draft marks
+- Unapproved marks
+- Internal review notes
+- Teacher-only information
+
+---
+
+# 17. REPORT CARD PORTAL
+
+Allow parents/students to:
+
+- View report cards
+- Download PDF
+- Print report cards
+
+Use the existing report-card generation system.
+
+Do not generate duplicate academic records.
+
+---
+
+# 18. HOMEWORK PORTAL
+
+Integrate with Phase 8.
+
+Parents/students should see:
+
+- Homework
+- Subject
+- Teacher
+- Assigned date
+- Due date
+- Description
+- Attachments
+- Submission status
+- Evaluation
+- Teacher feedback
+
+Students should be able to submit homework where supported.
+
+---
+
+# 19. HOMEWORK SUBMISSION
+
+Support:
+
+- Text response
+- File upload
+- Image upload
+- Multiple attachments where configured
+
+Show:
+
+- Submitted
+- Late
+- Returned
+- Evaluated
+
+Do not allow students to modify submissions after the configured deadline unless the teacher/school allows it.
+
+---
+
+# 20. STUDY MATERIALS
+
+Integrate with the existing learning-resource functionality.
+
+Allow students to access:
+
+- PDFs
+- Documents
+- Presentations
+- Images
+- Learning resources
+- Teacher-uploaded materials
+
+Use secure file access.
+
+Do not expose private files publicly.
+
+---
+
+# 21. TIMETABLE PORTAL
+
+Integrate with the existing timetable module.
+
+Parent/student views:
+
+- Daily timetable
+- Weekly timetable
+- Subject
+- Teacher
+- Room
+- Period
+- Start time
+- End time
+
+Show substitutions where the existing system has published substitution information.
+
+---
+
+# 22. SCHOOL CALENDAR
+
+Integrate with Phase 15.
+
+Show:
+
+- Holidays
+- Exams
+- Events
+- Meetings
+- School activities
+- Important dates
+- Academic calendar
+
+Allow filtering by:
+
+- Month
+- Event type
+
+---
+
+# 23. SCHOOL NOTICE BOARD
+
+Integrate with Phase 14 Communication.
+
+Show:
+
+- Announcements
+- Circulars
+- Notices
+- Important instructions
+- Attachments
+
+Allow:
+
+- Read
+- Download
+- Acknowledge where required
+
+Track acknowledgement where configured.
+
+---
+
+# 24. COMMUNICATION CENTER
+
+Create a unified communication center.
+
+Integrate with the existing Communication module.
+
+Parent/student should be able to access:
+
+- School announcements
+- Teacher communication
+- Messages
+- Conversations
+- Notifications
+- Circulars
+- Emergency broadcasts
+- Feedback
+
+Do not build a second messaging engine.
+
+---
+
+# 25. PARENT-TEACHER COMMUNICATION
+
+Where permitted, allow parents to communicate with authorized teachers.
+
+Support:
+
+- Conversation
+- Message
+- Attachment where permitted
+- Read status
+- Reply
+- Notification
+
+Apply school policies and teacher availability rules.
+
+Do not expose teachers' personal phone numbers unless explicitly configured.
+
+---
+
+# 26. TEACHER COMMUNICATION CONTROLS
+
+Teachers should only be able to communicate with:
+
+- Assigned students
+- Assigned parents
+- Relevant classes/sections
+
+Teachers must not be able to search or contact unrelated families.
+
+---
+
+# 27. NOTIFICATION CENTER
+
+Integrate with Phase 14.
+
+Display:
+
+- Attendance alerts
+- Fee reminders
+- Exam announcements
+- Result publication
+- Homework
+- Transport alerts
+- Hostel alerts
+- Library reminders
+- Certificate updates
+- Service request updates
+- Event reminders
+- Administrative notices
+
+Support:
+
+- Read/unread
+- Mark all as read
+- Notification categories
+
+---
+
+# 28. NOTIFICATION PREFERENCES
+
+Allow users to configure preferences where school policy permits:
+
+- In-app
+- Email
+- SMS
+- Push notification
+
+Do not disable mandatory/emergency school notifications where policy requires them.
+
+Use existing provider abstractions.
+
+Do not fake delivery.
+
+---
+
+# 29. TRANSPORT PORTAL
+
+Integrate with Phase 9.
+
+Parents should be able to view:
+
+- Transport enrollment
+- Route
+- Stop
+- Pickup time
+- Drop time
+- Vehicle
+- Driver information where permitted
+- Conductor information where permitted
+- Transport fee status
+- Transport notices
+
+Do not expose private driver information unnecessarily.
+
+---
+
+# 30. TRANSPORT TRACKING
+
+If a real GPS provider is configured, show authorized live/near-live transport information.
+
+If GPS is not configured:
+
+DO NOT create fake vehicle locations.
+
+Instead show:
+
+"Live tracking is not currently available."
+
+Use a provider abstraction for future integration.
+
+---
+
+# 31. HOSTEL PORTAL
+
+For hostel students, integrate with Phase 11.
+
+Parents should see:
+
+- Hostel
+- Block
+- Room
+- Bed
+- Hostel attendance
+- Leave requests
+- Outing information
+- Visitor information where appropriate
+- Hostel notices
+- Hostel fee status
+- Important alerts
+
+Students should see their own hostel information according to permissions.
+
+---
+
+# 32. LIBRARY PORTAL
+
+Integrate with Phase 10.
+
+Show:
+
+- Borrowed books
+- Due dates
+- Overdue books
+- Fines
+- Reservations
+- Book history
+- Available books where catalog search is enabled
+
+Allow reservations where supported.
+
+Do not create another library system.
+
+---
+
+# 33. STUDENT DOCUMENT CENTER
+
+Integrate with Phase 18.
+
+Parents/students should be able to access permitted:
+
+- Student documents
+- Certificates
+- Report cards
+- Approved records
+- Generated certificates
+
+Parents should be able to:
+
+- Upload requested documents
+- Replace rejected documents
+- Check verification status
+
+Students should only access documents permitted by school policy.
+
+---
+
+# 34. CERTIFICATE REQUEST CENTER
+
+Integrate with Phase 18.
+
+Parents/students should be able to request:
+
+- Bonafide Certificate
+- Character Certificate
+- Study Certificate
+- Fee Certificate
+- Attendance Certificate
+- Other configured certificates
+- TC where allowed
+
+Show:
+
+- Request number
+- Request type
+- Request date
+- Status
+- Fee
+- Approval
+- Generated document
+- Download
+
+Do not create another certificate engine.
+
+---
+
+# 35. TRANSFER CERTIFICATE REQUEST
+
+Allow authorized parent/student workflows for TC request.
+
+Show:
+
+- Request status
+- Clearance status
+- Pending department
+- Fee status
+- Approval status
+- TC generated
+- TC issued
+
+Never allow the portal user to bypass administrative approval.
+
+---
+
+# 36. ONLINE SCHOOL SERVICE CENTER
+
+Create a central:
+
+## School Services
+
+section.
+
+Possible services:
+
+- Bonafide Certificate
+- Character Certificate
+- Study Certificate
+- Fee Certificate
+- Attendance Certificate
+- ID Card request
+- Document correction
+- Profile correction
+- TC request
+- Duplicate certificate
+- Other configurable school services
+
+The school administrator should be able to enable/disable services.
+
+---
+
+# 37. PROFILE CORRECTION REQUEST
+
+Parents/students may request corrections to selected information.
+
+Example:
+
+- Name spelling
+- Parent name
+- Address
+- Date of birth
+- Contact details
+
+Workflow:
+
+Request
+
+→ Verification
+
+→ Approval
+
+→ Update
+
+→ Audit
+
+For critical fields such as date of birth, require supporting documentation where configured.
+
+Do not directly overwrite sensitive master data.
+
+---
+
+# 38. ONLINE APPOINTMENT SYSTEM
+
+Integrate with Phase 15.
+
+Parents should be able to:
+
+- View available appointment slots
+- Select department/person
+- Select date
+- Select time
+- Provide purpose
+- Submit request
+- Receive confirmation
+- Cancel/reschedule where permitted
+
+Support:
+
+- Principal
+- Class teacher
+- Accounts
+- Administration
+- Counselor
+- Transport
+- Hostel
+- Other configurable departments
+
+Do not allow double booking.
+
+---
+
+# 39. APPOINTMENT STATUS
+
+Support:
+
+- Requested
+- Confirmed
+- Rescheduled
+- Completed
+- Cancelled
+- No Show
+
+Send notifications through Phase 14.
+
+---
+
+# 40. EVENT REGISTRATION
+
+Integrate with Phase 15.
+
+Parents/students should be able to:
+
+- View events
+- Register
+- Cancel registration where permitted
+- View event details
+- View venue
+- View date/time
+- View participants where permitted
+
+Support configurable capacity.
+
+Prevent duplicate registrations.
+
+---
+
+# 41. EVENT ATTENDANCE
+
+Where configured:
+
+- QR/event code
+- Registration verification
+- Attendance marking
+
+Do not create a fake attendance record.
+
+Integrate with the existing event attendance system.
+
+---
+
+# 42. POLLS AND SURVEYS
+
+Integrate with Phase 14.
+
+Parents/students may receive:
+
+- Surveys
+- Feedback forms
+- Polls
+- School satisfaction surveys
+- Event feedback
+
+Support:
+
+- Start/end date
+- Audience
+- One response per user where configured
+- Anonymous surveys where configured
+
+Do not expose anonymous responses with identifying information.
+
+---
+
+# 43. GRIEVANCE / COMPLAINT CENTER
+
+Integrate with the Communication/Administration architecture.
+
+Allow authorized users to submit:
+
+- Complaint
+- Grievance
+- Suggestion
+- Safety concern
+- Academic concern
+- Fee concern
+- Transport concern
+- Hostel concern
+- Other category
+
+Workflow:
+
+Submitted
+
+→ Assigned
+
+→ Under Review
+
+→ Action Required
+
+→ Resolved
+
+→ Closed
+
+Maintain confidentiality based on issue type.
+
+---
+
+# 44. GRIEVANCE TRACKING
+
+Show:
+
+- Ticket number
+- Category
+- Date
+- Status
+- Assigned department
+- Response
+- Resolution
+- Closure date
+
+Do not expose internal investigation notes to parents/students unless explicitly configured.
+
+---
+
+# 45. EMERGENCY INFORMATION
+
+Provide a clearly visible emergency section.
+
+Show only authorized information such as:
+
+- School emergency contact
+- School address
+- Emergency phone number
+- Emergency instructions
+- Transport emergency contact where configured
+
+Do not expose private staff information.
+
+---
+
+# 46. SCHOOL DIRECTORY
+
+Create a controlled directory.
+
+Possible entries:
+
+- School office
+- Principal
+- Academic office
+- Accounts office
+- Transport office
+- Hostel office
+- Library
+- Reception
+
+Only publish information configured by school administrators.
+
+Do not expose personal contact information without permission.
+
+---
+
+# 47. DIGITAL ID CARD
+
+Integrate with existing Student/Staff identity architecture where possible.
+
+Allow students/parents to view:
+
+- Student photo
+- Name
+- Admission number
+- Class
+- Section
+- School
+- Validity
+
+If QR functionality is used, make it secure and non-guessable.
+
+Do not expose sensitive student information through QR.
+
+---
+
+# 48. DIGITAL SCHOOL CALENDAR
+
+Create a mobile-friendly calendar.
+
+Display:
+
+- Classes
+- Exams
+- Homework deadlines
+- Holidays
+- Events
+- Meetings
+- Appointments
+- Certificate deadlines
+- Fee due dates
+
+Allow users to tap an item for details.
+
+---
+
+# 49. PERSONALIZED HOME DASHBOARD
+
+Dashboard widgets must be role-aware.
+
+Parent:
+
+- Children
+- Attendance
+- Fees
+- Homework
+- Results
+- Notices
+- Requests
+
+Student:
+
+- Timetable
+- Homework
+- Exams
+- Results
+- Attendance
+- Learning materials
+
+Do not show widgets the user has no permission to access.
+
+---
+
+# 50. PORTAL SEARCH
+
+Create secure portal search.
+
+Search:
+
+- Notices
+- Homework
+- Study materials
+- Events
+- Certificates
+- Service requests
+- Messages
+
+Student-specific searches must remain limited to the authenticated student.
+
+Parent searches must remain limited to authorized children.
+
+---
+
+# 51. GLOBAL PORTAL NOTIFICATION BADGES
+
+Support badges for:
+
+- Unread notifications
+- Pending homework
+- Unread messages
+- Pending fees
+- Pending requests
+- New results
+- New notices
+
+Do not make excessive database calls.
+
+Use optimized unread counts.
+
+---
+
+# 52. MOBILE-FIRST DESIGN
+
+This Phase must fully use Phase 16.
+
+Optimize for:
+
+- Android phones
+- iPhones
+- Tablets
+- Desktop
+
+Important mobile features:
+
+- Bottom navigation where appropriate
+- Mobile dashboard cards
+- Swipe-friendly interfaces
+- Touch targets
+- Mobile file uploads
+- Camera document capture where supported
+- Responsive tables
+- Mobile forms
+- Mobile notifications
+- Mobile PDF viewing
+
+Do not create a separate mobile application unless the existing architecture explicitly requires one.
+
+---
+
+# 53. PWA INTEGRATION
+
+Use the existing PWA implementation.
+
+Support where technically available:
+
+- Installable portal
+- App icon
+- Splash screen
+- Safe caching
+- Push notifications
+- Offline informational pages
+
+Do not cache sensitive private data in insecure browser storage.
+
+Do not create fake offline submissions.
+
+---
+
+# 54. OFFLINE EXPERIENCE
+
+If the device is offline:
+
+Clearly show:
+
+"You're offline."
+
+Allow access only to safely cached non-sensitive content where appropriate.
+
+For operations requiring the server:
+
+- Disable submission
+- Show connection status
+- Retry safely when connection returns
+
+Do not pretend that a request was submitted if it was not.
+
+---
+
+# 55. PORTAL SECURITY
+
+Implement:
+
+- Secure authentication
+- Session management
+- Authorization
+- School isolation
+- Student-parent relationship checks
+- CSRF protection where applicable
+- Rate limiting
+- Secure cookies
+- Input validation
+- Output encoding
+- File validation
+- Secure downloads
+
+Never trust:
+
+- Student ID
+- Parent ID
+- School ID
+- Certificate ID
+- Request ID
+
+provided by the client.
+
+Resolve ownership server-side.
+
+---
+
+# 56. PARENT-CHILD AUTHORIZATION
+
+This is critical.
+
+When a parent accesses a child record:
+
+Verify server-side:
+
+Parent User
+
+→ Parent/Guardian record
+
+→ Student relationship
+
+→ School relationship
+
+→ Requested resource
+
+Only then return data.
+
+Prevent IDOR attacks.
+
+---
+
+# 57. STUDENT AUTHORIZATION
+
+Student users must only access their own:
+
+- Profile
+- Attendance
+- Results
+- Homework
+- Documents
+- Certificates
+- Requests
+- Messages
+- Fees where configured
+
+Never allow:
+
+Student A → Student B data.
+
+---
+
+# 58. SCHOOL ISOLATION
+
+A user from School A must never access School B portal data.
+
+Test:
+
+- Dashboard
+- Student data
+- Fees
+- Results
+- Documents
+- Certificates
+- Messages
+- Notifications
+- Requests
+- Events
+- Transport
+- Hostel
+- Library
+
+Enforce isolation server-side.
+
+---
+
+# 59. PORTAL USER MANAGEMENT
+
+Administrators should be able to:
+
+- Invite parent users
+- Activate/deactivate portal access
+- Reset access
+- Link parent to student
+- Remove incorrect relationship
+- View login status
+- View last login
+- Revoke sessions where supported
+
+Do not create duplicate parent records.
+
+---
+
+# 60. ACCOUNT ACTIVATION
+
+Support secure activation.
+
+Possible flow:
+
+School creates parent relationship
+
+→ Parent receives invitation
+
+→ Parent verifies identity/contact
+
+→ Sets password
+
+→ Accepts terms
+
+→ Portal activated
+
+Do not activate accounts based only on an unverified email/phone.
+
+Use the existing authentication infrastructure.
+
+---
+
+# 61. PASSWORD AND SESSION SECURITY
+
+Use the existing authentication system.
+
+Support:
+
+- Password reset
+- Session expiry
+- Logout from current device
+- Logout from all devices where supported
+- Optional MFA architecture
+- Login notifications where configured
+
+Do not build a separate authentication system.
+
+---
+
+# 62. PRIVACY SETTINGS
+
+Allow users to manage permitted preferences such as:
+
+- Notification preferences
+- Language if supported
+- Theme if supported
+- Time format
+- Accessibility preferences
+
+School-required settings cannot be disabled.
+
+---
+
+# 63. LANGUAGE SUPPORT ARCHITECTURE
+
+Prepare the portal for localization.
+
+At minimum, structure UI text so it can later support:
+
+- English
+- Hindi
+
+Do not hardcode user-facing strings throughout the application if the existing architecture supports internationalization.
+
+Do not translate database values automatically.
+
+---
+
+# 64. ACCESSIBILITY
+
+Ensure:
+
+- Keyboard navigation
+- Screen reader compatibility
+- Proper labels
+- Focus states
+- Accessible buttons
+- Accessible forms
+- Accessible modals
+- Accessible tables
+- Clear errors
+- Sufficient contrast
+
+---
+
+# 65. PORTAL DOCUMENT SECURITY
+
+All private documents must use authorized secure access.
+
+Do not expose:
+
+- Storage bucket paths
+- Internal file IDs
+- Direct public private URLs
+
+Every download must validate:
+
+- User
+- Role
+- School
+- Student relationship
+- Document permission
+
+---
+
+# 66. PORTAL REPORTING
+
+Integrate with Phase 17.
+
+Track aggregate portal analytics such as:
+
+- Active parent users
+- Active student users
+- Portal logins
+- Fee payment usage
+- Certificate requests
+- Document uploads
+- Homework submissions
+- Appointment requests
+- Event registrations
+- Communication engagement
+- Notification read rates
+
+Do not collect unnecessary personal tracking data.
+
+---
+
+# 67. ADMIN PORTAL ANALYTICS
+
+Create an administrator portal analytics section.
+
+Show:
+
+- Total portal users
+- Active parents
+- Active students
+- New registrations
+- Login trends
+- Pending service requests
+- Pending document verification
+- Pending certificates
+- Unread communication
+- Online payment usage
+- Portal engagement
+
+Use existing MIS infrastructure.
+
+---
+
+# 68. ONLINE SERVICE CONFIGURATION
+
+Administrators should be able to configure:
+
+- Available services
+- Service description
+- Required fields
+- Required documents
+- Processing fee
+- Approval workflow
+- Expected processing time
+- Responsible department
+- Notification template
+- Enabled/disabled status
+
+Do not build a completely separate workflow engine if an existing workflow system can be extended.
+
+---
+
+# 69. SERVICE REQUEST NUMBERING
+
+Generate unique request numbers.
+
+Example:
+
+SR-2026-000001
+
+Use school-aware sequences where appropriate.
+
+Prevent duplicate request numbers during concurrent submissions.
+
+---
+
+# 70. REQUEST FEES
+
+If a service has a fee:
+
+Use existing Fees & Accounts/payment infrastructure.
+
+Example:
+
+Bonafide Certificate
+
+Service Fee: ₹50
+
+Payment
+
+→ Receipt
+
+→ Request processing
+
+Do not create an independent payment ledger.
+
+---
+
+# 71. NOTIFICATION WORKFLOW
+
+For each service request:
+
+Submitted
+
+→ Notify responsible department
+
+Approved
+
+→ Notify requester
+
+Rejected
+
+→ Notify requester with reason
+
+Generated
+
+→ Notify requester
+
+Ready for collection/download
+
+→ Notify requester
+
+Use Phase 14.
+
+---
+
+# 72. ADMIN SERVICE REQUEST DASHBOARD
+
+Administrators should see:
+
+- New requests
+- Pending requests
+- Overdue requests
+- Requests by department
+- Requests by type
+- Completed requests
+- Rejected requests
+
+Filters:
+
+- School
+- Session
+- Date
+- Service
+- Department
+- Status
+
+---
+
+# 73. REQUEST SLA / DUE DATE
+
+Allow configuration of expected processing time.
+
+Example:
+
+Bonafide Certificate → 2 working days
+
+Character Certificate → 3 working days
+
+TC → 7 working days
+
+Show:
+
+- Due date
+- Days remaining
+- Overdue status
+
+Do not automatically promise legally binding turnaround times.
+
+---
+
+# 74. PORTAL HOME PAGE
+
+Create a professional portal landing/dashboard experience.
+
+Possible sections:
+
+- Welcome
+- School branding
+- Quick actions
+- Child selector
+- Attendance
+- Fees
+- Homework
+- Exams
+- Notices
+- Events
+- Services
+- Documents
+- Notifications
+
+Reuse existing ERP design language.
+
+---
+
+# 75. QUICK ACTIONS
+
+Parent quick actions may include:
+
+- Pay Fees
+- Submit Leave
+- Request Certificate
+- Upload Document
+- Book Appointment
+- View Result
+- View Homework
+- Contact School
+
+Student quick actions:
+
+- Today's Timetable
+- Homework
+- Study Materials
+- Exam Schedule
+- Results
+- Certificates
+- Notices
+
+Only show actions allowed for the user.
+
+---
+
+# 76. SECURITY AUDIT LOGGING
+
+Use the existing Audit Log.
+
+Track important actions:
+
+- Parent profile changes
+- Child switching where security-sensitive
+- Document upload
+- Document download where appropriate
+- Certificate request
+- Fee payment initiation
+- Service request
+- Appointment
+- Grievance
+- Communication
+- Account changes
+- Portal permission changes
+
+Do not log sensitive document contents.
+
+---
+
+# 77. DATABASE EXTENSIONS
+
+Only create new entities where genuinely required.
+
+Potential entities:
+
+- PortalPreference
+- PortalNotificationPreference
+- PortalServiceType
+- PortalServiceRequest
+- PortalServiceRequestAttachment
+- PortalServiceRequestStatusHistory
+- ParentProfileUpdateRequest
+- StudentProfileUpdateRequest
+- PortalAppointmentRequest
+- PortalGrievance
+- PortalGrievanceMessage
+- EventRegistration
+
+Before creating these entities, inspect whether equivalent existing entities already exist.
+
+Do not duplicate:
+
+- User
+- Student
+- Parent
+- Notification
+- Message
+- Appointment
+- Event
+- Certificate
+- Document
+- Payment
+
+---
+
+# 78. DATABASE INTEGRITY
+
+Use:
+
+- Foreign keys
+- Unique constraints
+- Indexes
+- School ownership constraints
+- Relationship constraints
+- Request number uniqueness
+- Event registration uniqueness
+- Appointment conflict constraints
+
+Prevent:
+
+- Duplicate registrations
+- Duplicate service requests where prohibited
+- Duplicate payments
+- Duplicate parent-child relationships
+- Cross-school relationships
+
+---
+
+# 79. TRANSACTION SAFETY
+
+Use transactions for:
+
+- Service request creation with payment
+- Parent-child relationship changes
+- Appointment booking
+- Event registration
+- Profile approval
+- Certificate requests
+- Fee payment state changes
+
+Use idempotency where external payment systems are involved.
+
+---
+
+# 80. PERFORMANCE
+
+Optimize portal performance.
+
+Use:
+
+- Server-side pagination
+- Efficient queries
+- Database indexes
+- Cached non-sensitive aggregates
+- Lazy loading
+- Image optimization
+- PDF lazy loading
+- Optimized notification counts
+- Background processing where available
+
+Do not load all student information into the client.
+
+---
+
+# 81. API DESIGN
+
+All portal APIs must:
+
+- Validate authentication
+- Validate authorization
+- Validate school
+- Validate parent/student relationship
+- Validate request ownership
+- Validate input
+- Return only permitted fields
+
+Do not expose internal database objects directly.
+
+Use DTOs/serializers or equivalent architecture where appropriate.
+
+---
+
+# 82. ERROR HANDLING
+
+Create user-friendly error messages.
+
+Examples:
+
+"Your session has expired. Please log in again."
+
+"You do not have permission to access this information."
+
+"This document is not available."
+
+"Payment status is being verified."
+
+"Your request could not be submitted because the connection was lost."
+
+Do not expose:
+
+- Stack traces
+- SQL errors
+- Internal IDs
+- File paths
+- Secrets
+
+---
+
+# 83. NO FAKE FEATURES
+
+Do not fake:
+
+- Payment success
+- Notification delivery
+- Push notifications
+- GPS tracking
+- Certificate issuance
+- Document verification
+- Email
+- SMS
+- WhatsApp
+- Offline submission
+- Appointment confirmation
+
+If an external integration is not configured, show an appropriate configuration state.
+
+---
+
+# 84. MULTI-SCHOOL PORTAL SUPPORT
+
+The same ERP may contain multiple schools.
+
+A user may potentially have access to multiple schools only if the existing business rules explicitly allow it.
+
+If multi-school access exists:
+
+Provide a secure school selector.
+
+Changing school must refresh all data.
+
+Do not allow users to manually submit another school ID to access another school.
+
+---
+
+# 85. SCHOOL BRANDING
+
+Portal should support school-specific branding from existing School configuration:
+
+- Logo
+- School name
+- Address
+- Contact details
+- Theme configuration where already supported
+
+Do not hardcode:
+
+- Vidya Vahini Public School
+- Gurukul International School Katoria
+- Any other school name
+
+The system must remain reusable for additional schools.
+
+---
+
+# 86. DATA EXPORT
+
+Where permitted, allow parents/students to download:
+
+- Receipts
+- Report cards
+- Certificates
+- Approved documents
+- Request records
+
+Do not allow bulk export of sensitive school databases.
+
+---
+
+# 87. PORTAL HELP CENTER
+
+Create a simple Help / Support section.
+
+Include configurable:
+
+- FAQs
+- Portal instructions
+- Fee payment guidance
+- Certificate request instructions
+- Document upload guidance
+- Contact school information
+
+Do not create a complex knowledge-base system unless the existing architecture supports it.
+
+---
+
+# 88. PORTAL TERMS AND PRIVACY
+
+Where required, support display of:
+
+- Terms of use
+- Privacy notice
+- School policies
+- Consent notices
+
+For important consent records, store:
+
+- User
+- Version
+- Timestamp
+- School
+- Consent status
+
+Do not assume legal compliance automatically; allow school/legal administrators to configure appropriate content.
+
+---
+
+# 89. ADMIN PORTAL CONTROL
+
+Administrators should be able to configure:
+
+- Parent portal enabled/disabled
+- Student portal enabled/disabled
+- Services enabled/disabled
+- Payment methods
+- Notifications
+- Portal announcements
+- Available documents
+- Available certificates
+- Appointment availability
+- Event registration
+- Grievance categories
+
+All configuration changes must be audited.
+
+---
+
+# 90. SECURITY TESTING
+
+Test:
+
+### Authentication
+
+- Unauthorized user
+- Expired session
+- Disabled user
+
+### Authorization
+
+- Parent → own child
+- Parent → unrelated child
+- Student → own record
+- Student → another student
+- Teacher → assigned students
+- Teacher → unrelated students
+- Admin → authorized school
+- Admin → unauthorized school
+
+### File Security
+
+- Private document download
+- Invalid file
+- Unauthorized download
+- Cross-school file access
+
+### Payment Security
+
+- Fake success callback
+- Duplicate callback
+- Modified amount
+- Modified student
+- Modified school
+
+### Request Security
+
+- Modified request ID
+- Modified student ID
+- Modified school ID
+- Duplicate submission
+
+### Event Security
+
+- Duplicate registration
+- Full event
+- Unauthorized event
+
+Fix all security issues before completion.
+
+---
+
+# 91. MOBILE TESTING
+
+Test on responsive sizes approximately:
+
+- 320px
+- 375px
+- 390px
+- 414px
+- 768px
+- 1024px
+- 1280px
+- 1440px+
+
+Check:
+
+- Navigation
+- Dashboard
+- Forms
+- Tables
+- File upload
+- PDF viewing
+- Notifications
+- Payment
+- Child switching
+- Service requests
+- Calendar
+
+---
+
+# 92. ACCESSIBILITY TESTING
+
+Verify:
+
+- Keyboard navigation
+- Screen readers
+- Form labels
+- Error messages
+- Focus management
+- Modal accessibility
+- Button accessibility
+- Color contrast
+- Touch target size
+
+---
+
+# 93. IMPLEMENTATION ORDER
+
+Implement in this order:
+
+### STEP 1
+Inspect existing Parent and Student portals.
+
+### STEP 2
+Inspect existing authentication and parent-child relationships.
+
+### STEP 3
+Inspect all existing modules that already provide portal data.
+
+### STEP 4
+Build unified portal layout and navigation.
+
+### STEP 5
+Implement secure parent child-switching.
+
+### STEP 6
+Implement parent dashboard.
+
+### STEP 7
+Implement student dashboard.
+
+### STEP 8
+Integrate attendance.
+
+### STEP 9
+Integrate fees and online payments.
+
+### STEP 10
+Integrate exams and results.
+
+### STEP 11
+Integrate homework and study materials.
+
+### STEP 12
+Integrate timetable and calendar.
+
+### STEP 13
+Integrate communication and notifications.
+
+### STEP 14
+Integrate transport.
+
+### STEP 15
+Integrate hostel.
+
+### STEP 16
+Integrate library.
+
+### STEP 17
+Integrate documents and certificates from Phase 18.
+
+### STEP 18
+Implement online school services.
+
+### STEP 19
+Implement appointments.
+
+### STEP 20
+Implement events and registration.
+
+### STEP 21
+Implement surveys/feedback.
+
+### STEP 22
+Implement grievance management.
+
+### STEP 23
+Implement portal analytics.
+
+### STEP 24
+Complete mobile/PWA optimization.
+
+### STEP 25
+Complete security and authorization testing.
+
+### STEP 26
+Run complete regression testing.
+
+---
+
+# 94. END-TO-END ACCEPTANCE TEST
+
+Test this complete parent workflow:
+
+1. Create an existing parent account.
+
+2. Link the parent to two existing students.
+
+3. Login as the parent.
+
+4. Verify the parent dashboard.
+
+5. Switch between Child 1 and Child 2.
+
+6. Verify that all student-specific data changes correctly.
+
+7. View attendance.
+
+8. View fee balance.
+
+9. Initiate an online fee payment if a gateway is configured.
+
+10. Verify payment status using the actual payment infrastructure.
+
+11. Download receipt.
+
+12. View examination schedule.
+
+13. View published result.
+
+14. Download report card.
+
+15. View homework.
+
+16. Submit homework where enabled.
+
+17. View timetable.
+
+18. View school calendar.
+
+19. Read an announcement.
+
+20. Send a permitted message to the teacher.
+
+21. Receive a notification.
+
+22. View transport information.
+
+23. View hostel information if applicable.
+
+24. View library information.
+
+25. Upload a required document.
+
+26. Verify that document enters verification workflow.
+
+27. Submit a Bonafide Certificate request.
+
+28. Verify request number.
+
+29. Pay service fee if configured.
+
+30. Verify approval.
+
+31. Download generated certificate.
+
+32. Verify certificate QR.
+
+33. Book an appointment.
+
+34. Verify appointment confirmation.
+
+35. Register for a school event.
+
+36. Submit a grievance.
+
+37. Verify grievance tracking.
+
+38. Logout.
+
+---
+
+# 95. STUDENT ACCEPTANCE TEST
+
+Test:
+
+1. Login as student.
+
+2. View dashboard.
+
+3. View timetable.
+
+4. View homework.
+
+5. Submit homework.
+
+6. View study materials.
+
+7. View attendance.
+
+8. View published results.
+
+9. Download report card.
+
+10. View certificates.
+
+11. Submit permitted certificate request.
+
+12. View school notices.
+
+13. View calendar.
+
+14. View events.
+
+15. Register for an event if allowed.
+
+16. View library records.
+
+17. View transport/hostel information if applicable.
+
+18. Verify that another student's data is inaccessible.
+
+---
+
+# 96. MULTI-SCHOOL ACCEPTANCE TEST
+
+Create or use:
+
+School A
+
+School B
+
+Verify:
+
+Parent A → School A data only.
+
+Parent B → School B data only.
+
+School A administrator → School A portal data only.
+
+School B administrator → School B portal data only.
+
+Attempt:
+
+- Changing school ID
+- Changing student ID
+- Changing parent ID
+- Changing request ID
+- Changing certificate ID
+
+All unauthorized attempts must fail.
+
+---
+
+# 97. REGRESSION TESTING
+
+After Phase 19, verify all previous modules:
+
+- Authentication
+- RBAC
+- Schools
+- Academic Sessions
+- Students
+- Parents
+- Admissions
+- Attendance
+- Fees
+- Accounts
+- Examinations
+- Timetable
+- Homework
+- Transport
+- Library
+- Hostel
+- HR/Payroll
+- Inventory
+- Communication
+- Administration
+- Student Lifecycle
+- Certificates
+- Mobile/PWA
+- MIS/Analytics
+
+Do not break existing functionality.
+
+---
+
+# 98. DATABASE MIGRATION SAFETY
+
+Use safe migrations.
+
+NEVER:
+
+- Drop existing tables
+- Truncate data
+- Delete students
+- Delete parent records
+- Delete financial transactions
+- Reset database
+- Rebuild existing portal data from scratch
+
+Extend existing entities where appropriate.
+
+Preserve all existing production data.
+
+---
+
+# 99. CODE QUALITY
+
+Maintain:
+
+- TypeScript safety
+- Clean architecture
+- Reusable components
+- Reusable API logic
+- Strong validation
+- Consistent error handling
+- Secure authorization
+- Proper database transactions
+- Clear naming
+- Existing coding conventions
+
+Do not introduce unnecessary dependencies.
+
+---
+
+# 100. FINAL IMPLEMENTATION REPORT
+
+After completing Phase 19, provide a clear implementation report containing:
+
+1. Parent Portal improvements
+2. Student Portal improvements
+3. Dashboard implementation
+4. Child switching implementation
+5. Attendance integration
+6. Fees/payment integration
+7. Examination integration
+8. Homework integration
+9. Timetable/calendar integration
+10. Communication integration
+11. Transport integration
+12. Hostel integration
+13. Library integration
+14. Document integration
+15. Certificate integration
+16. Online services
+17. Appointment system
+18. Event registration
+19. Survey/feedback
+20. Grievance system
+21. Portal analytics
+22. Mobile/PWA improvements
+23. Database changes
+24. API changes
+25. RBAC changes
+26. Security tests
+27. Multi-school isolation tests
+28. Regression tests
+29. Production build result
+30. Known limitations
+31. Required external configuration
+32. Recommended Phase 20
+
+IMPORTANT:
+
+Do not claim a feature is complete unless it is actually implemented and tested.
+
+If something cannot be completed because an external provider, API, payment gateway, GPS service, notification provider or other infrastructure is not configured, clearly state the limitation.
+
+Never introduce fake functionality.
+
+The final result must be a production-ready extension of the existing multi-school School ERP.

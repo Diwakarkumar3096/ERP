@@ -1,0 +1,6 @@
+{
+  "name": "School ERP Management System",
+  "description": "Enterprise Multi-School ERP Management System with multi-branch isolation, granular role-based permissions, academic session lifecycle, class and section administration, and audit trails.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,2006 @@
+# PHASE 18 — STUDENT LIFECYCLE, DIGITAL DOCUMENTS, CERTIFICATES & TRANSFER CERTIFICATE MANAGEMENT
+
+## IMPORTANT CONTEXT
+
+This is PHASE 18 of an already-developed, production-oriented, multi-school School ERP.
+
+DO NOT create a new application.
+
+DO NOT rebuild the ERP from scratch.
+
+DO NOT create a second student management system.
+
+DO NOT duplicate existing Student, Parent, Admission, Fee, Communication, Portal, Authentication, School, Academic Session, or Reporting modules.
+
+You must first inspect the existing codebase, database schema, APIs, authentication system, RBAC system, student module, parent module, admission module, fees module, communication module, portal, file/document handling, reporting system, audit system, and mobile/PWA implementation.
+
+Then extend the existing architecture safely.
+
+The ERP already contains modules from previous phases including:
+
+- Authentication & RBAC
+- Multi-school management
+- Academic sessions
+- Student & Parent Management
+- Admissions
+- Teacher & Staff Management
+- Attendance
+- Fees & Accounts
+- Examination & Results
+- Timetable & Homework
+- Transport
+- Library
+- Hostel
+- HR & Payroll
+- Inventory & Assets
+- Communication & Notifications
+- School Administration
+- Mobile/PWA
+- MIS & Analytics
+
+Phase 18 must integrate with these existing modules.
+
+---
+
+# 1. PRIMARY OBJECTIVE
+
+Build a complete:
+
+## Student Lifecycle + Digital Document Vault + Certificate Management + Transfer Certificate System
+
+The system should maintain the student's complete lifecycle from:
+
+Admission
+
+→ Active Student
+
+→ Class/Section Allocation
+
+→ Academic Promotion
+
+→ Reclassification/Section Change
+
+→ Internal Transfer
+
+→ Document Management
+
+→ Certificate Requests
+
+→ Certificate Approval
+
+→ Certificate Generation
+
+→ Transfer/Withdrawal
+
+→ Transfer Certificate / School Leaving Certificate
+
+→ Alumni
+
+while preserving the student's complete historical record.
+
+The system must be suitable for a professional school ERP used by multiple schools.
+
+---
+
+# 2. STUDENT LIFECYCLE MANAGEMENT
+
+Create a central Student Lifecycle section.
+
+Do NOT create a duplicate student master.
+
+Use the existing Student entity as the source of truth.
+
+The lifecycle system should track:
+
+- Student ID
+- Admission number
+- School
+- Academic session
+- Class
+- Section
+- Roll number
+- Admission date
+- Current status
+- Previous status
+- Status effective date
+- Status history
+- Leaving date
+- Leaving reason
+- Current academic session
+- Current enrollment
+- Previous enrollments
+- Promotion history
+- Transfer history
+- Withdrawal history
+- Certificate history
+- Alumni status
+
+---
+
+# 3. STUDENT STATUS SYSTEM
+
+Implement configurable student lifecycle statuses.
+
+Example statuses:
+
+- Applicant
+- Admitted
+- Active
+- Promoted
+- Reclassified
+- Transferred Internally
+- On Leave
+- Withdrawn
+- TC Requested
+- TC Approved
+- TC Issued
+- School Leaving Completed
+- Alumni
+- Inactive
+
+Do not hardcode the workflow if the existing architecture supports configurable statuses.
+
+Every status change must create a historical record.
+
+Example:
+
+Student:
+
+2025–26 → Class 5 → Section A → Active
+
+2026–27 → Class 6 → Section B → Promoted
+
+2027–28 → Class 7 → Section A → Promoted
+
+2028–29 → Withdrawn
+
+This historical information must never be lost.
+
+---
+
+# 4. STUDENT STATUS HISTORY
+
+Create a Student Lifecycle History interface.
+
+Show:
+
+- Date
+- Academic session
+- Previous status
+- New status
+- Class
+- Section
+- Reason
+- Changed by
+- Approval status
+- Notes
+
+Allow authorized administrators to view the complete timeline.
+
+Do not allow normal users to modify historical records directly.
+
+Corrections should use an authorized correction workflow.
+
+---
+
+# 5. ACADEMIC PROMOTION MANAGEMENT
+
+Create a proper Student Promotion system.
+
+Allow authorized administrators to promote students:
+
+Class 1 → Class 2
+
+Class 2 → Class 3
+
+etc.
+
+Support:
+
+- Bulk promotion
+- Individual promotion
+- Section allocation
+- Roll number allocation
+- Academic session selection
+- Promotion status
+- Promoted
+- Not Promoted
+- Conditional
+- Reclassified
+- Retained
+
+Allow configuration based on existing examination/result rules.
+
+Do not automatically promote students merely because a button is clicked.
+
+Show a confirmation/preview screen before finalizing bulk promotion.
+
+---
+
+# 6. PROMOTION PREVIEW
+
+Before executing bulk promotion, show:
+
+- Current class
+- Current section
+- Students selected
+- Current result status
+- Attendance percentage where available
+- Proposed class
+- Proposed section
+- Promotion decision
+- Validation warnings
+
+Example:
+
+Class 5-A
+
+45 students
+
+42 eligible
+
+2 not eligible
+
+1 requires manual review
+
+The administrator must explicitly confirm the final operation.
+
+---
+
+# 7. PROMOTION HISTORY
+
+Maintain:
+
+- Previous class
+- Previous section
+- Previous session
+- New class
+- New section
+- New session
+- Promotion decision
+- Promotion date
+- Approved by
+- Reason
+- Notes
+
+Never overwrite historical enrollment records.
+
+---
+
+# 8. SECTION TRANSFER
+
+Allow authorized users to transfer a student between sections within the same school/session.
+
+Example:
+
+Class 6-A → Class 6-B
+
+Support:
+
+- Individual transfer
+- Bulk transfer
+- Effective date
+- Reason
+- Approval
+- Notes
+
+Maintain the complete section history.
+
+---
+
+# 9. INTERNAL CLASS TRANSFER
+
+Allow authorized administrators to move students between classes when required.
+
+Examples:
+
+Class 5 → Class 6
+
+Class 6 → Class 5
+
+if the school's rules allow reclassification.
+
+Require:
+
+- Reason
+- Effective date
+- Approval
+- Academic session
+- Previous enrollment
+- New enrollment
+
+Never silently overwrite the previous enrollment.
+
+---
+
+# 10. STUDENT WITHDRAWAL
+
+Create a structured withdrawal workflow.
+
+Withdrawal should support:
+
+- Withdrawal request
+- Reason
+- Requested by
+- Parent request where applicable
+- Administrative review
+- Fee verification
+- Library clearance
+- Hostel clearance
+- Transport clearance
+- Inventory/asset clearance where applicable
+- Examination/result clearance where applicable
+- Approval
+- Final withdrawal date
+
+Do not permanently delete the student.
+
+---
+
+# 11. CLEARANCE SYSTEM
+
+Before final withdrawal/TC issuance, create a clearance checklist.
+
+Possible departments:
+
+- Academic
+- Accounts
+- Library
+- Transport
+- Hostel
+- Inventory
+- Administration
+- Examination
+
+Each department can provide:
+
+- Cleared
+- Pending
+- Not Applicable
+
+with:
+
+- Comment
+- Cleared by
+- Cleared date
+
+The system should clearly show outstanding issues.
+
+Do not automatically mark departments cleared without actual verification.
+
+---
+
+# 12. FEE CLEARANCE INTEGRATION
+
+Integrate with the existing Fees & Accounts module.
+
+Before TC issuance, display:
+
+- Total fees
+- Paid amount
+- Outstanding amount
+- Advance amount
+- Refund status
+- Pending dues
+- Financial clearance status
+
+Do not create another payment system.
+
+If the school configuration allows TC despite outstanding fees, support an authorized override with:
+
+- Reason
+- Approval
+- Audit log
+
+Never silently bypass financial rules.
+
+---
+
+# 13. LIBRARY CLEARANCE
+
+Integrate with the existing Library module.
+
+Check:
+
+- Outstanding books
+- Overdue books
+- Pending fines
+- Lost books
+- Replacement charges
+
+Show:
+
+Library Clearance:
+
+Cleared / Pending
+
+Do not duplicate library transaction data.
+
+---
+
+# 14. TRANSPORT CLEARANCE
+
+If the student is enrolled in transport, check:
+
+- Active route
+- Vehicle assignment
+- Transport dues
+- Pending transport issues
+
+Integrate with the existing Transport module.
+
+---
+
+# 15. HOSTEL CLEARANCE
+
+If the student is a hostel resident, check:
+
+- Hostel allocation
+- Room
+- Bed
+- Pending hostel fees
+- Hostel assets
+- Pending hostel issues
+- Hostel withdrawal
+
+Integrate with the existing Hostel module.
+
+---
+
+# 16. DIGITAL STUDENT DOCUMENT VAULT
+
+Create a secure Student Document Vault.
+
+Use the existing file/document infrastructure where available.
+
+Do not create a duplicate file-storage architecture unnecessarily.
+
+Documents may include:
+
+### Identity Documents
+
+- Birth Certificate
+- Aadhaar/ID record where legally appropriate
+- Passport
+- Government ID
+- Parent/Guardian ID
+
+### Admission Documents
+
+- Previous School Leaving Certificate
+- Transfer Certificate
+- Migration Certificate
+- Marksheet
+- Previous Academic Records
+- Admission Form
+- Entrance Test Documents
+- Medical Certificate
+- Address Proof
+- Category/Caste Certificate where applicable
+- Disability Certificate where applicable
+
+### School Documents
+
+- Student Photograph
+- Parent Photograph
+- Consent Forms
+- Undertakings
+- Fee Documents
+- Scholarship Documents
+- Transport Documents
+- Hostel Documents
+
+Only collect documents actually required by the school configuration.
+
+---
+
+# 17. DOCUMENT METADATA
+
+Every uploaded document should have:
+
+- Document ID
+- Student ID
+- School ID
+- Document type
+- File name
+- File type
+- File size
+- Upload date
+- Uploaded by
+- Document status
+- Verification status
+- Verification date
+- Verified by
+- Expiry date if applicable
+- Notes
+- Version number
+
+---
+
+# 18. DOCUMENT VERIFICATION
+
+Support:
+
+- Pending Verification
+- Verified
+- Rejected
+- Expired
+- Replaced
+
+Authorized users should be able to:
+
+- View
+- Verify
+- Reject
+- Request replacement
+- Add remarks
+
+When rejecting a document, require a reason.
+
+Example:
+
+Document rejected:
+
+"Birth certificate image is unclear."
+
+---
+
+# 19. DOCUMENT VERSIONING
+
+Do not overwrite important documents without preserving history.
+
+When a replacement document is uploaded:
+
+Old Version → Archived
+
+New Version → Current
+
+Maintain:
+
+- Version number
+- Uploaded date
+- Uploaded by
+- Verification status
+
+---
+
+# 20. DOCUMENT EXPIRY MANAGEMENT
+
+Allow document types to optionally have expiry dates.
+
+Examples:
+
+- Medical certificate
+- Certain permissions
+- Identity documents
+- Transport-related documents
+
+Create alerts for:
+
+- Expiring soon
+- Expired
+- Missing
+
+Use the existing Communication & Notification system.
+
+Do not send fake notifications.
+
+---
+
+# 21. MISSING DOCUMENT MANAGEMENT
+
+Create a Missing Documents dashboard.
+
+Show:
+
+- Student
+- Class
+- Section
+- Document type
+- Missing/expired status
+- Responsible person
+- Reminder status
+
+Allow filtering by:
+
+- School
+- Session
+- Class
+- Section
+- Document type
+- Status
+
+---
+
+# 22. PARENT DOCUMENT UPLOAD
+
+Extend the existing Parent Portal.
+
+Parents should be able to:
+
+- View required documents
+- Upload documents
+- Replace rejected documents
+- View verification status
+- Read rejection remarks
+- Download permitted documents
+
+Parent-uploaded documents must enter a verification workflow.
+
+Never allow parents to mark their own documents as verified.
+
+---
+
+# 23. STUDENT PORTAL DOCUMENTS
+
+Extend the existing Student Portal where applicable.
+
+Students should be able to view permitted documents such as:
+
+- Certificates
+- Report cards
+- Approved academic documents
+- School-issued certificates
+
+Sensitive administrative documents must remain restricted.
+
+---
+
+# 24. ONLINE STUDENT SERVICE REQUEST CENTER
+
+Create a Student Services / Requests section.
+
+Parents or students should be able to request services such as:
+
+- Bonafide Certificate
+- Character Certificate
+- Study Certificate
+- Fee Certificate
+- Transfer Certificate
+- School Leaving Certificate
+- Duplicate Certificate
+- Student ID Card
+- Other configurable certificates
+
+Do not create separate unrelated request systems.
+
+Use one configurable service request engine.
+
+---
+
+# 25. SERVICE REQUEST WORKFLOW
+
+Request lifecycle:
+
+Draft
+
+→ Submitted
+
+→ Under Review
+
+→ Additional Information Required
+
+→ Approved
+
+→ Rejected
+
+→ Generated
+
+→ Issued
+
+→ Completed
+
+→ Cancelled
+
+Maintain full request history.
+
+---
+
+# 26. SERVICE REQUEST INFORMATION
+
+Each request should contain:
+
+- Request number
+- Student
+- Parent/student requester
+- School
+- Academic session
+- Request type
+- Request date
+- Required date
+- Reason
+- Notes
+- Supporting documents
+- Fee status if applicable
+- Approval status
+- Generated document
+- Issued date
+- Issued by
+
+---
+
+# 27. CERTIFICATE MANAGEMENT SYSTEM
+
+Create a centralized Certificate Management module.
+
+Supported certificates should include:
+
+- Bonafide Certificate
+- Character Certificate
+- Study Certificate
+- Fee Certificate
+- Admission Certificate
+- Attendance Certificate
+- Conduct Certificate
+- Transfer Certificate
+- School Leaving Certificate
+- Custom certificates
+
+The school administrator should be able to configure certificate types.
+
+---
+
+# 28. CERTIFICATE TEMPLATES
+
+Create a configurable certificate template system.
+
+Templates should support:
+
+- School logo
+- School name
+- School address
+- School contact details
+- Certificate title
+- Student name
+- Admission number
+- Class
+- Section
+- Father's name
+- Mother's name
+- Date of birth
+- Academic session
+- Issue date
+- Certificate number
+- Dynamic fields
+- Authorized signatory
+- Designation
+- School seal placeholder
+- QR verification code
+
+Use safe template variables.
+
+Do not allow arbitrary executable code inside templates.
+
+---
+
+# 29. CERTIFICATE NUMBERING
+
+Implement configurable certificate numbering.
+
+Example:
+
+BON/2026/00001
+
+TC/2026/00001
+
+CHAR/2026/00001
+
+Allow configuration for:
+
+- Prefix
+- Academic year
+- School code
+- Sequence
+- Number padding
+
+Certificate numbers must be unique within the appropriate school/certificate scope.
+
+Prevent duplicate numbering under concurrent requests.
+
+---
+
+# 30. CERTIFICATE GENERATION
+
+Certificates should be generated from approved data.
+
+Process:
+
+Request
+
+→ Verification
+
+→ Approval
+
+→ Generate
+
+→ Assign Certificate Number
+
+→ Generate PDF
+
+→ Store securely
+
+→ Issue
+
+→ Audit
+
+Do not generate an official certificate before required approval.
+
+---
+
+# 31. PDF GENERATION
+
+Use the existing PDF/document generation infrastructure if available.
+
+Generated PDF should:
+
+- Use the configured school branding
+- Use the correct student information
+- Display certificate number
+- Display issue date
+- Include authorized signatory
+- Include QR verification code where enabled
+- Be printable
+- Be mobile-readable
+- Preserve formatting
+
+Never hardcode school-specific information.
+
+---
+
+# 32. QR CODE VERIFICATION
+
+Implement certificate QR verification.
+
+Every supported official certificate may contain a QR code.
+
+The QR code should point to a secure public verification page.
+
+Example:
+
+Certificate Number
+
+→ Verification Page
+
+The public verification page should show only safe information such as:
+
+- Certificate type
+- Certificate number
+- Student name or masked name according to privacy settings
+- School
+- Issue date
+- Validity/status
+
+Do not expose:
+
+- Aadhaar
+- Parent phone numbers
+- Address
+- Financial information
+- Sensitive documents
+- Private student information
+
+---
+
+# 33. PUBLIC CERTIFICATE VERIFICATION PAGE
+
+Create a public route such as:
+
+/verify/certificate/[verificationCode]
+
+The verification code must be:
+
+- Randomized/secure
+- Non-guessable
+- Revocable if required
+
+Support statuses:
+
+- Valid
+- Revoked
+- Cancelled
+- Not Found
+
+Rate-limit the verification endpoint.
+
+Do not expose internal database IDs.
+
+---
+
+# 34. CERTIFICATE REVOCATION
+
+Authorized administrators should be able to revoke a certificate.
+
+Require:
+
+- Reason
+- Revoked by
+- Revocation date
+
+The public verification page must reflect the revoked status.
+
+Never delete the historical certificate record.
+
+---
+
+# 35. DIGITAL SIGNATURE ARCHITECTURE
+
+Prepare the system for digital signing.
+
+If actual digital signature infrastructure is available/configured, integrate through a secure provider/service abstraction.
+
+Otherwise:
+
+DO NOT fake digital signatures.
+
+DO NOT claim legally valid digital signing.
+
+Use an architecture that can later support:
+
+- Digital signature provider
+- Signatory identity
+- Signature status
+- Signing timestamp
+- Signed document hash
+- Verification status
+
+---
+
+# 36. TRANSFER CERTIFICATE MANAGEMENT
+
+Create a dedicated TC workflow integrated with the Student Lifecycle.
+
+TC request:
+
+Parent/Student/Admin
+
+→ Clearance
+
+→ Academic verification
+
+→ Accounts verification
+
+→ Library verification
+
+→ Transport/Hostel verification where applicable
+
+→ Administrative approval
+
+→ TC generation
+
+→ Certificate number
+
+→ PDF
+
+→ QR verification
+
+→ Issue
+
+→ Student status update
+
+---
+
+# 37. TC DATA
+
+TC should support configurable fields based on school requirements.
+
+Potential fields include:
+
+- Student name
+- Admission number
+- Date of birth
+- Father's name
+- Mother's name
+- Nationality where required
+- Category where legally appropriate
+- Date of admission
+- Last class attended
+- Last academic session
+- Result status
+- Attendance summary where required
+- Date of leaving
+- Reason for leaving
+- Conduct
+- Fees clearance
+- Library clearance
+- Hostel clearance
+- Transport clearance
+- Other required school fields
+- Certificate number
+- Issue date
+- Authorized signatory
+
+Do not assume one fixed TC format for every school.
+
+Make the template configurable.
+
+---
+
+# 38. SCHOOL LEAVING CERTIFICATE
+
+Support School Leaving Certificate separately if the school requires a distinct document.
+
+Do not automatically treat TC and School Leaving Certificate as identical.
+
+Allow schools to configure:
+
+- Template
+- Fields
+- Numbering
+- Approval workflow
+- Signatories
+- Verification
+
+---
+
+# 39. DUPLICATE CERTIFICATE WORKFLOW
+
+If a certificate is lost or needs replacement:
+
+Create:
+
+Duplicate Certificate Request
+
+Require:
+
+- Original certificate number
+- Reason
+- Approval
+- Duplicate number/reference
+- Issue date
+- Audit trail
+
+Do not silently generate another certificate using the original number.
+
+---
+
+# 40. CERTIFICATE CORRECTION
+
+If a certificate contains incorrect information:
+
+Do not edit the issued certificate silently.
+
+Create:
+
+Correction Request
+
+→ Review
+
+→ Approval
+
+→ Corrected Certificate
+
+→ Previous Certificate Archived/Marked Superseded
+
+Maintain full history.
+
+---
+
+# 41. CERTIFICATE REGISTRY
+
+Create a centralized certificate registry.
+
+Show:
+
+- Certificate number
+- Student
+- Certificate type
+- Issue date
+- Status
+- Verification status
+- Generated by
+- Approved by
+- Issued by
+
+Filters:
+
+- School
+- Session
+- Certificate type
+- Date range
+- Status
+- Student
+- Class
+
+---
+
+# 42. ALUMNI HANDOFF
+
+When a student completes the leaving process, allow conversion to Alumni status.
+
+Do not delete the student's record.
+
+Maintain:
+
+- Student ID
+- Admission history
+- Academic history
+- Certificates
+- Leaving date
+- Leaving reason
+- Last class
+- Last session
+
+Create an Alumni reference/profile if the existing architecture supports it.
+
+Do not create an unnecessarily complex alumni CRM in this phase.
+
+---
+
+# 43. STUDENT PROFILE TIMELINE
+
+Enhance the existing Student Profile with a lifecycle timeline.
+
+Example:
+
+2024-06-10 — Admission
+
+2025-04-01 — Promoted to Class 5
+
+2026-04-01 — Promoted to Class 6
+
+2026-07-10 — Section changed A → B
+
+2026-09-12 — Bonafide Certificate issued
+
+2027-03-20 — TC requested
+
+2027-03-25 — Clearance completed
+
+2027-03-26 — TC issued
+
+2027-03-26 — Student marked Alumni
+
+This should be read-only for most users.
+
+---
+
+# 44. NOTIFICATIONS INTEGRATION
+
+Use the existing Phase 14 Communication & Notification system.
+
+Possible notifications:
+
+- Missing document
+- Document rejected
+- Document verified
+- Certificate request submitted
+- Certificate approved
+- Certificate rejected
+- Certificate generated
+- Certificate ready for download
+- TC request received
+- Clearance pending
+- TC approved
+- TC issued
+- Withdrawal completed
+
+Do not build another notification engine.
+
+Use the existing notification templates and delivery architecture.
+
+---
+
+# 45. FEE INTEGRATION FOR CERTIFICATE SERVICES
+
+If the school configuration requires a fee for a certificate:
+
+Integrate with the existing Fees & Accounts module.
+
+Do not create a separate payment system.
+
+Support:
+
+- Service fee
+- Payment status
+- Receipt
+- Pending payment
+- Waiver where authorized
+
+Only issue the certificate when the configured financial rule is satisfied or an authorized override is recorded.
+
+---
+
+# 46. REPORTS
+
+Create Phase 18 reports.
+
+### Student Lifecycle Reports
+
+- Active students
+- Withdrawn students
+- Alumni
+- Promotion history
+- Section transfer history
+- Class transfer history
+- Student lifecycle timeline
+
+### Document Reports
+
+- Missing documents
+- Pending verification
+- Rejected documents
+- Expiring documents
+- Expired documents
+- Document completeness
+
+### Certificate Reports
+
+- Certificates issued
+- Certificates by type
+- Certificates by class
+- Certificates by session
+- Pending requests
+- Rejected requests
+- Revoked certificates
+- Duplicate certificates
+- Certificate verification activity
+
+### TC Reports
+
+- TC requests
+- Pending TC
+- Approved TC
+- Issued TC
+- Withdrawn students
+- Leaving reasons
+
+All reports must respect school and role permissions.
+
+---
+
+# 47. MIS / ANALYTICS INTEGRATION
+
+Integrate with Phase 17.
+
+Possible KPIs:
+
+- Active students
+- Promoted students
+- Retained students
+- Withdrawn students
+- TC requests
+- TC issued
+- Pending clearances
+- Missing documents
+- Document verification rate
+- Certificate requests
+- Certificates issued
+- Alumni count
+
+Do not duplicate the analytics engine.
+
+Use the existing reporting/analytics infrastructure.
+
+---
+
+# 48. SEARCH AND FILTERING
+
+Provide centralized search for:
+
+- Student name
+- Admission number
+- Student ID
+- Certificate number
+- Request number
+- Document type
+
+Filters:
+
+- School
+- Academic session
+- Class
+- Section
+- Status
+- Certificate type
+- Request status
+- Document status
+- Date range
+
+Use server-side pagination for large datasets.
+
+---
+
+# 49. IMPORT / EXPORT
+
+Where appropriate, support secure:
+
+- Student lifecycle import
+- Promotion import
+- Document metadata import
+- Certificate registry export
+- Lifecycle reports export
+
+Do not allow bulk file imports to bypass validation.
+
+Validate:
+
+- School ownership
+- Student existence
+- Session
+- Class
+- Section
+- Duplicate records
+- Required fields
+
+---
+
+# 50. ROLE-BASED ACCESS CONTROL
+
+Use the existing RBAC system.
+
+Possible permissions:
+
+- View student lifecycle
+- Manage promotion
+- Manage section transfer
+- Manage withdrawal
+- View documents
+- Upload documents
+- Verify documents
+- Manage certificates
+- Approve certificates
+- Issue certificates
+- Manage TC
+- Approve TC
+- Revoke certificate
+- View certificate registry
+- Manage templates
+- View financial clearance
+- View sensitive student information
+
+Do not rely only on frontend visibility.
+
+Every API/server action must verify authorization.
+
+---
+
+# 51. MULTI-SCHOOL ISOLATION
+
+This is mandatory.
+
+Every lifecycle record, document, request, certificate, clearance, template, and verification configuration must be correctly associated with the school.
+
+Users from School A must never access School B's:
+
+- Students
+- Documents
+- Certificates
+- TC records
+- Requests
+- Templates
+- Lifecycle history
+- Reports
+
+Do not rely only on frontend school selectors.
+
+Enforce school isolation server-side/database-side where appropriate.
+
+---
+
+# 52. DATA PRIVACY
+
+Student documents can contain highly sensitive information.
+
+Implement:
+
+- Secure access
+- Authorization checks
+- Signed/private file URLs where appropriate
+- File type validation
+- File size limits
+- Safe file naming
+- Malware/security validation where infrastructure supports it
+- Access logging
+- Download logging where appropriate
+- No sensitive documents in public URLs
+- No sensitive data in QR verification pages
+- No sensitive data in logs
+
+Never expose private document storage publicly.
+
+---
+
+# 53. DATABASE DESIGN
+
+Extend the existing schema safely.
+
+Potential entities:
+
+- StudentLifecycleEvent
+- StudentEnrollmentHistory
+- StudentPromotion
+- StudentTransfer
+- StudentWithdrawal
+- StudentClearance
+- StudentClearanceItem
+- StudentDocument
+- StudentDocumentVersion
+- DocumentVerification
+- StudentServiceRequest
+- CertificateType
+- CertificateTemplate
+- CertificateSequence
+- Certificate
+- CertificateRevision
+- CertificateVerification
+- CertificateRevocation
+- CertificateCorrection
+- AlumniProfile
+
+Use existing naming conventions if equivalent entities already exist.
+
+Do not create duplicate tables if the current schema already provides the required functionality.
+
+---
+
+# 54. DATABASE CONSTRAINTS
+
+Implement appropriate:
+
+- Foreign keys
+- Unique constraints
+- Indexes
+- School ownership constraints
+- Session constraints
+- Certificate number uniqueness
+- Verification code uniqueness
+- Request number uniqueness
+- Document version consistency
+
+Protect against duplicate certificates and duplicate certificate numbers under concurrent requests.
+
+---
+
+# 55. TRANSACTION SAFETY
+
+Critical operations must be transactional.
+
+Especially:
+
+- Bulk promotion
+- Withdrawal finalization
+- Clearance completion
+- Certificate number generation
+- TC issuance
+- Certificate correction
+- Certificate revocation
+- Alumni conversion
+
+If one critical operation fails, the system should not leave inconsistent partial state.
+
+---
+
+# 56. AUDIT LOGGING
+
+Use the existing Audit Log system.
+
+Log:
+
+- Promotion
+- Section transfer
+- Class transfer
+- Withdrawal
+- Clearance updates
+- Document upload
+- Document verification
+- Document rejection
+- Certificate request
+- Certificate approval
+- Certificate generation
+- Certificate issue
+- Certificate correction
+- Certificate revocation
+- TC issuance
+- Template changes
+- Certificate numbering changes
+- Sensitive document access where appropriate
+
+Include:
+
+- User
+- School
+- Timestamp
+- Action
+- Entity
+- Entity ID
+- Relevant metadata
+
+Never log private document contents or unnecessary sensitive information.
+
+---
+
+# 57. MOBILE RESPONSIVENESS
+
+Integrate with Phase 16.
+
+The entire Phase 18 interface must work on:
+
+- Android
+- iPhone
+- Tablet
+- Laptop
+- Desktop
+
+Parent users should be able to:
+
+- Upload documents
+- Check document status
+- Submit certificate requests
+- View request status
+- Download approved certificates
+
+Administrators should be able to:
+
+- Review requests
+- Verify documents
+- Approve certificates
+- Check clearances
+- View student lifecycle
+
+Use touch-friendly controls.
+
+---
+
+# 58. ACCESSIBILITY
+
+Follow accessible UI practices:
+
+- Keyboard navigation
+- Proper labels
+- Focus states
+- Screen-reader-friendly controls
+- Accessible tables
+- Accessible dialogs
+- Sufficient contrast
+- Clear validation errors
+
+---
+
+# 59. DOCUMENT DOWNLOAD SECURITY
+
+Do not expose storage paths directly.
+
+Use secure authorization-controlled downloads.
+
+Before allowing download verify:
+
+- User identity
+- User role
+- School
+- Student relationship where applicable
+- Document permissions
+- Certificate status
+
+Public verification pages must never provide direct access to the private PDF/document unless explicitly designed and authorized.
+
+---
+
+# 60. PERFORMANCE
+
+Optimize:
+
+- Student lifecycle queries
+- Document lists
+- Certificate registry
+- Search
+- Reports
+- Bulk promotion
+- Bulk document operations
+
+Use:
+
+- Pagination
+- Indexes
+- Server-side filtering
+- Lazy loading
+- Efficient joins
+- Background processing where appropriate
+
+Do not load thousands of documents into the browser unnecessarily.
+
+---
+
+# 61. SECURITY TESTING
+
+Test for:
+
+- Cross-school access
+- Unauthorized document access
+- Unauthorized certificate approval
+- Unauthorized TC issuance
+- Certificate number manipulation
+- Verification code guessing
+- IDOR vulnerabilities
+- Broken access control
+- File upload vulnerabilities
+- Unsafe file types
+- Unauthorized downloads
+- Parent accessing another student's documents
+- Student accessing another student's records
+- Role escalation
+
+---
+
+# 62. NO FAKE IMPLEMENTATIONS
+
+Do not create fake:
+
+- Digital signatures
+- Certificate verification
+- File storage
+- Email delivery
+- SMS delivery
+- WhatsApp delivery
+- Notifications
+- Payment confirmation
+
+If an external provider is not configured, create a proper integration abstraction and clearly show the feature as not configured.
+
+Never claim an external operation succeeded when it did not actually execute.
+
+---
+
+# 63. UI NAVIGATION
+
+Add appropriate navigation under:
+
+## Student Management
+
+- Student Lifecycle
+- Promotion
+- Transfers
+- Withdrawal
+- Documents
+- Service Requests
+- Certificates
+- TC Management
+- Certificate Registry
+- Alumni
+
+Avoid clutter.
+
+Reuse the existing layout, navigation, design system, icons, tables, forms, dialogs, cards, filters, and notification components.
+
+---
+
+# 64. DASHBOARDS
+
+Create a Student Lifecycle dashboard showing:
+
+- Total Active Students
+- Pending Promotions
+- Pending Withdrawals
+- Pending Clearances
+- Missing Documents
+- Documents Pending Verification
+- Certificate Requests
+- Pending TC Requests
+- Certificates Issued
+- Recently Withdrawn
+- Recently Promoted
+
+Allow drill-down into the relevant records.
+
+---
+
+# 65. ADMINISTRATIVE CONTROLS
+
+Create settings for authorized administrators:
+
+- Lifecycle statuses
+- Withdrawal reasons
+- Certificate types
+- Certificate templates
+- Certificate numbering
+- Required documents
+- Document expiry rules
+- Clearance departments
+- Certificate service fees
+- Approval workflows
+- Authorized signatories
+- Verification settings
+
+All configuration changes must be audited.
+
+---
+
+# 66. IMPLEMENTATION ORDER
+
+Implement in this order:
+
+### Step 1
+Inspect existing ERP architecture.
+
+### Step 2
+Inspect existing Student, Admission, Enrollment and Parent models.
+
+### Step 3
+Inspect existing document/file infrastructure.
+
+### Step 4
+Inspect existing Fees, Library, Transport, Hostel and Accounts integrations.
+
+### Step 5
+Implement student lifecycle history.
+
+### Step 6
+Implement promotion and section transfer.
+
+### Step 7
+Implement withdrawal and clearance.
+
+### Step 8
+Implement document vault and verification.
+
+### Step 9
+Implement service request center.
+
+### Step 10
+Implement certificate types and templates.
+
+### Step 11
+Implement certificate numbering.
+
+### Step 12
+Implement PDF generation.
+
+### Step 13
+Implement QR verification.
+
+### Step 14
+Implement TC workflow.
+
+### Step 15
+Implement certificate correction/revocation.
+
+### Step 16
+Implement alumni handoff.
+
+### Step 17
+Integrate notifications.
+
+### Step 18
+Integrate Fees & Accounts where applicable.
+
+### Step 19
+Integrate MIS/Analytics.
+
+### Step 20
+Complete mobile/accessibility/security review.
+
+### Step 21
+Run full regression testing.
+
+---
+
+# 67. ACCEPTANCE TEST WORKFLOW
+
+After implementation, test this complete workflow:
+
+1. Create/select an existing student.
+
+2. Verify the student's current academic enrollment.
+
+3. Promote the student to the next academic session.
+
+4. Verify promotion history.
+
+5. Change the student's section.
+
+6. Verify section history.
+
+7. Upload a required document.
+
+8. Mark the document as pending verification.
+
+9. Login as authorized verifier.
+
+10. Verify the document.
+
+11. Upload another document and reject it.
+
+12. Login as parent.
+
+13. Verify the parent can see the rejection reason.
+
+14. Upload a replacement document.
+
+15. Verify the replacement workflow.
+
+16. Submit a Bonafide Certificate request.
+
+17. Verify request number generation.
+
+18. Approve the request.
+
+19. Generate the certificate.
+
+20. Verify certificate numbering.
+
+21. Verify PDF generation.
+
+22. Verify QR code.
+
+23. Open the public certificate verification page.
+
+24. Confirm only safe information is exposed.
+
+25. Create a withdrawal request.
+
+26. Verify Accounts clearance.
+
+27. Verify Library clearance.
+
+28. Verify Transport clearance if applicable.
+
+29. Verify Hostel clearance if applicable.
+
+30. Complete administrative clearance.
+
+31. Approve TC.
+
+32. Generate TC.
+
+33. Verify unique TC number.
+
+34. Verify TC PDF.
+
+35. Verify QR verification.
+
+36. Issue TC.
+
+37. Confirm student status changes appropriately.
+
+38. Confirm historical enrollment remains available.
+
+39. Convert the student to Alumni where configured.
+
+40. Verify the complete student lifecycle timeline.
+
+41. Check audit logs.
+
+42. Test the same workflow from another school.
+
+43. Confirm School B cannot access School A's data.
+
+44. Test unauthorized users.
+
+45. Confirm unauthorized certificate/document access is blocked.
+
+46. Test mobile layout.
+
+47. Test production build.
+
+---
+
+# 68. REGRESSION TESTING
+
+After implementation, verify that existing modules still work:
+
+- Authentication
+- RBAC
+- School Management
+- Academic Sessions
+- Student Management
+- Parent Portal
+- Admissions
+- Attendance
+- Fees & Accounts
+- Examination
+- Timetable
+- Homework
+- Transport
+- Library
+- Hostel
+- HR/Payroll
+- Inventory
+- Communication
+- Administration
+- Mobile/PWA
+- MIS/Analytics
+
+Do not break existing workflows.
+
+---
+
+# 69. DATABASE MIGRATION SAFETY
+
+Use safe migrations only.
+
+NEVER:
+
+- Drop production tables
+- Truncate existing data
+- Delete existing students
+- Delete financial transactions
+- Reset the database
+- Replace existing schema unnecessarily
+
+If an existing table already supports a requirement, extend it instead of creating a duplicate.
+
+Preserve all existing production data.
+
+---
+
+# 70. TESTING REQUIREMENTS
+
+Run:
+
+- TypeScript type checking
+- Linting
+- Unit tests
+- Integration tests
+- API tests
+- Authorization tests
+- Multi-school isolation tests
+- File upload tests
+- Certificate generation tests
+- QR verification tests
+- Database migration tests
+- Mobile responsive tests
+- Regression tests
+- Production build
+
+Fix errors before declaring the phase complete.
+
+---
+
+# 71. FINAL QUALITY REQUIREMENT
+
+Before finishing Phase 18:
+
+Inspect the complete implementation and confirm:
+
+- No duplicate student system exists.
+- Existing student records remain intact.
+- Existing admissions remain intact.
+- Existing fees remain intact.
+- Existing library data remains intact.
+- Existing transport data remains intact.
+- Existing hostel data remains intact.
+- Existing parent accounts remain intact.
+- Existing authentication remains intact.
+- Existing RBAC remains intact.
+- Existing communication system is reused.
+- Existing reporting system is reused.
+- Existing mobile architecture is reused.
+- Multi-school isolation works.
+- Audit logging works.
+- Private documents are protected.
+- Certificates are traceable.
+- Certificate numbers are unique.
+- TC workflow is auditable.
+- QR verification works.
+- No fake external integrations exist.
+- No mock production data has been introduced.
+
+---
+
+# 72. FINAL IMPLEMENTATION REPORT
+
+At the end, provide a concise implementation report containing:
+
+1. Features implemented
+2. Existing modules extended
+3. New database entities/migrations
+4. APIs/routes added
+5. UI pages/components added
+6. Permissions added
+7. Certificate workflows implemented
+8. Document security implemented
+9. TC workflow implemented
+10. QR verification implementation
+11. External integrations/configuration requirements
+12. Tests executed
+13. Regression test results
+14. Build result
+15. Known limitations
+16. Recommended next phase
+
+IMPORTANT:
+
+Do not claim something is implemented unless it is actually implemented and tested.
+
+If any part could not be completed, clearly identify it instead of presenting it as complete.
+
+The final result should be a production-ready extension of the existing multi-school School ERP, not a separate application.

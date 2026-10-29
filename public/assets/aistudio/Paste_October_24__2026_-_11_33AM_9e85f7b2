@@ -1,0 +1,1537 @@
+# PHASE 17 — ADVANCED REPORTS, MIS DASHBOARD & ANALYTICS
+
+You are continuing development of an EXISTING professional multi-school School ERP.
+
+IMPORTANT:
+
+This is an EXISTING ERP.
+
+Do NOT create a new project.
+
+Do NOT rebuild the ERP from scratch.
+
+Do NOT create duplicate modules.
+
+Do NOT create a separate reporting database unless genuinely required and carefully justified.
+
+Do NOT delete, reset, truncate, or replace existing data.
+
+Inspect the existing codebase, database schema, APIs, permissions, and all existing modules before implementing this phase.
+
+Reuse existing architecture, components, entities, APIs, authentication, RBAC, school isolation, notification system, financial system, academic system, and existing dashboards.
+
+The purpose of this phase is to create a professional:
+
+# ADVANCED REPORTS + MIS + MANAGEMENT DASHBOARD + ANALYTICS SYSTEM
+
+The system must provide actionable information to:
+
+- Super Admin
+- School Management
+- Principal
+- Vice Principal
+- Academic Coordinator
+- Teachers
+- Accountant
+- HR
+- Transport Manager
+- Hostel Warden
+- Librarian
+- Inventory Manager
+- Other authorized roles
+
+Every report must respect role permissions and school isolation.
+
+==================================================
+1. FIRST AUDIT THE EXISTING ERP
+==================================================
+
+Before implementation:
+
+Inspect all existing modules and identify available data from:
+
+- Schools
+- Academic Sessions
+- Students
+- Parents
+- Admissions
+- Teachers
+- Staff
+- Attendance
+- Fees
+- Accounts
+- Examinations
+- Results
+- Timetable
+- Homework
+- Transport
+- Vehicles
+- Library
+- Hostel
+- HR
+- Payroll
+- Inventory
+- Assets
+- Procurement
+- Communication
+- Notifications
+- Calendar
+- Events
+- Meetings
+- Visitors
+- Student Portal
+- Parent Portal
+- Teacher Portal
+
+Identify existing:
+
+- database tables
+- relationships
+- APIs
+- server actions
+- services
+- dashboards
+- charts
+- report components
+- filters
+- exports
+
+Do not create duplicate data structures.
+
+==================================================
+2. MIS DASHBOARD ARCHITECTURE
+==================================================
+
+Create a centralized MIS and Analytics section.
+
+Recommended navigation:
+
+MIS & Analytics
+├── Executive Dashboard
+├── Academic Dashboard
+├── Student Dashboard
+├── Attendance Analytics
+├── Fees & Finance Analytics
+├── Examination Analytics
+├── Staff & HR Analytics
+├── Transport Analytics
+├── Hostel Analytics
+├── Library Analytics
+├── Inventory Analytics
+├── Admissions Analytics
+├── Communication Analytics
+├── Events & Administration Analytics
+├── Custom Reports
+└── Report Center
+
+Visibility must depend on RBAC.
+
+==================================================
+3. EXECUTIVE MANAGEMENT DASHBOARD
+==================================================
+
+Create a high-level dashboard for authorized school management.
+
+Display:
+
+- total students
+- active students
+- new admissions
+- pending admissions
+- attendance today
+- average attendance
+- fee collection today
+- fee collection this month
+- outstanding fees
+- exam performance
+- staff count
+- staff attendance
+- pending leave requests
+- transport students
+- hostel students
+- library circulation
+- inventory alerts
+- pending approvals
+- upcoming events
+- important notifications
+
+Use configurable date ranges.
+
+Provide:
+
+- Today
+- This Week
+- This Month
+- Current Session
+- Previous Session
+- Custom Range
+
+==================================================
+4. MULTI-SCHOOL DASHBOARD
+==================================================
+
+For Super Admin or authorized multi-school users, provide school comparison.
+
+Display:
+
+School A
+School B
+School C
+etc.
+
+Compare:
+
+- student strength
+- admission count
+- attendance percentage
+- fee collection
+- outstanding fees
+- academic performance
+- staff strength
+- staff attendance
+- transport usage
+- hostel occupancy
+- library usage
+- inventory status
+
+Users must only see schools they are authorized to access.
+
+Never expose School A data to School B users.
+
+==================================================
+5. SCHOOL-WISE FILTER
+==================================================
+
+Implement a central filter system:
+
+- School
+- Academic Session
+- Class
+- Section
+- Date Range
+- Gender where permitted
+- Student status
+- Admission status
+
+Filters should dynamically affect supported reports and charts.
+
+Do not send unauthorized school IDs from the frontend and trust them.
+
+Server-side authorization must enforce access.
+
+==================================================
+6. ACADEMIC PERFORMANCE DASHBOARD
+==================================================
+
+Create academic analytics using existing examination/result data.
+
+Display:
+
+- average marks
+- average percentage
+- pass percentage
+- fail percentage
+- subject-wise performance
+- class-wise performance
+- section-wise performance
+- exam-wise performance
+- student performance distribution
+- grade distribution
+- highest performers
+- students requiring academic support
+
+Allow comparison:
+
+- exam vs exam
+- class vs class
+- section vs section
+- subject vs subject
+- current session vs previous session
+
+==================================================
+7. STUDENT ANALYTICS
+==================================================
+
+Create student analytics.
+
+Display:
+
+- total students
+- active students
+- inactive students
+- new admissions
+- withdrawals
+- transfers
+- class strength
+- section strength
+- gender distribution where permitted
+- age distribution where appropriate
+- students with attendance concerns
+- students with fee dues
+- students with academic concerns
+
+Provide class-wise and session-wise analysis.
+
+==================================================
+8. ATTENDANCE ANALYTICS
+==================================================
+
+Create an advanced attendance dashboard.
+
+Display:
+
+- today's attendance
+- weekly attendance
+- monthly attendance
+- average attendance
+- class-wise attendance
+- section-wise attendance
+- student-wise attendance
+- teacher attendance
+- staff attendance
+- chronic absenteeism
+- attendance below configurable threshold
+
+Use configurable thresholds.
+
+Example:
+
+- Below 75%
+- Below 80%
+- Below 85%
+- Custom threshold
+
+Do not hardcode one legal/academic rule.
+
+==================================================
+9. ATTENDANCE TREND ANALYSIS
+==================================================
+
+Show:
+
+- daily trend
+- weekly trend
+- monthly trend
+- session trend
+
+Allow filtering by:
+
+- school
+- class
+- section
+- student
+- date range
+
+Provide charts and tabular details.
+
+Every chart must have an accessible alternative table/list.
+
+==================================================
+10. FEES & FINANCE DASHBOARD
+==================================================
+
+Use the existing Fees & Accounts system.
+
+Display:
+
+- total billed
+- total collected
+- total outstanding
+- today's collection
+- monthly collection
+- yearly collection
+- overdue amount
+- concessions
+- scholarships
+- refunds
+- payment method distribution
+
+Payment methods may include:
+
+- Cash
+- UPI
+- Bank Transfer
+- Cheque
+- Card
+- Online Gateway
+
+Do not create another payment system.
+
+==================================================
+11. FEE COLLECTION ANALYTICS
+==================================================
+
+Provide:
+
+- daily collection trend
+- monthly collection trend
+- class-wise collection
+- fee-category collection
+- payment-method analysis
+- outstanding by class
+- outstanding by student
+- overdue aging
+
+Aging categories should be configurable.
+
+Example:
+
+- 0–30 days
+- 31–60 days
+- 61–90 days
+- 90+ days
+
+==================================================
+12. FINANCIAL RECONCILIATION REPORTS
+==================================================
+
+Provide reports for authorized finance users:
+
+- collection summary
+- payment transactions
+- refunds
+- concessions
+- adjustments
+- outstanding fees
+- receipt sequence
+- payment-method reconciliation
+- daily closing summary
+
+Do not allow reports to modify financial transactions.
+
+Financial transactions remain immutable except through existing approved correction/refund mechanisms.
+
+==================================================
+13. EXAMINATION ANALYTICS
+==================================================
+
+Create:
+
+- exam performance dashboard
+- class performance
+- subject performance
+- student performance
+- grade distribution
+- pass/fail analysis
+- attendance vs performance analysis where valid
+- previous exam comparison
+- previous session comparison
+
+Provide drill-down:
+
+Dashboard → Class → Section → Subject → Student
+
+==================================================
+14. STUDENT PERFORMANCE ANALYTICS
+==================================================
+
+Create student performance profile containing:
+
+- examination history
+- subject performance
+- percentage trend
+- grade trend
+- attendance trend
+- homework activity where available
+- teacher feedback where available
+
+Do not make unsupported claims or AI-generated academic judgments.
+
+If AI analytics are later introduced, clearly label them as AI-generated insights.
+
+==================================================
+15. CLASS PERFORMANCE REPORT
+==================================================
+
+For each class:
+
+Display:
+
+- total students
+- appeared
+- passed
+- failed
+- pass percentage
+- average percentage
+- highest percentage
+- lowest percentage
+- subject-wise averages
+- grade distribution
+
+Allow export.
+
+==================================================
+16. SUBJECT PERFORMANCE REPORT
+==================================================
+
+For each subject:
+
+Display:
+
+- students appearing
+- average marks
+- highest marks
+- lowest marks
+- pass percentage
+- grade distribution
+
+Allow:
+
+- class filter
+- section filter
+- exam filter
+- session filter
+
+==================================================
+17. ADMISSIONS ANALYTICS
+==================================================
+
+Use existing Admissions data.
+
+Display:
+
+- applications received
+- applications pending
+- entrance tests
+- interviews
+- selected
+- rejected
+- confirmed admissions
+- conversion rate
+- class-wise admissions
+- source/channel if captured
+- admission trend
+
+Provide admission funnel:
+
+Application
+↓
+Screening
+↓
+Entrance Test
+↓
+Interview
+↓
+Selection
+↓
+Fee
+↓
+Confirmed Admission
+
+==================================================
+18. ADMISSION FUNNEL ANALYTICS
+==================================================
+
+Provide conversion percentages between stages.
+
+Example:
+
+Applications → Test
+Test → Interview
+Interview → Selection
+Selection → Confirmed Admission
+
+Do not invent missing data.
+
+Only calculate from actual stored records.
+
+==================================================
+19. STAFF & HR ANALYTICS
+==================================================
+
+Use existing HR/Staff system.
+
+Display:
+
+- total employees
+- teachers
+- non-teaching staff
+- department distribution
+- designation distribution
+- active/inactive
+- joining trends
+- resignation trends
+- staff attendance
+- leave trends
+- pending leave requests
+- payroll status
+
+Restrict sensitive salary/bank/tax information to authorized users.
+
+==================================================
+20. PAYROLL ANALYTICS
+==================================================
+
+For authorized HR/payroll/accounting roles:
+
+Display:
+
+- total payroll
+- salary component totals
+- deductions
+- net payroll
+- pending payroll
+- paid payroll
+- advances
+- reimbursements
+- overtime
+- payroll trend
+
+Do not expose individual salary information to unauthorized users.
+
+==================================================
+21. TRANSPORT ANALYTICS
+==================================================
+
+Use existing Transport module.
+
+Display:
+
+- total vehicles
+- active vehicles
+- maintenance due
+- routes
+- route capacity
+- occupied seats
+- available seats
+- students using transport
+- transport attendance
+- fuel consumption
+- maintenance expenses
+- transport expenses
+- incidents
+
+Provide vehicle-wise and route-wise reports.
+
+==================================================
+22. HOSTEL ANALYTICS
+==================================================
+
+Use existing Hostel module.
+
+Display:
+
+- total hostel capacity
+- occupied beds
+- available beds
+- occupancy percentage
+- hostel-wise occupancy
+- room-wise occupancy
+- hostel attendance
+- leave/outing activity
+- incidents
+- hostel fee status
+- mess attendance where available
+
+==================================================
+23. LIBRARY ANALYTICS
+==================================================
+
+Use existing Library module.
+
+Display:
+
+- total books
+- available books
+- issued books
+- overdue books
+- reservations
+- fines
+- lost/damaged books
+- active members
+- circulation trend
+- popular books
+- category-wise circulation
+
+Provide date-range filtering.
+
+==================================================
+24. INVENTORY & ASSET ANALYTICS
+==================================================
+
+Use existing Inventory/Assets/Procurement system.
+
+Display:
+
+- total inventory items
+- low stock
+- out-of-stock
+- stock value where available
+- stock movement
+- asset count
+- asset assignment
+- assets under maintenance
+- warranty expiry
+- procurement spending
+- vendor spending
+- pending purchase requests
+- pending purchase orders
+
+Do not duplicate accounting calculations.
+
+==================================================
+25. PROCUREMENT ANALYTICS
+==================================================
+
+Display:
+
+- purchase requests
+- approved requests
+- purchase orders
+- goods received
+- pending deliveries
+- purchase invoices
+- vendor-wise purchases
+- category-wise purchases
+- monthly procurement trend
+
+==================================================
+26. COMMUNICATION ANALYTICS
+==================================================
+
+Use Phase 14 communication data.
+
+Display where available:
+
+- messages sent
+- announcements
+- notifications
+- delivery status
+- read status
+- acknowledgement rate
+- parent engagement
+- communication by module
+
+Do not expose private message content in management analytics unless explicitly authorized.
+
+==================================================
+27. EVENT & ADMINISTRATION ANALYTICS
+==================================================
+
+Use Phase 15 data.
+
+Display:
+
+- upcoming events
+- completed events
+- attendance
+- event participation
+- venue utilization
+- meetings
+- pending action items
+- visitor count
+- visitor trends
+- appointment trends
+
+==================================================
+28. VISITOR ANALYTICS
+==================================================
+
+Display:
+
+- visitors today
+- visitors this month
+- visitor type
+- purpose
+- repeat visitors
+- peak visitor periods
+- appointments
+- deliveries
+- service providers
+
+Protect visitor privacy.
+
+==================================================
+29. CROSS-MODULE ANALYTICS
+==================================================
+
+Create useful cross-module reports.
+
+Examples:
+
+### Attendance vs Academic Performance
+Compare attendance percentage with examination performance.
+
+### Attendance vs Fee Status
+Identify students with attendance concerns and outstanding fees.
+
+### Admission vs Student Strength
+Analyze admission trends against current student strength.
+
+### Transport vs Student Enrollment
+Analyze transport usage by class.
+
+### Hostel vs Student Enrollment
+Analyze hostel occupancy.
+
+### Library vs Academic Activity
+Where data supports it, compare library usage with academic activity.
+
+Do not claim causal relationships.
+
+Use language such as:
+
+"Correlation/Comparison"
+
+rather than:
+
+"Attendance caused low marks."
+
+==================================================
+30. DRILL-DOWN ANALYTICS
+==================================================
+
+Charts and summary cards should support drill-down where appropriate.
+
+Example:
+
+School
+→ Class
+→ Section
+→ Student
+
+Or:
+
+Fees
+→ Class
+→ Student
+→ Fee Ledger
+
+Or:
+
+Examination
+→ Class
+→ Subject
+→ Student
+
+Drill-down must preserve permissions and filters.
+
+==================================================
+31. CUSTOM REPORT BUILDER
+==================================================
+
+Create a controlled Custom Report Builder for authorized administrators.
+
+Allow selection of:
+
+- module
+- fields
+- filters
+- grouping
+- sorting
+- date range
+- school
+- academic session
+
+Support:
+
+- preview
+- save report
+- rename report
+- duplicate report
+- run report
+- export report
+
+Do NOT allow arbitrary raw SQL execution from the browser.
+
+Use predefined safe query/report definitions.
+
+==================================================
+32. SAVED REPORTS
+==================================================
+
+Authorized users can save frequently used reports.
+
+Each saved report should contain:
+
+- report name
+- module
+- selected fields
+- filters
+- grouping
+- sorting
+- owner
+- school scope
+- created date
+- updated date
+
+Respect permissions when a saved report is opened later.
+
+==================================================
+33. REPORT SCHEDULING
+==================================================
+
+If the existing architecture supports background jobs, allow authorized users to schedule reports.
+
+Possible schedules:
+
+- daily
+- weekly
+- monthly
+
+Possible delivery:
+
+- in-app
+- email
+
+Do not implement fake email delivery.
+
+Use the existing Phase 14 notification/provider abstraction.
+
+Provide execution status:
+
+- pending
+- processing
+- completed
+- failed
+
+==================================================
+34. EXPORT CENTER
+==================================================
+
+Create a central Report Export Center.
+
+Support where already available:
+
+- PDF
+- Excel
+- CSV
+
+Track:
+
+- report
+- requested by
+- generated date
+- status
+- file
+- expiration/retention where applicable
+
+Secure generated files.
+
+Do not expose report download URLs publicly.
+
+==================================================
+35. REPORT TEMPLATES
+==================================================
+
+Create reusable professional templates for:
+
+- Student Strength Report
+- Attendance Report
+- Fee Collection Report
+- Outstanding Fee Report
+- Admission Report
+- Examination Result Report
+- Class Performance Report
+- Staff Report
+- Payroll Summary
+- Transport Report
+- Hostel Report
+- Library Report
+- Inventory Report
+- Procurement Report
+- Visitor Report
+- Event Report
+
+Use school branding where existing branding is available.
+
+==================================================
+36. REPORT FILTER SYSTEM
+==================================================
+
+Create a reusable filter component.
+
+Support:
+
+- School
+- Session
+- Date range
+- Class
+- Section
+- Subject
+- Student
+- Staff
+- Department
+- Status
+
+Only display filters relevant to the selected report.
+
+==================================================
+37. DATE RANGE SYSTEM
+==================================================
+
+Provide:
+
+- Today
+- Yesterday
+- This Week
+- This Month
+- Previous Month
+- This Quarter
+- This Year
+- Academic Session
+- Custom Range
+
+Use timezone-aware date handling.
+
+Avoid off-by-one-day problems.
+
+==================================================
+38. CHART SYSTEM
+==================================================
+
+Use a consistent chart library if one already exists.
+
+Charts may include:
+
+- line charts
+- bar charts
+- stacked bars
+- pie/donut charts
+- area charts
+- progress indicators
+- KPI cards
+
+Do not overload dashboards with unnecessary charts.
+
+Every visualization should answer a useful management question.
+
+==================================================
+39. ACCESSIBLE DATA ALTERNATIVES
+==================================================
+
+Every important chart must provide an accessible alternative.
+
+For example:
+
+Chart + data table.
+
+Do not make important information available only visually.
+
+==================================================
+40. MOBILE REPORTING
+==================================================
+
+Integrate with Phase 16 mobile responsiveness.
+
+Reports must work on:
+
+- phones
+- tablets
+- desktops
+
+On mobile:
+
+- KPI cards stack
+- charts resize
+- filters become filter drawers
+- tables become cards or controlled scrolling
+- export buttons remain accessible
+- drill-down remains usable
+
+==================================================
+41. AI-ASSISTED MIS INSIGHTS
+==================================================
+
+If Gemini AI is already integrated into the ERP, create an OPTIONAL AI Insights layer.
+
+AI may summarize verified existing data such as:
+
+- attendance trends
+- fee collection trends
+- admission trends
+- examination trends
+- inventory alerts
+
+Example:
+
+"Attendance decreased compared with the previous month."
+
+AI must not invent numbers.
+
+AI must receive structured verified data rather than unrestricted database access.
+
+Clearly label AI-generated content.
+
+Do not allow AI to make final decisions regarding:
+
+- student promotion
+- admission rejection
+- employee termination
+- disciplinary action
+- financial approval
+
+AI should assist, not replace authorized decision makers.
+
+==================================================
+42. MANAGEMENT ALERTS
+==================================================
+
+Create configurable MIS alerts.
+
+Examples:
+
+- attendance below threshold
+- fee outstanding above threshold
+- unusual fee collection decline
+- low inventory
+- vehicle maintenance overdue
+- hostel capacity near full
+- library overdue increase
+- pending approvals
+- payroll pending
+- examination results pending
+
+Alerts should be based on actual data.
+
+==================================================
+43. KPI CONFIGURATION
+==================================================
+
+Where practical, allow administrators to configure:
+
+- dashboard KPI visibility
+- attendance thresholds
+- fee aging thresholds
+- alert thresholds
+
+Do not allow ordinary users to modify system-wide business rules without permission.
+
+==================================================
+44. REPORT PERMISSIONS
+==================================================
+
+Implement report-level permissions.
+
+Examples:
+
+Principal:
+- academic
+- attendance
+- student
+- admissions
+- general finance summary
+
+Accountant:
+- fees
+- finance
+- receipts
+- outstanding
+- financial reconciliation
+
+HR:
+- staff
+- attendance
+- leave
+- payroll
+
+Librarian:
+- library reports
+
+Transport Manager:
+- transport reports
+
+Hostel Warden:
+- hostel reports
+
+Super Admin:
+- authorized multi-school analytics
+
+Do not expose sensitive reports to unauthorized roles.
+
+==================================================
+45. DATA PRIVACY
+==================================================
+
+Reports can contain sensitive information.
+
+Protect:
+
+- student personal information
+- parent contact details
+- employee salary
+- bank details
+- tax information
+- financial transactions
+- private communications
+- visitor information
+
+Use field-level visibility where required.
+
+Do not include unnecessary personal information in reports.
+
+==================================================
+46. AUDIT LOGGING
+==================================================
+
+Log important reporting actions:
+
+- report created
+- report edited
+- report deleted
+- report viewed where appropriate
+- report exported
+- report scheduled
+- report shared if sharing exists
+- dashboard configuration changed
+
+Do not log sensitive report contents unnecessarily.
+
+==================================================
+47. REPORT DATA ACCURACY
+==================================================
+
+Reports must use authoritative existing data.
+
+Avoid:
+
+- duplicated calculations
+- conflicting totals
+- client-only calculations for critical financial reports
+- stale cached financial information without clear labeling
+
+For financial reports, use server-side authoritative calculations.
+
+==================================================
+48. PERFORMANCE
+==================================================
+
+Reports may process large datasets.
+
+Implement where appropriate:
+
+- server-side aggregation
+- pagination
+- indexed queries
+- optimized joins
+- date filtering
+- caching of safe aggregate results
+- lazy loading
+- background generation for heavy exports
+
+Do not load thousands of records into the browser unnecessarily.
+
+==================================================
+49. LARGE DATASET SUPPORT
+==================================================
+
+The system must remain usable with:
+
+- thousands of students
+- hundreds of staff
+- years of attendance
+- years of fee transactions
+- large examination datasets
+- large library catalogs
+- large inventory records
+
+Use appropriate database indexes and query optimization.
+
+==================================================
+50. FINANCIAL REPORT INTEGRITY
+==================================================
+
+Financial dashboards must reconcile with existing Fees & Accounts.
+
+Verify:
+
+Collection Summary
+=
+Underlying Payment Transactions
+
+Outstanding
+=
+Configured Billing
+-
+Valid Payments
+-
+Approved Adjustments
+-
+Applicable Concessions
+
+Do not silently modify accounting data to make dashboard numbers match.
+
+If discrepancies exist, report them.
+
+==================================================
+51. MULTI-SCHOOL SECURITY TEST
+==================================================
+
+Test:
+
+School A user
+→ sees School A data only.
+
+School B user
+→ sees School B data only.
+
+Multi-school authorized user
+→ sees only assigned schools.
+
+Attempt unauthorized school filtering through:
+
+- URL
+- query parameters
+- API requests
+- report builder
+- exports
+
+All must be rejected server-side.
+
+==================================================
+52. REGRESSION TESTING
+==================================================
+
+After implementing MIS:
+
+Verify that existing modules still work.
+
+Test:
+
+- login
+- RBAC
+- school isolation
+- students
+- admissions
+- staff
+- attendance
+- fees
+- exams
+- timetable
+- homework
+- transport
+- library
+- hostel
+- HR
+- payroll
+- inventory
+- procurement
+- communication
+- calendar
+- events
+- visitors
+- portals
+- mobile responsiveness
+
+==================================================
+53. END-TO-END MIS ACCEPTANCE TEST
+==================================================
+
+Perform the following workflow:
+
+1. Login as authorized school administrator.
+2. Open MIS Dashboard.
+3. Select School.
+4. Select Academic Session.
+5. Select date range.
+6. View student strength.
+7. View attendance.
+8. Drill into a class.
+9. Drill into a section.
+10. Open student details.
+11. Open fee analytics.
+12. Drill into outstanding fees.
+13. Open examination analytics.
+14. Compare two examinations.
+15. Open staff analytics.
+16. Open transport analytics.
+17. Open hostel analytics.
+18. Open library analytics.
+19. Open inventory analytics.
+20. Open admissions funnel.
+21. Create a custom report.
+22. Preview the report.
+23. Save the report.
+24. Export it.
+25. Verify permissions.
+26. Verify audit log.
+27. Test mobile view.
+28. Test tablet view.
+29. Test desktop view.
+30. Verify production build.
+
+==================================================
+54. TEST DATA POLICY
+==================================================
+
+Do not insert fake production data.
+
+If test data is necessary:
+
+- use clearly isolated development/test fixtures
+- never mix test records with production records
+- never present test records as real school data
+
+==================================================
+55. DATABASE MIGRATIONS
+==================================================
+
+If new database entities are required for:
+
+- saved reports
+- report definitions
+- scheduled reports
+- report execution history
+- dashboard preferences
+- KPI configuration
+- alert configuration
+
+Create safe migrations.
+
+Never:
+
+- drop existing tables
+- truncate existing data
+- reset database
+- overwrite production records
+
+==================================================
+56. IMPLEMENTATION ORDER
+==================================================
+
+Implement in this order:
+
+STEP 1
+Audit existing data architecture.
+
+STEP 2
+Create reusable report/query service architecture.
+
+STEP 3
+Create centralized MIS navigation.
+
+STEP 4
+Create Executive Dashboard.
+
+STEP 5
+Create Student and Attendance Analytics.
+
+STEP 6
+Create Fees & Finance Analytics.
+
+STEP 7
+Create Examination Analytics.
+
+STEP 8
+Create Admissions Analytics.
+
+STEP 9
+Create Staff/HR/Payroll Analytics.
+
+STEP 10
+Create Transport Analytics.
+
+STEP 11
+Create Hostel Analytics.
+
+STEP 12
+Create Library Analytics.
+
+STEP 13
+Create Inventory/Procurement Analytics.
+
+STEP 14
+Create Communication/Event/Visitor Analytics.
+
+STEP 15
+Create drill-down architecture.
+
+STEP 16
+Create Custom Report Builder.
+
+STEP 17
+Create Saved Reports.
+
+STEP 18
+Create Export Center.
+
+STEP 19
+Add scheduled reports if architecture supports it.
+
+STEP 20
+Add configurable management alerts.
+
+STEP 21
+Add optional Gemini AI insights.
+
+STEP 22
+Optimize database queries.
+
+STEP 23
+Apply RBAC and school isolation.
+
+STEP 24
+Implement audit logging.
+
+STEP 25
+Test mobile/tablet/desktop.
+
+STEP 26
+Run complete regression tests.
+
+STEP 27
+Run production build.
+
+==================================================
+57. CODE QUALITY REQUIREMENTS
+==================================================
+
+Use:
+
+- TypeScript
+- reusable components
+- typed APIs
+- schema validation
+- reusable query services
+- centralized permission checks
+- reusable filter components
+- reusable chart components
+- reusable export services
+
+Avoid:
+
+- duplicated report logic
+- hardcoded school IDs
+- hardcoded session IDs
+- hardcoded thresholds
+- raw SQL exposed to users
+- client-only authorization
+- giant monolithic dashboard components
+
+==================================================
+58. FINAL IMPLEMENTATION REPORT
+==================================================
+
+After implementation provide a detailed report containing:
+
+1. MIS architecture
+2. Dashboards created
+3. Reports created
+4. Analytics created
+5. Filters implemented
+6. Drill-down functionality
+7. Custom report builder
+8. Saved reports
+9. Export functionality
+10. Scheduled reports status
+11. Alerts
+12. AI insights status
+13. Database changes
+14. API changes
+15. Security changes
+16. RBAC verification
+17. Multi-school isolation verification
+18. Performance improvements
+19. Mobile responsiveness verification
+20. Tests executed
+21. Production build status
+22. Known limitations
+23. Files/components modified
+
+IMPORTANT:
+
+Do not simply create attractive charts.
+
+The MIS system must provide accurate, permission-controlled, school-isolated, actionable management information using the EXISTING ERP data.
+
+Do not claim implementation is complete unless the functionality has actually been implemented and tested.

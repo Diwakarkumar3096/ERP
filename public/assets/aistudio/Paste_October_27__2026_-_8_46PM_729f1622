@@ -1,0 +1,1492 @@
+# CORE ERP AUDIT, STABILIZATION, INTEGRATION & PRODUCTION READINESS
+
+You are working on an EXISTING multi-school School ERP Management System.
+
+This is NOT a request to create a new project.
+
+Your primary objective in this phase is to audit, stabilize, complete, integrate, secure, and make the existing ERP production-ready.
+
+DO NOT rebuild the application from scratch.
+
+DO NOT create a second ERP.
+
+DO NOT replace working modules unnecessarily.
+
+DO NOT create duplicate entities, duplicate dashboards, duplicate databases, or duplicate business logic.
+
+Before changing anything, inspect the complete existing codebase, database schema, migrations, API routes, server actions, authentication system, RBAC, components, pages, existing modules, and current implementation status.
+
+==================================================
+1. CORE OBJECTIVE
+==================================================
+
+Perform a complete CORE ERP AUDIT and then implement/fix everything required for a reliable basic School ERP.
+
+The following core workflow must work correctly from beginning to end:
+
+School
+→ Academic Session
+→ Class
+→ Section
+→ Subject
+→ Student
+→ Parent/Guardian
+→ Teacher/Staff
+→ Teacher Subject/Class Assignment
+→ Attendance
+→ Fees
+→ Payment
+→ Receipt
+→ Student Ledger
+→ Examination
+→ Marks
+→ Result
+→ Report Card
+→ Timetable
+→ Homework
+→ Parent/Student Portal
+
+The system must support multiple schools with strict school-level data isolation.
+
+Every implemented feature must use real database persistence.
+
+No fake buttons.
+
+No placeholder functionality.
+
+No mock production data.
+
+No hardcoded business records.
+
+No frontend-only security.
+
+==================================================
+2. IMPORTANT DEVELOPMENT RULES
+==================================================
+
+Before implementation:
+
+1. Inspect the existing architecture.
+2. Inspect the database schema.
+3. Inspect all existing migrations.
+4. Inspect authentication.
+5. Inspect role and permission systems.
+6. Inspect school/session relationships.
+7. Inspect all existing modules.
+8. Identify which features are already implemented.
+9. Identify which features are partially implemented.
+10. Identify broken features.
+11. Identify duplicate entities or duplicate business logic.
+
+Reuse existing architecture wherever possible.
+
+Do not create duplicate tables if an existing table can be extended safely.
+
+Do not rename or delete existing data structures unless absolutely necessary.
+
+Do not reset the database.
+
+Do not DROP production tables.
+
+Do not TRUNCATE existing data.
+
+Do not delete existing user/student/financial records.
+
+Use safe, backward-compatible database migrations.
+
+Preserve all working functionality.
+
+==================================================
+3. PHASE A — AUTHENTICATION & SECURITY AUDIT
+==================================================
+
+Verify and fix:
+
+- Login
+- Logout
+- Session management
+- Password security
+- Password reset
+- Account activation/deactivation
+- Role-based access control
+- Permission checks
+- School-level authorization
+- API authorization
+- Server-side authorization
+- Route protection
+- Unauthorized access handling
+- Session expiration
+- Secure cookies/tokens
+- CSRF protection where applicable
+- Input validation
+- API request validation
+- Rate limiting where appropriate
+- IDOR protection
+- Sensitive data protection
+
+Required roles should be supported where appropriate:
+
+- Super Admin
+- School Admin
+- Principal
+- Teacher
+- Accountant
+- HR
+- Librarian
+- Transport Manager
+- Hostel/Warden
+- Parent
+- Student
+
+Do not assume that hiding a menu item is security.
+
+Every protected API/action must verify authorization on the server.
+
+==================================================
+4. PHASE B — MULTI-SCHOOL ISOLATION
+==================================================
+
+Verify that every school-owned record is correctly associated with a school.
+
+Audit:
+
+- Schools
+- Users
+- Students
+- Parents
+- Teachers
+- Staff
+- Classes
+- Sections
+- Subjects
+- Attendance
+- Fees
+- Payments
+- Exams
+- Marks
+- Results
+- Timetable
+- Homework
+- Documents
+- Notifications
+- Library
+- Transport
+- Hostel
+- Inventory
+- HR
+- Reports
+
+A user from School A must NEVER be able to:
+
+- view School B students
+- view School B fees
+- view School B attendance
+- view School B results
+- edit School B records
+- access School B documents
+- access School B reports
+- access School B APIs
+
+Test this at the database/API/server level, not only in the UI.
+
+==================================================
+5. PHASE C — SCHOOL & ACADEMIC MASTER DATA
+==================================================
+
+Verify and complete:
+
+### School
+- School profile
+- Logo
+- Address
+- Contact information
+- Email
+- Website
+- School code
+- Academic configuration
+
+### Academic Session
+- Create session
+- Edit session
+- Activate session
+- Close session
+- Current session
+- Session history
+
+### Class
+- Create
+- Edit
+- Activate/deactivate
+
+### Section
+- Create
+- Edit
+- Class relationship
+
+### Subject
+- Create
+- Edit
+- Subject code
+- Subject type
+- Class mapping
+
+### Department
+- Create/edit
+
+### Designation
+- Create/edit
+
+Ensure all master data has:
+
+- Validation
+- Search
+- Filters
+- Pagination
+- Permissions
+- Audit logging
+- School isolation
+
+==================================================
+6. PHASE D — STUDENT MANAGEMENT AUDIT
+==================================================
+
+Verify the complete student lifecycle.
+
+Student profile must support:
+
+- Admission number
+- Student ID
+- Name
+- Date of birth
+- Gender
+- Contact information
+- Address
+- Class
+- Section
+- Academic session
+- Admission date
+- Student status
+- Photo
+- Documents
+- Parent/guardian
+- Emergency information where applicable
+
+Verify:
+
+- Create student
+- Edit student
+- View student
+- Search student
+- Filter student
+- Transfer class
+- Transfer section
+- Change session
+- Student history
+- Active/inactive status
+- Document management
+
+Prevent duplicate student records where appropriate.
+
+Use proper database constraints and validation.
+
+==================================================
+7. PHASE E — PARENT/GUARDIAN MANAGEMENT
+==================================================
+
+Verify:
+
+- Parent profile
+- Guardian profile
+- Contact information
+- Multiple guardians
+- Parent-child relationship
+- Multiple children
+- Parent login
+- Parent authorization
+
+A parent must only see children linked to that parent.
+
+A parent must NEVER be able to change the child ID in the request and access another student's data.
+
+Test:
+
+Parent A → Child A = allowed
+
+Parent A → Child B = denied
+
+==================================================
+8. PHASE F — TEACHER & STAFF MANAGEMENT
+==================================================
+
+Verify:
+
+- Employee profile
+- Teacher profile
+- Staff profile
+- Employee ID
+- Department
+- Designation
+- Joining date
+- Employment status
+- Qualifications
+- Documents
+- Subject assignment
+- Class assignment
+- Section assignment
+- Class teacher assignment
+
+Ensure Teacher/Staff uses ONE employee/staff master.
+
+Do not create a second employee database.
+
+Verify teacher relationships with:
+
+- Classes
+- Sections
+- Subjects
+- Timetable
+- Attendance
+- Homework
+- Examination
+
+==================================================
+9. PHASE G — ATTENDANCE SYSTEM
+==================================================
+
+Audit and fix student attendance.
+
+Required:
+
+- Daily attendance
+- Bulk attendance
+- Present
+- Absent
+- Half Day
+- Leave
+- Holiday
+- Attendance calendar
+- Attendance correction
+- Attendance history
+- Monthly attendance
+- Attendance percentage
+
+Teacher/staff attendance must also work.
+
+Verify:
+
+Student
+→ Class
+→ Section
+→ Session
+→ Attendance
+
+Attendance must not be accidentally recorded for the wrong school/session/class.
+
+Implement proper correction permissions.
+
+Attendance corrections must create audit logs.
+
+Support attendance locking where already designed.
+
+Prevent duplicate attendance records for the same:
+
+School + Session + Student + Date + Attendance Session
+
+unless the architecture explicitly supports multiple attendance sessions.
+
+==================================================
+10. PHASE H — FEES & ACCOUNTS AUDIT
+==================================================
+
+This is one of the most important modules.
+
+Verify the complete flow:
+
+Fee Structure
+→ Student Fee Assignment
+→ Installment
+→ Payment
+→ Receipt
+→ Ledger
+→ Outstanding Balance
+
+Verify:
+
+- Fee categories
+- Fee structures
+- Class-based fees
+- Student fee assignment
+- Installments
+- Discounts
+- Concessions
+- Scholarships
+- Due dates
+- Late fees
+- Partial payments
+- Advance payments
+- Payment history
+- Receipts
+- Student ledger
+- Outstanding fees
+- Daily collection
+- Refunds
+- Payment reversal
+- Payment methods
+
+Payment methods:
+
+- Cash
+- UPI
+- Bank Transfer
+- Cheque
+- Card
+- Online Gateway
+
+Financial transactions must never be silently deleted.
+
+Use reversal/refund mechanisms.
+
+Prevent duplicate payments.
+
+Implement idempotency where applicable.
+
+Receipt numbers must be unique and safely generated.
+
+Verify financial calculations.
+
+Test:
+
+Fee = ₹10,000
+
+Payment 1 = ₹4,000
+
+Payment 2 = ₹3,000
+
+Outstanding = ₹3,000
+
+The ledger and receipt history must remain correct.
+
+==================================================
+11. PHASE I — EXAMINATION & RESULT AUDIT
+==================================================
+
+Verify complete flow:
+
+Exam
+→ Exam Schedule
+→ Subject
+→ Marks Entry
+→ Marks Submission
+→ Approval
+→ Result Calculation
+→ Report Card
+→ Publication
+
+Verify:
+
+- Exam creation
+- Exam types
+- Exam schedule
+- Subject mapping
+- Class mapping
+- Section mapping
+- Maximum marks
+- Passing marks
+- Marks entry
+- Marks validation
+- Grade calculation
+- Result calculation
+- Result approval
+- Result publication
+- Report card
+- Student result portal
+
+Marks workflow should support where implemented:
+
+Draft
+→ Submitted
+→ Review
+→ Approved
+→ Published
+
+Prevent unauthorized modification of published results.
+
+Maintain marks correction history.
+
+Ensure result calculations are consistent and configurable.
+
+Test:
+
+Student
+→ Marks
+→ Total
+→ Percentage
+→ Grade
+→ Pass/Fail
+→ Report Card
+
+==================================================
+12. PHASE J — TIMETABLE AUDIT
+==================================================
+
+Verify:
+
+- Academic periods
+- Period timings
+- Class timetable
+- Section timetable
+- Teacher timetable
+- Subject assignment
+- Room assignment
+
+Detect conflicts:
+
+Teacher conflict
+
+Example:
+
+Teacher A cannot teach:
+
+Class 5 Section A Period 2
+
+AND
+
+Class 6 Section B Period 2
+
+Class conflict
+
+Room conflict
+
+Invalid teacher-subject assignment
+
+Invalid class/section assignment
+
+Verify timetable publishing.
+
+Verify teachers and students see the correct timetable.
+
+==================================================
+13. PHASE K — HOMEWORK & STUDY MATERIAL
+==================================================
+
+Verify:
+
+- Homework creation
+- Class assignment
+- Section assignment
+- Subject
+- Teacher
+- Due date
+- Instructions
+- Attachments
+- Student submission
+- Submission date
+- Late submission
+- Teacher evaluation
+- Feedback
+- Marks where applicable
+
+Study materials:
+
+- Upload
+- Download/view
+- Class access
+- Subject access
+- Teacher access
+- Student access
+- Parent access where applicable
+
+Use secure file access.
+
+Do not expose private files through predictable public URLs.
+
+==================================================
+14. PHASE L — ADMISSION MANAGEMENT
+==================================================
+
+Verify the admission flow:
+
+Application
+→ Review
+→ Documents
+→ Entrance Test
+→ Interview
+→ Selection
+→ Approval
+→ Fee
+→ Confirm Admission
+→ Student Creation/Linking
+
+Ensure confirmed admission does not accidentally create duplicate students.
+
+Admission data must connect correctly with:
+
+- Student
+- Parent
+- Class
+- Section
+- Session
+- Fees
+
+==================================================
+15. PHASE M — PARENT & STUDENT PORTAL
+==================================================
+
+Verify the portal using real database data.
+
+Parent dashboard must show:
+
+- Child information
+- Attendance
+- Fees
+- Receipts
+- Results
+- Homework
+- Timetable
+- Notices
+- Documents
+- Notifications
+
+Student dashboard must show:
+
+- Profile
+- Attendance
+- Results
+- Homework
+- Timetable
+- Study materials
+- Notices
+- Documents
+
+Implement secure multi-child switching for parents.
+
+Every portal query must validate ownership/relationship server-side.
+
+==================================================
+16. PHASE N — LIBRARY, TRANSPORT, HOSTEL, INVENTORY & HR
+==================================================
+
+If these modules already exist, audit them instead of rebuilding them.
+
+### Library
+
+Verify:
+
+- Books
+- Copies
+- Accession number
+- Issue
+- Return
+- Renewal
+- Due dates
+- Fine
+- Lost/damaged
+- Member
+- Library reports
+
+Integrate fines with existing Fees & Accounts.
+
+### Transport
+
+Verify:
+
+- Vehicles
+- Drivers
+- Routes
+- Stops
+- Student transport assignment
+- Transport fees
+- Vehicle documents
+- Driver documents
+- Maintenance
+
+Do not fake GPS tracking.
+
+### Hostel
+
+Verify:
+
+- Hostel
+- Block
+- Room
+- Bed
+- Student allocation
+- Attendance
+- Leave
+- Outing
+- Visitor
+- Hostel fees
+
+### Inventory
+
+Verify:
+
+- Items
+- Stock
+- Stock in/out
+- Transfers
+- Assets
+- Vendors
+- Purchase
+- Goods receipt
+- Asset assignment
+
+### HR
+
+Verify:
+
+- Employees
+- Leave
+- Attendance
+- Salary structure
+- Payroll
+- Payslips
+
+Do not duplicate employee records.
+
+If any of these modules are incomplete, document the exact missing parts and implement only essential fixes required for the existing design.
+
+==================================================
+17. PHASE O — CROSS-MODULE DATA INTEGRITY
+==================================================
+
+Audit all relationships.
+
+Required relationships:
+
+Student
+→ Parent
+
+Student
+→ School
+
+Student
+→ Session
+
+Student
+→ Class
+
+Student
+→ Section
+
+Teacher
+→ School
+
+Teacher
+→ Subject
+
+Teacher
+→ Class
+
+Teacher
+→ Section
+
+Attendance
+→ Student
+
+Attendance
+→ Session
+
+Fee
+→ Student
+
+Payment
+→ Student
+
+Payment
+→ Fee
+
+Receipt
+→ Payment
+
+Exam
+→ Session
+
+Exam
+→ Class
+
+Exam
+→ Subject
+
+Marks
+→ Student
+
+Marks
+→ Exam
+
+Result
+→ Student
+
+Timetable
+→ Teacher
+
+Timetable
+→ Class/Section
+
+Homework
+→ Teacher
+
+Homework
+→ Class/Section
+
+Homework
+→ Subject
+
+Homework Submission
+→ Student
+
+Fix broken relationships and orphaned records.
+
+Do not silently delete orphaned records.
+
+Create safe migration scripts if required.
+
+==================================================
+18. PHASE P — DATA VALIDATION & DUPLICATE CONTROL
+==================================================
+
+Identify possible duplicates in:
+
+- Students
+- Parents
+- Teachers
+- Employees
+- Fee structures
+- Payments
+- Receipts
+- Exams
+- Subjects
+- Classes
+- Sections
+
+Implement appropriate unique constraints.
+
+Do not blindly add constraints that can break existing valid data.
+
+First identify conflicts.
+
+Then provide a safe migration/cleanup strategy.
+
+==================================================
+19. PHASE Q — SEARCH, FILTER & PAGINATION
+==================================================
+
+Every major management page should support appropriate:
+
+- Search
+- Filters
+- Sorting
+- Pagination
+- Date filters
+- Class filters
+- Section filters
+- Session filters
+- Status filters
+
+Do not load thousands of records unnecessarily into the browser.
+
+Use server-side pagination for large datasets.
+
+==================================================
+20. PHASE R — DOCUMENT & FILE SECURITY
+==================================================
+
+Audit:
+
+- Student documents
+- Staff documents
+- Admission documents
+- Certificates
+- Homework files
+- Study materials
+- Other uploaded documents
+
+Verify:
+
+- File type validation
+- File size validation
+- Secure storage
+- Access authorization
+- School isolation
+- Ownership checks
+- Download authorization
+
+A user must not access another school's or another user's private document by changing an ID or URL.
+
+==================================================
+21. PHASE S — NOTIFICATIONS
+==================================================
+
+Verify existing notification functionality.
+
+Notifications may be triggered by:
+
+- Attendance
+- Fees
+- Exams
+- Homework
+- Admissions
+- Library
+- Transport
+- Hostel
+- HR
+- Communication
+
+Do not fake SMS/WhatsApp/email delivery.
+
+Use provider abstraction.
+
+If provider credentials are not configured, clearly show:
+
+"Provider not configured"
+
+instead of falsely showing "Message sent".
+
+==================================================
+22. PHASE T — AUDIT LOGGING
+==================================================
+
+Important actions should create audit logs.
+
+Examples:
+
+- Login
+- Logout
+- Student creation
+- Student update
+- Parent linking
+- Teacher assignment
+- Attendance correction
+- Fee creation
+- Payment
+- Refund
+- Result modification
+- Result approval
+- Certificate generation
+- User permission change
+- Important document changes
+
+Audit logs should contain appropriate:
+
+- User
+- School
+- Action
+- Entity
+- Entity ID
+- Timestamp
+- Relevant metadata
+
+Audit logs must not be editable by normal users.
+
+==================================================
+23. PHASE U — ERROR HANDLING
+==================================================
+
+Replace broken or unclear errors with professional messages.
+
+Handle:
+
+- Validation errors
+- Authorization errors
+- Database errors
+- Duplicate records
+- Network errors
+- Payment errors
+- File upload errors
+- Missing records
+- Session expiration
+
+Never expose:
+
+- Database credentials
+- SQL queries
+- Internal stack traces
+- API secrets
+- Sensitive server information
+
+to normal users.
+
+==================================================
+24. PHASE V — UI/UX QUALITY AUDIT
+==================================================
+
+Audit all major screens.
+
+Ensure:
+
+- Consistent navigation
+- Consistent buttons
+- Consistent forms
+- Consistent tables
+- Loading states
+- Empty states
+- Error states
+- Confirmation dialogs
+- Success messages
+- Validation messages
+- Responsive design
+- Accessible controls
+
+Remove:
+
+- Broken links
+- Dead buttons
+- Empty pages
+- Duplicate menus
+- Placeholder text
+- "Coming Soon" where the feature is expected to work
+- Fake statistics
+- Fake charts
+- Demo records
+
+Do not redesign the entire application unnecessarily.
+
+Improve existing UI where required for usability.
+
+==================================================
+25. PHASE W — MOBILE & RESPONSIVE AUDIT
+==================================================
+
+Verify the existing ERP on:
+
+- Desktop
+- Laptop
+- Tablet
+- Android
+- iPhone-sized screens
+
+Especially test:
+
+- Login
+- Dashboard
+- Attendance
+- Fees
+- Student profile
+- Marks entry
+- Timetable
+- Homework
+- Parent portal
+
+Ensure tables do not destroy mobile usability.
+
+Use cards/stacked layouts or controlled horizontal scrolling where appropriate.
+
+==================================================
+26. PHASE X — PERFORMANCE AUDIT
+==================================================
+
+Identify:
+
+- Slow database queries
+- N+1 queries
+- Unnecessary API calls
+- Large payloads
+- Unnecessary client rendering
+- Missing database indexes
+- Slow dashboard queries
+- Large file loading
+- Duplicate requests
+
+Optimize only where evidence shows a problem.
+
+Add appropriate indexes.
+
+Use server-side aggregation for reports.
+
+Do not introduce premature complexity.
+
+==================================================
+27. PHASE Y — DATABASE & MIGRATION AUDIT
+==================================================
+
+Review:
+
+- Schema consistency
+- Foreign keys
+- Unique constraints
+- Nullable fields
+- Cascading behavior
+- Indexes
+- Migration history
+- Duplicate tables
+- Unused tables
+- Orphaned relationships
+
+Do not delete existing data.
+
+Every schema change must have a safe migration.
+
+Migration must be:
+
+- Repeatable where appropriate
+- Backward-conscious
+- Tested
+- Safe for existing records
+
+==================================================
+28. PHASE Z — PRODUCTION QUALITY CHECK
+==================================================
+
+Run:
+
+- TypeScript type checking
+- Linting
+- Unit tests where available
+- Integration tests
+- API tests
+- Database tests
+- Authentication tests
+- Authorization tests
+- Multi-school isolation tests
+- Critical workflow tests
+- Production build
+
+Fix all blocking errors.
+
+Do not simply suppress errors.
+
+Do not disable type checking.
+
+Do not disable linting just to make the build pass.
+
+==================================================
+29. REQUIRED END-TO-END TESTS
+==================================================
+
+After implementation, test these complete workflows.
+
+TEST 1 — BASIC SCHOOL SETUP
+
+Create School
+→ Create Session
+→ Create Class
+→ Create Section
+→ Create Subject
+
+Verify all relationships.
+
+TEST 2 — STUDENT
+
+Create Parent
+→ Create Student
+→ Link Parent
+→ Assign Class
+→ Assign Section
+
+Verify student profile.
+
+TEST 3 — TEACHER
+
+Create Teacher
+→ Assign Subject
+→ Assign Class
+→ Assign Section
+→ Make Class Teacher
+
+Verify teacher workspace.
+
+TEST 4 — ATTENDANCE
+
+Login as Teacher
+→ Open Class
+→ Mark Attendance
+→ Save
+→ View Attendance
+→ Generate Monthly Report
+
+Verify percentage.
+
+TEST 5 — FEES
+
+Create Fee Structure
+→ Assign Fee
+→ Record Payment
+→ Generate Receipt
+→ Check Ledger
+→ Check Outstanding
+
+Verify all calculations.
+
+TEST 6 — EXAM
+
+Create Exam
+→ Create Schedule
+→ Enter Marks
+→ Submit Marks
+→ Approve Marks
+→ Calculate Result
+→ Publish Result
+→ View Report Card
+
+TEST 7 — TIMETABLE
+
+Create Periods
+→ Assign Teacher
+→ Assign Class
+→ Assign Subject
+→ Assign Room
+→ Publish Timetable
+
+Verify conflict detection.
+
+TEST 8 — HOMEWORK
+
+Teacher Creates Homework
+→ Student Sees Homework
+→ Student Submits
+→ Teacher Evaluates
+→ Student Sees Feedback
+
+TEST 9 — PARENT PORTAL
+
+Parent Login
+→ Select Child
+→ View Attendance
+→ View Fees
+→ View Receipt
+→ View Result
+→ View Homework
+→ View Timetable
+
+TEST 10 — MULTI-SCHOOL SECURITY
+
+School A User
+→ Try School B Student
+
+Expected:
+
+ACCESS DENIED
+
+School A Parent
+→ Try School B Child
+
+Expected:
+
+ACCESS DENIED
+
+School A Accountant
+→ Try School B Fees
+
+Expected:
+
+ACCESS DENIED
+
+==================================================
+30. NO FAKE IMPLEMENTATION POLICY
+==================================================
+
+Never implement a feature like this:
+
+Button → success message → nothing saved.
+
+Every production feature must have:
+
+UI
++
+Validation
++
+API/Server Action
++
+Database Persistence
++
+Authorization
++
+Error Handling
++
+Audit Logging where appropriate
+
+If a feature cannot currently be completed because an external provider is required, implement the provider abstraction and clearly identify the configuration requirement.
+
+Do not pretend that the integration is live.
+
+==================================================
+31. DO NOT IMPLEMENT ADVANCED FEATURES IN THIS PHASE
+==================================================
+
+Do NOT spend this phase implementing:
+
+- AI Assistant
+- AI chatbot
+- Predictive analytics
+- AI-based student decisions
+- AI lesson generation
+- Advanced automation engine
+- Workflow builder
+- Advanced rule engine
+- Predictive attendance
+- Predictive fee collection
+- AI disciplinary decisions
+- AI admission decisions
+
+These will be implemented later.
+
+Focus only on making the BASIC ERP stable, integrated, secure and production-ready.
+
+==================================================
+32. IMPLEMENTATION PRIORITY
+==================================================
+
+Follow this priority:
+
+PRIORITY 1
+Authentication
+RBAC
+Multi-school isolation
+School setup
+
+PRIORITY 2
+Students
+Parents
+Teachers
+Staff
+Classes
+Sections
+Subjects
+
+PRIORITY 3
+Attendance
+
+PRIORITY 4
+Fees & Accounts
+
+PRIORITY 5
+Examination & Results
+
+PRIORITY 6
+Timetable
+
+PRIORITY 7
+Homework & Study Materials
+
+PRIORITY 8
+Parent/Student Portal
+
+PRIORITY 9
+Admissions
+
+PRIORITY 10
+Existing Library/Transport/Hostel/Inventory/HR stabilization
+
+PRIORITY 11
+Security
+Audit logs
+Data integrity
+Performance
+
+PRIORITY 12
+Mobile/responsive quality
+
+PRIORITY 13
+Production build and regression testing
+
+==================================================
+33. FINAL IMPLEMENTATION REPORT
+==================================================
+
+At the end, provide a detailed implementation report.
+
+Include:
+
+1. Existing modules audited
+2. Modules fully working
+3. Modules partially working
+4. Bugs found
+5. Bugs fixed
+6. Missing features implemented
+7. Database changes
+8. Migrations created
+9. Security fixes
+10. Multi-school isolation fixes
+11. Performance improvements
+12. UI/UX improvements
+13. Tests executed
+14. Tests passed
+15. Tests failed
+16. Remaining issues
+17. External integrations requiring configuration
+18. Production readiness status
+
+Use this status format:
+
+READY
+PARTIALLY READY
+NOT READY
+
+Do not claim "100% complete" unless it is actually verified.
+
+==================================================
+34. FINAL ACCEPTANCE CRITERIA
+==================================================
+
+The ERP should be considered ready for the BASIC ERP stage only when:
+
+- Login works
+- RBAC works
+- Multi-school isolation works
+- School setup works
+- Session works
+- Classes work
+- Sections work
+- Subjects work
+- Student management works
+- Parent management works
+- Teacher/staff management works
+- Attendance works
+- Fees work
+- Payments work
+- Receipts work
+- Ledger works
+- Examination works
+- Marks work
+- Results work
+- Report cards work
+- Timetable works
+- Homework works
+- Parent portal works
+- Student portal works
+- Admissions work
+- Existing secondary modules do not break
+- Important actions are audited
+- Sensitive documents are protected
+- No major fake/mock functionality remains
+- No critical security vulnerabilities remain
+- No critical database integrity issues remain
+- Production build succeeds
+- Critical end-to-end workflows pass
+- Previous functionality remains intact
+
+==================================================
+35. MOST IMPORTANT INSTRUCTION
+==================================================
+
+DO NOT JUST GIVE ME A LIST OF WHAT SHOULD BE DONE.
+
+ACTUALLY INSPECT THE EXISTING PROJECT AND IMPLEMENT THE REQUIRED FIXES.
+
+Work incrementally.
+
+First audit.
+
+Then identify gaps.
+
+Then implement fixes.
+
+Then migrate safely.
+
+Then test.
+
+Then perform regression testing.
+
+Then provide the final implementation report.
+
+If an existing feature already works correctly, DO NOT rebuild it.
+
+If an existing feature is partially implemented, COMPLETE it.
+
+If an existing feature is broken, FIX it.
+
+If two systems duplicate the same responsibility, consolidate them safely without losing data.
+
+Preserve existing data and functionality throughout the entire process.
+
+The final goal is a reliable, secure, integrated, production-ready BASIC SCHOOL ERP — not an advanced AI system.

@@ -1,0 +1,1619 @@
+# PHASE 15 — SCHOOL ADMINISTRATION, CALENDAR, EVENTS, MEETINGS & VISITOR MANAGEMENT
+
+You are continuing development of an existing Multi-School School ERP.
+
+The ERP already contains:
+
+- Authentication
+- RBAC / Permissions
+- Multi-School Management
+- Academic Sessions
+- Classes & Sections
+- Student Management
+- Parent/Guardian Management
+- Admissions
+- Teacher & Staff Management
+- Attendance
+- Fees & Accounts
+- Examination & Results
+- Timetable
+- Homework & Classroom Management
+- Transport & Vehicle Management
+- Library Management
+- Hostel / Residential Management
+- HR & Payroll
+- Inventory / Assets / Procurement
+- Communication & Notification
+- Audit Logs
+
+Now implement:
+
+# PHASE 15 — SCHOOL ADMINISTRATION, CALENDAR, EVENTS, MEETINGS & VISITOR MANAGEMENT
+
+The purpose of this phase is to provide a centralized administrative management system for daily school operations.
+
+This module must integrate with the existing ERP.
+
+---
+
+# 1. CRITICAL IMPLEMENTATION RULES
+
+This is an EXISTING ERP.
+
+Do NOT create a new project.
+
+Do NOT rebuild the ERP.
+
+Do NOT reset the database.
+
+Do NOT:
+
+- Drop tables
+- Truncate tables
+- Delete existing production data
+- Replace existing modules
+- Create duplicate student systems
+- Create duplicate staff systems
+- Create duplicate notification systems
+- Create duplicate attendance systems
+- Create duplicate timetable systems
+- Create duplicate accounting systems
+
+Before implementation:
+
+1. Inspect the existing codebase.
+2. Inspect the existing database.
+3. Inspect existing school configuration.
+4. Inspect academic session/calendar functionality.
+5. Inspect timetable.
+6. Inspect communication.
+7. Inspect users and RBAC.
+8. Inspect staff and student relationships.
+9. Inspect existing file storage.
+10. Inspect audit logs.
+
+Reuse existing components and entities wherever possible.
+
+Use safe migrations only.
+
+---
+
+# 2. ADMINISTRATION DASHBOARD
+
+Create a School Administration Dashboard.
+
+Display:
+
+- Today's date
+- Current academic session
+- Today's events
+- Today's meetings
+- Visitors currently inside campus
+- Pending visitor approvals
+- Today's appointments
+- Upcoming holidays
+- Upcoming examinations
+- Upcoming parent meetings
+- Important announcements
+- Pending administrative tasks
+- Pending approvals
+- Recent activities
+
+Quick actions:
+
+- Create Event
+- Create Meeting
+- Add Visitor
+- Schedule Appointment
+- Create Holiday
+- Add Calendar Event
+- Publish Notice
+- View Daily Schedule
+
+---
+
+# 3. CENTRAL SCHOOL CALENDAR
+
+Create a centralized calendar.
+
+Calendar views:
+
+- Month
+- Week
+- Day
+- Agenda
+
+Events may come from:
+
+- School administration
+- Academic calendar
+- Examinations
+- Timetable
+- Parent meetings
+- Staff meetings
+- Holidays
+- Admissions
+- Transport
+- Hostel
+- Library
+- HR
+- Events
+- Communication
+
+IMPORTANT:
+
+Do not duplicate existing module events.
+
+Where an existing module already owns an event, expose/reference it in the central calendar.
+
+---
+
+# 4. CALENDAR EVENT TYPES
+
+Support:
+
+- Academic Event
+- School Event
+- Holiday
+- Examination
+- Parent Meeting
+- Staff Meeting
+- Training
+- Admission Event
+- Sports Event
+- Cultural Event
+- Competition
+- Workshop
+- Seminar
+- Inspection
+- Administrative Event
+- Other
+
+---
+
+# 5. EVENT MANAGEMENT
+
+Each event should support:
+
+- Event ID
+- Title
+- Description
+- School
+- Academic session
+- Event type
+- Start date/time
+- End date/time
+- Venue
+- Organizer
+- Department
+- Target audience
+- Maximum participants if applicable
+- Registration required
+- Registration deadline
+- Attachment
+- Status
+
+Statuses:
+
+- Draft
+- Scheduled
+- Published
+- In Progress
+- Completed
+- Cancelled
+
+---
+
+# 6. EVENT AUDIENCE
+
+Events can target:
+
+- Entire school
+- Students
+- Parents
+- Teachers
+- Staff
+- Specific class
+- Specific section
+- Specific department
+- Hostel students
+- Transport students
+
+Audience selection must respect RBAC and school isolation.
+
+---
+
+# 7. EVENT REGISTRATION
+
+For events that require registration, support:
+
+- Registration form
+- Student registration
+- Parent registration
+- Staff registration
+- Capacity
+- Registration deadline
+- Participant list
+- Registration status
+
+Registration status:
+
+- Registered
+- Waitlisted
+- Cancelled
+- Attended
+- Absent
+
+Do not create duplicate student or parent records.
+
+---
+
+# 8. EVENT ATTENDANCE
+
+For registered events, allow attendance marking.
+
+Support:
+
+- Present
+- Absent
+- Late
+- Excused
+
+Event attendance must remain separate from normal academic attendance unless there is an explicit integration requirement.
+
+---
+
+# 9. HOLIDAY MANAGEMENT
+
+Create school holiday management.
+
+Support:
+
+- Holiday name
+- Date
+- Holiday type
+- School
+- Academic session
+- Description
+- Applicable classes
+- Status
+
+Types:
+
+- National Holiday
+- State Holiday
+- School Holiday
+- Festival Holiday
+- Vacation
+- Emergency Closure
+- Other
+
+Do not hardcode legal/state holiday lists.
+
+Allow administrators to configure them.
+
+---
+
+# 10. ACADEMIC CALENDAR
+
+Integrate with existing academic sessions.
+
+Academic calendar should include:
+
+- Session start
+- Session end
+- Terms
+- Exams
+- Holidays
+- Parent meetings
+- Result dates
+- Admission periods
+- School events
+
+Do not create a second academic session system.
+
+Use the existing Academic Session entity.
+
+---
+
+# 11. SCHOOL YEAR / TERM CONFIGURATION
+
+Where supported, allow:
+
+- Academic year
+- Term 1
+- Term 2
+- Term 3
+- Semester
+- Custom periods
+
+The system should support schools using different academic structures.
+
+Do not hardcode only one term structure.
+
+---
+
+# 12. MEETING MANAGEMENT
+
+Create meeting management.
+
+Meeting types:
+
+- Principal Meeting
+- Staff Meeting
+- Department Meeting
+- Parent-Teacher Meeting
+- Management Meeting
+- Academic Meeting
+- HR Meeting
+- Disciplinary Meeting
+- Admission Meeting
+- Other
+
+Each meeting:
+
+- Meeting ID
+- Title
+- Description
+- Organizer
+- Participants
+- Date
+- Start time
+- End time
+- Venue
+- Online meeting link if applicable
+- Agenda
+- Attachments
+- Status
+
+---
+
+# 13. MEETING STATUS
+
+Support:
+
+- Draft
+- Scheduled
+- Confirmed
+- In Progress
+- Completed
+- Cancelled
+- Rescheduled
+
+Maintain meeting history.
+
+---
+
+# 14. MEETING PARTICIPANTS
+
+Participants may include:
+
+- Principal
+- Teachers
+- Staff
+- Parents
+- Students
+- Management
+- External visitors where appropriate
+
+Do not allow users to access meetings they are not authorized to view.
+
+---
+
+# 15. MEETING INVITATIONS
+
+Integrate with the existing Communication/Notification system.
+
+When a meeting is created:
+
+- Notify participants
+- Show calendar entry
+- Allow RSVP where appropriate
+
+RSVP statuses:
+
+- Accepted
+- Declined
+- Tentative
+- Pending
+
+Do not claim external email/SMS/WhatsApp delivery unless the provider is configured.
+
+---
+
+# 16. MEETING AGENDA
+
+Allow meeting organizers to create agenda items.
+
+Each agenda item:
+
+- Title
+- Description
+- Responsible person
+- Priority
+- Status
+
+Status:
+
+- Pending
+- Discussed
+- Deferred
+- Completed
+
+---
+
+# 17. MEETING MINUTES
+
+Create Minutes of Meeting.
+
+Support:
+
+- Meeting
+- Date
+- Attendees
+- Agenda
+- Discussion
+- Decisions
+- Action items
+- Responsible person
+- Deadline
+- Attachments
+
+Meeting minutes should be editable only by authorized users.
+
+Maintain audit history.
+
+---
+
+# 18. ACTION ITEMS
+
+Create administrative action tracking.
+
+Each action:
+
+- Action ID
+- Meeting reference
+- Task
+- Assigned person
+- Priority
+- Due date
+- Status
+- Completion date
+- Remarks
+
+Statuses:
+
+- Pending
+- In Progress
+- Completed
+- Overdue
+- Cancelled
+
+Show overdue actions on the admin dashboard.
+
+---
+
+# 19. APPOINTMENT MANAGEMENT
+
+Create appointment scheduling.
+
+Appointments can be made with:
+
+- Principal
+- Vice Principal
+- Coordinator
+- Teacher
+- HR
+- Accounts
+- Admission Officer
+- Transport Manager
+- Hostel Warden
+- Other authorized staff
+
+Appointment fields:
+
+- Appointment ID
+- Visitor/requester
+- Staff member
+- Purpose
+- Date
+- Time
+- Duration
+- Status
+- Notes
+
+---
+
+# 20. PARENT APPOINTMENTS
+
+Parents should be able to request appointments with authorized staff.
+
+Workflow:
+
+Parent requests appointment
+
+→ Staff reviews
+
+→ Approve / Reject / Reschedule
+
+→ Parent receives notification
+
+→ Appointment occurs
+
+→ Mark completed
+
+Do not allow parents to schedule directly into unavailable time slots.
+
+---
+
+# 21. STAFF APPOINTMENT AVAILABILITY
+
+Authorized staff should be able to configure:
+
+- Working hours
+- Available days
+- Meeting duration
+- Break times
+- Maximum appointments
+
+Prevent double-booking.
+
+---
+
+# 22. VISITOR MANAGEMENT
+
+Create a complete Visitor Management System.
+
+Visitor fields:
+
+- Visitor ID
+- Name
+- Mobile
+- Email
+- Address
+- ID type
+- ID number where legally/operationally appropriate
+- Photo
+- Organization
+- Purpose
+- Person to meet
+- Appointment
+- Vehicle number
+- Entry time
+- Exit time
+- Visitor type
+- Status
+
+Visitor types:
+
+- Parent
+- Vendor
+- Guest
+- Government Official
+- Service Provider
+- Interview Candidate
+- Management
+- Delivery
+- Other
+
+---
+
+# 23. VISITOR CHECK-IN
+
+At reception:
+
+Search existing appointment or visitor.
+
+Record:
+
+- Visitor
+- Purpose
+- Person to meet
+- Entry time
+- ID verification status
+- Vehicle number
+- Visitor photo where permitted
+- Badge/pass number
+- Reception staff
+
+Generate visitor pass where supported.
+
+---
+
+# 24. VISITOR CHECK-OUT
+
+Record:
+
+- Exit time
+- Pass returned
+- Remarks
+- Checked out by
+
+Prevent a visitor from being simultaneously marked both inside and checked out.
+
+---
+
+# 25. VISITOR PASS
+
+Create printable visitor pass.
+
+Include only necessary information:
+
+- Visitor name
+- Visitor ID
+- Person to meet
+- Date
+- Entry time
+- Pass number
+- School name
+- QR/barcode if supported
+
+Do not expose unnecessary personal information.
+
+---
+
+# 26. VISITOR APPROVAL
+
+For sensitive visitor types, support approval workflow.
+
+Example:
+
+Visitor request
+
+→ Staff approval
+
+→ Reception check-in
+
+→ Visit
+
+→ Check-out
+
+Use permissions to determine which visitors require approval.
+
+---
+
+# 27. DELIVERY MANAGEMENT
+
+Support controlled delivery entry.
+
+For delivery visitors record:
+
+- Vendor
+- Delivery type
+- Item description
+- Purchase order reference if applicable
+- Vehicle
+- Entry time
+- Exit time
+- Receiving department
+- Receiver
+- Delivery document
+
+Integrate with Procurement/Inventory where appropriate.
+
+Do not create duplicate purchase order records.
+
+---
+
+# 28. SERVICE PROVIDER VISITS
+
+Support:
+
+- Maintenance staff
+- Internet provider
+- Electrical technician
+- Plumbing technician
+- Equipment service
+- Other vendors
+
+Link visit to relevant:
+
+- Asset
+- Maintenance ticket
+- Procurement record
+
+where available.
+
+---
+
+# 29. CAMPUS ACCESS LOG
+
+Maintain an access log.
+
+Record:
+
+- Visitor
+- Date
+- Entry
+- Exit
+- Purpose
+- Host
+- Pass
+- Reception user
+
+Do not hard-delete access history.
+
+---
+
+# 30. SECURITY / BLACKLIST
+
+Allow authorized administrators to flag a visitor as:
+
+- Restricted
+- Requires approval
+- Blocked
+
+This information must be highly restricted.
+
+Never automatically block someone without an authorized action.
+
+Every change must be audit logged.
+
+---
+
+# 31. VISITOR SEARCH
+
+Search by:
+
+- Name
+- Mobile
+- Visitor ID
+- Appointment
+- Host
+- Date
+- Vehicle number
+- Organization
+
+Use pagination.
+
+Do not expose restricted visitor data to unauthorized users.
+
+---
+
+# 32. DAILY VISITOR DASHBOARD
+
+Show:
+
+- Visitors expected today
+- Visitors checked in
+- Visitors currently inside
+- Visitors checked out
+- Pending approvals
+- Late/overdue visitors
+- Deliveries
+- Service providers
+
+---
+
+# 33. CAMPUS OCCUPANCY / VISITOR STATUS
+
+Provide a real-time operational list of visitors currently inside campus.
+
+Display:
+
+- Visitor name
+- Host
+- Entry time
+- Purpose
+- Pass number
+
+Restrict access to authorized reception/security/admin users.
+
+---
+
+# 34. EMERGENCY VISITOR INFORMATION
+
+In an emergency, authorized administrators should be able to see:
+
+- Visitors currently inside campus
+- Staff currently present if existing attendance data supports it
+- Relevant student/hostel information only where legally and operationally appropriate
+
+Do not create a separate attendance system.
+
+Use existing attendance records.
+
+---
+
+# 35. EVENT VENUE MANAGEMENT
+
+Create venue management.
+
+Venues:
+
+- Auditorium
+- Classroom
+- Conference Room
+- Playground
+- Computer Lab
+- Science Lab
+- Library
+- Hall
+- Open Ground
+- Other
+
+Each venue may contain:
+
+- Name
+- Capacity
+- Location
+- Facilities
+- Availability
+- Status
+
+---
+
+# 36. VENUE CONFLICT DETECTION
+
+Prevent overlapping bookings for the same venue.
+
+Example:
+
+Auditorium:
+
+10:00–12:00 → Event A
+
+Do not allow:
+
+11:00–13:00 → Event B
+
+unless an authorized override mechanism exists.
+
+Log overrides.
+
+---
+
+# 37. RESOURCE BOOKING
+
+Where appropriate allow booking of:
+
+- Projector
+- Sound system
+- Computer
+- Microphone
+- Chairs
+- Tables
+- Other school resources
+
+Integrate with Inventory/Asset Management.
+
+Do not create duplicate asset records.
+
+---
+
+# 38. EVENT TASK MANAGEMENT
+
+For major school events, allow task planning.
+
+Tasks:
+
+- Decoration
+- Transport
+- Seating
+- Invitations
+- Food
+- Security
+- Sound
+- Photography
+- Certificates
+- Stage management
+
+Assign:
+
+- Staff
+- Department
+- Deadline
+- Priority
+- Status
+
+This is an administrative task system, not a full project-management platform.
+
+---
+
+# 39. EVENT BUDGET
+
+Where appropriate allow event budget tracking.
+
+Support:
+
+- Estimated budget
+- Approved budget
+- Actual expense
+- Variance
+
+Financial transactions must integrate with existing Accounts.
+
+Do not create duplicate accounting.
+
+---
+
+# 40. EVENT EXPENSE INTEGRATION
+
+Link event expenses to existing Accounts.
+
+Example:
+
+Annual Function
+
+→ Event
+
+→ Approved budget
+
+→ Expenses
+
+→ Existing Accounts
+
+Do not create a separate payment ledger.
+
+---
+
+# 41. EVENT COMMUNICATION
+
+Integrate with Phase 14 Communication.
+
+For an event:
+
+- Publish announcement
+- Send reminders
+- Send participant notifications
+- Publish changes
+- Send cancellation notice
+
+Do not create a second messaging system.
+
+---
+
+# 42. CALENDAR NOTIFICATIONS
+
+Use existing notification infrastructure for:
+
+- Event reminders
+- Meeting reminders
+- Appointment reminders
+- Holiday reminders
+- Venue booking changes
+- Visitor appointment notifications
+
+Do not claim external channel delivery unless configured.
+
+---
+
+# 43. REPORTS
+
+Create:
+
+### Calendar Reports
+
+- Monthly calendar
+- Academic calendar
+- Holiday list
+- Event list
+
+### Event Reports
+
+- Events by type
+- Participant list
+- Attendance
+- Event expenses
+- Budget vs actual
+
+### Meeting Reports
+
+- Meetings held
+- Meeting attendance
+- Pending action items
+- Overdue actions
+
+### Visitor Reports
+
+- Daily visitors
+- Monthly visitors
+- Visitor types
+- Currently inside
+- Vendor visits
+- Delivery visits
+- Visitor history
+
+### Appointment Reports
+
+- Appointments
+- Completed
+- Cancelled
+- Rescheduled
+- No-show
+
+---
+
+# 44. ADMINISTRATIVE SEARCH
+
+Create centralized search for:
+
+- Events
+- Meetings
+- Appointments
+- Visitors
+- Venues
+- Action items
+
+Search must respect permissions and school isolation.
+
+---
+
+# 45. SCHOOL-WISE ISOLATION
+
+This ERP supports multiple schools.
+
+School A must never see:
+
+- School B events
+- School B visitors
+- School B meetings
+- School B appointments
+- School B venue bookings
+- School B administrative data
+
+unless the user has explicit organization-level permission.
+
+Enforce isolation server-side.
+
+---
+
+# 46. ROLE-BASED ACCESS CONTROL
+
+Use existing RBAC.
+
+Possible permissions:
+
+### Super Admin
+
+Full access.
+
+### School Admin
+
+Full school administration.
+
+### Principal
+
+View/manage permitted events, meetings and administration.
+
+### Reception
+
+Manage visitors and appointments.
+
+### Security
+
+Manage visitor check-in/check-out and access logs.
+
+### Teacher
+
+View permitted events and meetings.
+
+### Staff
+
+View assigned events/meetings.
+
+### Parent
+
+View permitted events and appointments.
+
+### Student
+
+View permitted school events.
+
+Do not create duplicate roles if existing RBAC can handle permissions.
+
+---
+
+# 47. AUDIT LOGGING
+
+Log:
+
+- Event creation
+- Event changes
+- Event cancellation
+- Meeting creation
+- Meeting changes
+- Meeting minutes changes
+- Appointment creation
+- Appointment approval
+- Visitor check-in
+- Visitor check-out
+- Visitor restriction changes
+- Venue booking
+- Resource booking
+- Budget changes
+- Emergency actions
+
+Include:
+
+- User
+- School
+- Timestamp
+- Entity
+- Action
+- Entity ID
+
+---
+
+# 48. DATABASE DESIGN
+
+Inspect existing schema first.
+
+Potential entities:
+
+- calendar_events
+- holidays
+- event_registrations
+- event_attendance
+- meetings
+- meeting_participants
+- meeting_agenda_items
+- meeting_minutes
+- meeting_action_items
+- appointments
+- staff_availability
+- visitors
+- visitor_visits
+- visitor_passes
+- visitor_approvals
+- venues
+- venue_bookings
+- resource_bookings
+- event_tasks
+- event_budgets
+
+Do not blindly create these tables.
+
+Reuse existing calendar/event entities where possible.
+
+Use safe migrations.
+
+Add proper:
+
+- Foreign keys
+- Indexes
+- Unique constraints
+- School relationships
+- Academic session relationships
+
+---
+
+# 49. CONCURRENCY
+
+Prevent:
+
+- Double booking of venues
+- Double booking of staff
+- Double booking of appointments
+- Double booking of resources
+- Duplicate visitor check-in
+- Duplicate event registration
+
+Use server-side validation and database constraints where possible.
+
+Critical booking operations should use transactions.
+
+---
+
+# 50. DOCUMENT MANAGEMENT
+
+Use existing secure file storage.
+
+Support attachments for:
+
+- Events
+- Meetings
+- Minutes
+- Visitor documents where necessary
+- Appointments
+- Administrative documents
+
+Do not expose private documents publicly.
+
+---
+
+# 51. MOBILE SUPPORT
+
+Reception and security staff may use tablets/mobile devices.
+
+Optimize:
+
+- Visitor check-in
+- Visitor check-out
+- Appointment search
+- Today's visitors
+- Emergency visitor list
+- Event calendar
+- Meeting list
+
+Use large touch-friendly controls.
+
+---
+
+# 52. ACCESSIBILITY
+
+Maintain:
+
+- Keyboard navigation
+- Clear labels
+- Accessible forms
+- Accessible calendars
+- Accessible tables
+- Clear error messages
+- Screen-reader-friendly controls
+
+---
+
+# 53. SECURITY
+
+Protect:
+
+- Visitor personal information
+- ID information
+- Visitor photos
+- Restricted visitor records
+- Meeting information
+- Internal administrative documents
+
+Use:
+
+- Server-side authorization
+- Secure file storage
+- Input validation
+- School isolation
+- Audit logs
+- IDOR protection
+- Permission checks
+
+---
+
+# 54. DATA RETENTION
+
+Visitor and administrative records may contain sensitive information.
+
+Implement configurable retention/archive policies where appropriate.
+
+Do not permanently delete important audit records automatically.
+
+Use archive/inactive status where possible.
+
+---
+
+# 55. TESTING
+
+Create tests for:
+
+### Calendar
+
+- Create event
+- Update event
+- Cancel event
+- School isolation
+
+### Holidays
+
+- Create holiday
+- Session association
+- Calendar display
+
+### Meetings
+
+- Create meeting
+- Participant invitation
+- RSVP
+- Minutes
+- Action items
+
+### Appointments
+
+- Parent appointment
+- Staff availability
+- Conflict prevention
+- Rescheduling
+
+### Visitors
+
+- Visitor creation
+- Check-in
+- Check-out
+- Pass
+- Approval
+- Current visitor list
+
+### Venues
+
+- Create venue
+- Booking
+- Conflict detection
+
+### Events
+
+- Registration
+- Capacity
+- Attendance
+- Budget
+
+### Security
+
+- Unauthorized visitor access
+- Cross-school access
+- Restricted record access
+- Attachment protection
+
+---
+
+# 56. REGRESSION TESTING
+
+After implementation verify:
+
+- Authentication
+- RBAC
+- Schools
+- Academic Sessions
+- Students
+- Parents
+- Admissions
+- Staff
+- HR
+- Attendance
+- Fees
+- Accounts
+- Examination
+- Results
+- Timetable
+- Homework
+- Transport
+- Library
+- Hostel
+- Inventory
+- Assets
+- Procurement
+- Communication
+- Notifications
+- Audit Logs
+
+Do not break existing functionality.
+
+---
+
+# 57. IMPLEMENTATION ORDER
+
+Implement in this order:
+
+## Step 1
+Inspect existing calendar, event and notification functionality.
+
+## Step 2
+Identify reusable entities.
+
+## Step 3
+Create safe database migrations.
+
+## Step 4
+Implement centralized school calendar.
+
+## Step 5
+Implement holiday management.
+
+## Step 6
+Implement event management.
+
+## Step 7
+Implement event registration.
+
+## Step 8
+Implement event attendance.
+
+## Step 9
+Implement meeting management.
+
+## Step 10
+Implement meeting agendas and minutes.
+
+## Step 11
+Implement administrative action items.
+
+## Step 12
+Implement appointment management.
+
+## Step 13
+Implement staff availability.
+
+## Step 14
+Implement visitor management.
+
+## Step 15
+Implement visitor check-in/check-out.
+
+## Step 16
+Implement visitor passes.
+
+## Step 17
+Implement venue management.
+
+## Step 18
+Implement venue/resource booking.
+
+## Step 19
+Implement event tasks and budget integration.
+
+## Step 20
+Integrate Communication & Notifications.
+
+## Step 21
+Integrate Inventory/Assets and Accounts.
+
+## Step 22
+Implement reports.
+
+## Step 23
+Implement security and school isolation.
+
+## Step 24
+Run complete testing and production build.
+
+---
+
+# 58. END-TO-END ACCEPTANCE TEST
+
+The following workflow must work:
+
+Create Academic Session.
+
+→ Create school calendar.
+
+→ Add school holiday.
+
+→ Create school event.
+
+→ Assign venue.
+
+→ Register participants.
+
+→ Mark event attendance.
+
+→ Send event announcement through existing Communication system.
+
+→ Schedule event reminder.
+
+→ Create staff meeting.
+
+→ Add participants.
+
+→ Send meeting notification.
+
+→ Create agenda.
+
+→ Conduct meeting.
+
+→ Record minutes.
+
+→ Create action items.
+
+→ Assign action item to staff.
+
+→ Mark action item completed.
+
+→ Parent requests appointment with teacher.
+
+→ Teacher/admin approves.
+
+→ Parent receives notification.
+
+→ Visitor arrives.
+
+→ Reception searches appointment.
+
+→ Verify visitor.
+
+→ Check visitor in.
+
+→ Generate visitor pass.
+
+→ Visitor meets staff.
+
+→ Visitor checks out.
+
+→ Verify visitor access log.
+
+→ Create vendor delivery.
+
+→ Link delivery to Procurement/Inventory where applicable.
+
+→ Book venue.
+
+→ Attempt overlapping booking.
+
+→ Verify conflict is blocked.
+
+→ Verify audit log.
+
+→ Verify School A cannot access School B administrative records.
+
+---
+
+# 59. FINAL QUALITY CHECK
+
+Run:
+
+- TypeScript typecheck
+- Lint
+- Unit tests
+- Integration tests
+- Database migration validation
+- Production build
+- RBAC tests
+- Multi-school isolation tests
+- Booking conflict tests
+- Visitor security tests
+- Regression tests
+
+Fix all critical issues.
+
+Do not leave core functionality as TODO.
+
+Do not use mock production records.
+
+---
+
+# 60. FINAL IMPLEMENTATION REPORT
+
+After implementation provide:
+
+1. Files created
+2. Files modified
+3. Database migrations
+4. New/extended entities
+5. APIs/server actions
+6. UI pages
+7. RBAC permissions
+8. Calendar integrations
+9. Communication integrations
+10. Accounts/Inventory integrations
+11. Tests completed
+12. Typecheck status
+13. Lint status
+14. Production build status
+15. Known limitations
+16. Required configuration
+17. Future integration points
+
+Do not claim a feature is complete unless it actually works.
+
+---
+
+# FINAL INSTRUCTION
+
+Implement Phase 15 directly into the existing Multi-School School ERP.
+
+DO NOT rebuild the ERP.
+
+DO NOT delete existing data.
+
+DO NOT create duplicate:
+
+- Student systems
+- Parent systems
+- Staff systems
+- Academic session systems
+- Attendance systems
+- Timetable systems
+- Communication systems
+- Notification systems
+- Accounting systems
+- Inventory systems
+
+Use existing modules as the source of truth.
+
+Maintain:
+
+- Multi-school isolation
+- Server-side RBAC
+- Audit logging
+- Secure file access
+- Data integrity
+- Transaction safety
+- Mobile responsiveness
+- Accessibility
+
+The final result must be a professional School Administration, Calendar, Events, Meetings, Appointments and Visitor Management System fully integrated into the existing ERP.

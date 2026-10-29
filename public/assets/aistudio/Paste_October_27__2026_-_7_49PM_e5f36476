@@ -1,0 +1,2636 @@
+# PHASE 23 — ADVANCED WORKFLOW AUTOMATION, APPROVAL ENGINE, RULES ENGINE & SMART TASK MANAGEMENT
+
+## ROLE
+
+You are a senior enterprise software architect, workflow-engine architect, automation engineer, full-stack developer, database architect, security engineer, and education ERP specialist.
+
+You are working on an EXISTING production-oriented multi-school School ERP.
+
+This is:
+
+# PHASE 23 — ADVANCED WORKFLOW AUTOMATION, APPROVAL ENGINE, RULES ENGINE & SMART TASK MANAGEMENT
+
+The ERP already contains:
+
+- Authentication
+- Users
+- RBAC
+- Multi-school management
+- Academic sessions
+- Classes and sections
+- Students
+- Parents
+- Admissions
+- Teachers and staff
+- Attendance
+- Fees and Accounts
+- Examination and Results
+- Timetable
+- Homework
+- Transport
+- Library
+- Hostel
+- HR and Payroll
+- Inventory and Procurement
+- Communication and Notifications
+- School Administration
+- Events and Meetings
+- MIS and Analytics
+- Student Lifecycle
+- Certificates and Documents
+- Parent Portal
+- Student Portal
+- Teacher Portal
+- Mobile/PWA
+- Curriculum
+- Syllabus
+- Lesson Planning
+- Learning Management
+- AI Assistant and AI Intelligence Layer
+
+The objective of this phase is to build a centralized:
+
+# WORKFLOW + APPROVAL + RULES + TASK AUTOMATION ENGINE
+
+Do NOT rebuild the ERP.
+
+Do NOT create duplicate module-specific workflow engines.
+
+Do NOT create a second notification system.
+
+Do NOT create a second task-management system if one already exists.
+
+Extend the existing ERP architecture.
+
+---
+
+# 1. FIRST — INSPECT THE EXISTING ERP
+
+Before writing code:
+
+1. Inspect the complete existing codebase.
+2. Inspect database schema.
+3. Inspect all existing workflow logic.
+4. Inspect approval systems already implemented.
+5. Inspect notification infrastructure.
+6. Inspect scheduled jobs/background workers.
+7. Inspect audit logging.
+8. Inspect RBAC.
+9. Inspect multi-school isolation.
+10. Inspect AI automation from Phase 22.
+11. Identify duplicate workflow implementations.
+
+Reuse existing functionality wherever possible.
+
+Do not blindly create new tables or services.
+
+---
+
+# 2. CORE OBJECTIVE
+
+Create a centralized automation architecture:
+
+EVENT
+↓
+RULE EVALUATION
+↓
+WORKFLOW
+↓
+TASK
+↓
+APPROVAL
+↓
+NOTIFICATION
+↓
+ESCALATION
+↓
+COMPLETION
+↓
+AUDIT
+
+The engine must work across multiple ERP modules.
+
+---
+
+# 3. CENTRAL WORKFLOW ENGINE
+
+Create:
+
+# Workflow Engine
+
+The engine should support:
+
+- Workflow definitions
+- Workflow versions
+- Workflow stages
+- Workflow steps
+- Conditions
+- Approvals
+- Assignments
+- Tasks
+- Deadlines
+- Escalations
+- Notifications
+- Actions
+- Audit history
+
+A workflow should be configurable rather than hardcoded whenever practical.
+
+---
+
+# 4. WORKFLOW DEFINITION
+
+A workflow should contain:
+
+- Workflow ID
+- Workflow name
+- Workflow code
+- Description
+- School
+- Module
+- Entity type
+- Trigger
+- Status
+- Version
+- Effective date
+- Created by
+- Updated by
+
+Status:
+
+- Draft
+- Active
+- Inactive
+- Archived
+
+---
+
+# 5. WORKFLOW VERSIONING
+
+Never modify an active workflow destructively.
+
+Support:
+
+Version 1
+Version 2
+Version 3
+
+When a workflow is changed:
+
+- Create a new version.
+- Preserve previous workflow history.
+- Existing running instances should continue under their original version unless explicitly migrated.
+- Record change history.
+
+---
+
+# 6. WORKFLOW TRIGGERS
+
+Support event triggers such as:
+
+### Student
+
+- Student created
+- Student admitted
+- Student transferred
+- Student withdrawn
+- Student document missing
+- Student document expired
+- Student profile correction requested
+
+### Attendance
+
+- Student absent
+- Repeated absence
+- Low attendance
+- Teacher attendance pending
+- Attendance correction requested
+
+### Fees
+
+- Fee due
+- Fee overdue
+- Payment received
+- Payment failed
+- Refund requested
+- Refund approval required
+
+### Examination
+
+- Marks submitted
+- Marks pending
+- Result approval required
+- Result published
+- Result correction requested
+
+### Academic
+
+- Syllabus behind schedule
+- Lesson plan pending
+- Lesson completed
+- Homework pending
+- Academic support required
+- Curriculum approval required
+
+### Transport
+
+- Vehicle document expiring
+- Driver document expiring
+- Transport incident created
+- Route capacity exceeded
+
+### Hostel
+
+- Leave request
+- Outing request
+- Incident created
+- Bed allocation request
+
+### Library
+
+- Book overdue
+- Fine created
+- Lost book
+- Reservation available
+
+### HR
+
+- Leave requested
+- Payroll pending
+- Salary revision
+- Employee document expiry
+- Probation ending
+
+### Inventory
+
+- Low stock
+- Purchase request
+- Purchase order approval
+- Goods received
+- Asset maintenance due
+
+### Administration
+
+- Visitor approval
+- Meeting approval
+- Event approval
+- Complaint submitted
+
+### Documents
+
+- Certificate request
+- TC request
+- Document verification
+- Document expiry
+
+---
+
+# 7. MANUAL WORKFLOW TRIGGERS
+
+Allow authorized users to start workflows manually.
+
+Examples:
+
+- Start admission review
+- Start student clearance
+- Start certificate approval
+- Start purchase approval
+- Start staff leave approval
+- Start academic intervention
+- Start disciplinary review
+
+Manual triggers must respect RBAC.
+
+---
+
+# 8. WORKFLOW CONDITIONS
+
+Implement a safe rule/condition engine.
+
+Example:
+
+IF:
+
+attendance_percentage < 75%
+
+THEN:
+
+create academic support task.
+
+Another example:
+
+IF:
+
+fee_due_days > 15
+
+THEN:
+
+send parent reminder.
+
+Another:
+
+IF:
+
+vehicle_document_expiry <= 30 days
+
+THEN:
+
+create transport admin task.
+
+Conditions must be evaluated server-side.
+
+---
+
+# 9. SAFE RULE ENGINE
+
+Create configurable rules using structured conditions.
+
+Possible operators:
+
+- equals
+- not equals
+- greater than
+- less than
+- greater than or equal
+- less than or equal
+- contains
+- starts with
+- in
+- not in
+- exists
+- is empty
+- is not empty
+
+Support:
+
+AND
+OR
+
+Do NOT allow arbitrary JavaScript execution.
+
+Do NOT allow users to upload executable rules.
+
+Do NOT allow arbitrary SQL.
+
+---
+
+# 10. RULE GROUPS
+
+Support nested logical conditions.
+
+Example:
+
+Attendance < 75%
+
+AND
+
+Student status = Active
+
+AND
+
+Class is not exempt
+
+THEN:
+
+Create academic support workflow.
+
+Keep the condition engine predictable and auditable.
+
+---
+
+# 11. ACTION ENGINE
+
+A workflow action may:
+
+- Create task
+- Assign task
+- Send notification
+- Send email through existing provider
+- Send SMS through configured provider
+- Send WhatsApp through configured official provider
+- Create approval request
+- Update a permitted workflow field
+- Create reminder
+- Create escalation
+- Generate report
+- Schedule follow-up
+- Call an approved internal service
+- Create an AI draft
+- Request human confirmation
+
+Never allow arbitrary code execution.
+
+---
+
+# 12. HUMAN APPROVAL GATE
+
+For high-impact actions:
+
+AI or automation must stop at:
+
+# HUMAN APPROVAL REQUIRED
+
+Examples:
+
+- Financial refund
+- Salary change
+- Employee termination
+- Student withdrawal
+- Admission rejection
+- Certificate cancellation
+- Result publication
+- Marks correction
+- Fee concession
+- Major disciplinary action
+
+Automation may prepare the action but must not finalize it without authorization.
+
+---
+
+# 13. APPROVAL ENGINE
+
+Create centralized:
+
+# Approval Center
+
+Display:
+
+- Pending approvals
+- Approved
+- Rejected
+- Returned for correction
+- Expired
+- Cancelled
+
+Each approval should include:
+
+- Request
+- Entity
+- Requested by
+- Requested date
+- Current approver
+- Deadline
+- Priority
+- Comments
+- History
+
+---
+
+# 14. MULTI-LEVEL APPROVALS
+
+Support:
+
+Single approval:
+
+Requester → Principal
+
+Multi-level:
+
+Requester
+→ Department Head
+→ Principal
+→ Management
+
+Sequential approval:
+
+Step 1
+→ Step 2
+→ Step 3
+
+Parallel approval:
+
+Approver A
++
+Approver B
+
+Then final decision.
+
+---
+
+# 15. APPROVAL RULES
+
+Allow schools to configure approval requirements.
+
+Example:
+
+Fee concession:
+
+< ₹5,000 → Principal
+
+₹5,000–₹20,000 → Principal + Management
+
+> ₹20,000 → Management
+
+Do not hardcode financial thresholds.
+
+School administrators should be able to configure authorized approval rules.
+
+---
+
+# 16. APPROVAL DELEGATION
+
+Support temporary approval delegation.
+
+Example:
+
+Principal unavailable.
+
+Delegate approval authority to authorized person.
+
+Requirements:
+
+- Start date
+- End date
+- Delegated permissions
+- Delegated workflow types
+- Created by
+- Audit trail
+
+Do not allow users to delegate permissions they do not possess.
+
+---
+
+# 17. APPROVAL ESCALATION
+
+If approval is not completed within configured time:
+
+Example:
+
+After 24 hours:
+
+Reminder
+
+After 48 hours:
+
+Escalate to supervisor
+
+After 72 hours:
+
+Escalate to management
+
+All escalation rules must be configurable.
+
+---
+
+# 18. TASK MANAGEMENT ENGINE
+
+Create centralized:
+
+# Task Center
+
+Tasks may come from:
+
+- Workflows
+- Approvals
+- Notifications requiring action
+- AI recommendations
+- Manual creation
+- Scheduled rules
+
+Task fields:
+
+- Task ID
+- Title
+- Description
+- Module
+- Entity
+- Assigned user
+- Assigned role
+- Assigned department
+- Priority
+- Status
+- Due date
+- Created date
+- Completed date
+- Escalation status
+- Workflow instance
+
+---
+
+# 19. TASK STATUS
+
+Support:
+
+- Open
+- In Progress
+- Waiting
+- Blocked
+- Completed
+- Cancelled
+- Expired
+
+---
+
+# 20. TASK PRIORITY
+
+Support:
+
+- Low
+- Normal
+- High
+- Urgent
+- Critical
+
+Allow school configuration where appropriate.
+
+---
+
+# 21. TASK ASSIGNMENT
+
+Tasks can be assigned to:
+
+- Specific user
+- Role
+- Department
+- School administrator
+- Class teacher
+- Academic coordinator
+- Accountant
+- HR officer
+- Transport manager
+- Librarian
+- Hostel warden
+
+Assignment must respect existing permissions.
+
+---
+
+# 22. SMART TASK ASSIGNMENT
+
+Where appropriate, support rules such as:
+
+Assign to:
+
+- Existing class teacher
+- Existing subject teacher
+- Department head
+- Responsible accountant
+- Assigned transport manager
+
+Do not randomly assign tasks.
+
+---
+
+# 23. TASK QUEUES
+
+Create role-based queues:
+
+- Principal Queue
+- Academic Queue
+- Accounts Queue
+- HR Queue
+- Transport Queue
+- Hostel Queue
+- Library Queue
+- Inventory Queue
+- Administration Queue
+
+Users only see tasks they are authorized to access.
+
+---
+
+# 24. MY TASKS
+
+Each user gets:
+
+# My Tasks
+
+Display:
+
+- Due today
+- Overdue
+- Upcoming
+- High priority
+- Waiting
+- Completed
+
+Provide filters:
+
+- Module
+- Priority
+- Status
+- Date
+- Assigned by
+
+---
+
+# 25. TASK DETAIL
+
+Task detail should show:
+
+- Description
+- Related entity
+- Workflow
+- Previous actions
+- Current status
+- Due date
+- Attachments
+- Comments
+- Approval status
+- Activity timeline
+
+---
+
+# 26. TASK COMMENTS
+
+Allow authorized users to comment.
+
+Comments should support:
+
+- Text
+- Attachments where permitted
+- Mentions if existing communication system supports them
+
+Record audit information.
+
+---
+
+# 27. TASK ATTACHMENTS
+
+Use existing secure file storage.
+
+Do not create another document storage system.
+
+Apply:
+
+- RBAC
+- School isolation
+- File validation
+- Access control
+
+---
+
+# 28. DEADLINES
+
+Workflows and tasks must support:
+
+- Due date
+- Due time
+- SLA
+- Business days
+- Calendar-aware deadlines
+
+Where possible, account for:
+
+- Holidays
+- Weekends
+- School closures
+
+---
+
+# 29. SLA MANAGEMENT
+
+Create configurable SLA rules.
+
+Example:
+
+Certificate request:
+
+Normal → 2 working days
+
+Urgent → 1 working day
+
+Purchase approval:
+
+Normal → 3 working days
+
+Do not hardcode these values.
+
+---
+
+# 30. ESCALATION ENGINE
+
+Create escalation levels:
+
+Level 1:
+Assigned user
+
+Level 2:
+Supervisor
+
+Level 3:
+Department Head
+
+Level 4:
+Principal/Management
+
+Escalation should be configurable.
+
+---
+
+# 31. REMINDER ENGINE
+
+Support reminders:
+
+- Before due date
+- On due date
+- After due date
+- Repeated reminders
+- Escalation reminders
+
+Prevent duplicate reminders.
+
+Use existing Phase 14 notification infrastructure.
+
+---
+
+# 32. NOTIFICATION INTEGRATION
+
+Do NOT create another notification engine.
+
+Use existing notification system for:
+
+- In-app notifications
+- Email
+- SMS
+- WhatsApp
+- Push
+
+Use notification templates.
+
+Respect user notification preferences.
+
+---
+
+# 33. AUTOMATED SCHOOL WORKFLOWS
+
+Implement configurable examples.
+
+## Attendance Workflow
+
+Student absent
+
+→ Parent notification
+
+→ Repeated absence check
+
+→ Class teacher task
+
+→ Academic coordinator task
+
+if threshold exceeded.
+
+---
+
+# 34. FEE COLLECTION WORKFLOW
+
+Fee due
+
+→ Reminder
+
+→ Due date reminder
+
+→ Overdue reminder
+
+→ Escalation
+
+→ Accountant task
+
+→ Parent communication
+
+Do not automatically block students from education unless existing school policy explicitly implements such a rule and appropriate authorization exists.
+
+---
+
+# 35. ADMISSION WORKFLOW
+
+Application submitted
+
+→ Document verification
+
+→ Entrance test
+
+→ Interview
+
+→ Selection review
+
+→ Fee status
+
+→ Admission confirmation
+
+→ Student creation/linking
+
+Use the existing Admissions system.
+
+Do not duplicate admission records.
+
+---
+
+# 36. STUDENT CLEARANCE WORKFLOW
+
+Withdrawal request
+
+→ Accounts clearance
+
+→ Library clearance
+
+→ Transport clearance
+
+→ Hostel clearance
+
+→ Examination clearance
+
+→ Administration approval
+
+→ TC generation
+
+Integrate with Phase 18.
+
+---
+
+# 37. CERTIFICATE WORKFLOW
+
+Certificate request
+
+→ Verification
+
+→ Fee check if applicable
+
+→ Approval
+
+→ Generation
+
+→ QR verification
+
+→ Delivery
+
+Use the existing certificate engine.
+
+---
+
+# 38. EXAMINATION WORKFLOW
+
+Marks:
+
+Draft
+→ Submitted
+→ Review
+→ Approved
+→ Published
+
+If correction required:
+
+Published
+→ Correction Request
+→ Review
+→ Authorized Correction
+→ Republish
+
+Do not bypass existing examination controls.
+
+---
+
+# 39. HR LEAVE WORKFLOW
+
+Employee leave request
+
+→ Reporting manager
+
+→ HR
+
+→ Approved/Rejected
+
+Integrate with existing HR and attendance.
+
+---
+
+# 40. PAYROLL WORKFLOW
+
+Payroll preparation
+
+→ Verification
+
+→ Approval
+
+→ Payment preparation
+
+→ Payment execution
+
+→ Payslip
+
+Do not allow automation to directly alter payroll without authorized controls.
+
+---
+
+# 41. PURCHASE WORKFLOW
+
+Purchase Request
+
+→ Department Approval
+
+→ Purchase Order
+
+→ Vendor
+
+→ Goods Received
+
+→ Verification
+
+→ Invoice
+
+→ Accounts
+
+→ Payment Approval
+
+Integrate with existing Inventory and Accounts.
+
+---
+
+# 42. INVENTORY LOW-STOCK WORKFLOW
+
+Stock below reorder level
+
+→ Alert
+
+→ Task
+
+→ Purchase Request
+
+Do not automatically purchase items unless the school explicitly enables and authorizes automated procurement.
+
+---
+
+# 43. TRANSPORT DOCUMENT WORKFLOW
+
+Vehicle/driver document nearing expiry:
+
+→ Reminder
+
+→ Transport manager task
+
+→ Escalation
+
+→ Document update
+
+Integrate with existing Transport.
+
+---
+
+# 44. LIBRARY OVERDUE WORKFLOW
+
+Book overdue:
+
+→ Student notification
+
+→ Parent notification
+
+→ Librarian task
+
+→ Fine calculation through existing Library/Fees integration
+
+Do not create duplicate fee transactions.
+
+---
+
+# 45. HOSTEL LEAVE WORKFLOW
+
+Hostel leave request:
+
+→ Parent request if applicable
+
+→ Warden review
+
+→ Approval
+
+→ Movement register
+
+→ Return verification
+
+→ Late return escalation
+
+Use existing Hostel module.
+
+---
+
+# 46. ACADEMIC WORKFLOW
+
+Syllabus behind threshold:
+
+→ Academic alert
+
+→ Teacher task
+
+→ Coordinator review
+
+→ Intervention plan
+
+→ Follow-up
+
+Integrate with Phase 21.
+
+---
+
+# 47. AI + WORKFLOW INTEGRATION
+
+Integrate Phase 22 AI carefully.
+
+AI may:
+
+- Detect patterns
+- Summarize pending tasks
+- Suggest priority
+- Draft messages
+- Recommend workflow actions
+- Generate summaries
+- Identify potential bottlenecks
+
+Example:
+
+AI detects:
+
+"Several Class 7 subjects are behind syllabus schedule."
+
+AI can suggest:
+
+"Create an academic intervention review."
+
+But the system should require authorized confirmation before high-impact actions.
+
+---
+
+# 48. AI ACTION APPROVAL
+
+For AI-generated actions:
+
+AI Suggestion
+↓
+Review
+↓
+Human Confirmation
+↓
+Workflow Execution
+
+Never:
+
+AI
+↓
+Automatic high-impact action
+
+---
+
+# 49. SMART DAILY BRIEFING
+
+Create:
+
+# AI Daily School Briefing
+
+For authorized users.
+
+Example:
+
+Good morning.
+
+Today:
+
+- 3 pending approvals
+- 8 overdue tasks
+- 2 attendance alerts
+- 4 fee follow-ups
+- 1 transport document expiring
+- 3 academic issues
+- 2 upcoming events
+
+Provide concise actionable summaries.
+
+All numbers must come from real ERP data.
+
+---
+
+# 50. SMART PRIORITY ENGINE
+
+Calculate task priority based on configurable factors:
+
+- Deadline
+- SLA
+- Severity
+- Business impact
+- Student safety
+- Financial impact
+- Number of affected users
+- Escalation level
+
+Do not allow AI to override mandatory safety or authorization rules.
+
+---
+
+# 51. AUTOMATION RULE BUILDER
+
+Create an administrator UI:
+
+# Automation Rules
+
+Example:
+
+WHEN:
+
+Student attendance falls below 75%
+
+AND:
+
+Student status = Active
+
+THEN:
+
+Create task for class teacher
+
+AND:
+
+Notify parent
+
+AND:
+
+Notify academic coordinator
+
+Allow:
+
+- Enable/disable
+- Priority
+- Schedule
+- Conditions
+- Actions
+- Approval requirement
+
+---
+
+# 52. RULE BUILDER UI
+
+Use a visual rule builder.
+
+Structure:
+
+WHEN
+[Event]
+
+IF
+[Condition]
+
+AND
+[Condition]
+
+THEN
+[Action]
+
+AND
+[Action]
+
+WITH
+[Approval]
+
+AFTER
+[Delay]
+
+ESCALATE
+[Rule]
+
+Do not expose raw code.
+
+---
+
+# 53. AUTOMATION TEMPLATES
+
+Provide reusable templates.
+
+Examples:
+
+### Attendance Alert
+
+Absence → Parent Notification
+
+### Fee Reminder
+
+Due → Parent Reminder
+
+### Certificate SLA
+
+Request → Approval → Certificate Generation
+
+### Staff Leave
+
+Request → Manager → HR
+
+### Purchase
+
+Request → Approval → Procurement
+
+### Academic Support
+
+Low Progress → Teacher → Coordinator
+
+### Document Expiry
+
+30 Days Before → Reminder
+
+---
+
+# 54. AUTOMATION SCHEDULER
+
+Support scheduled rules:
+
+- Daily
+- Weekly
+- Monthly
+- Specific date
+- Before due date
+- After due date
+- Recurring
+
+Use existing background job infrastructure if available.
+
+Do not create multiple competing schedulers.
+
+---
+
+# 55. JOB EXECUTION SAFETY
+
+Background jobs must support:
+
+- Retry
+- Idempotency
+- Failure logging
+- Dead-letter handling if infrastructure supports it
+- Duplicate prevention
+- Timeout
+- Cancellation
+
+Do not repeatedly send the same notification because of job retries.
+
+---
+
+# 56. WORKFLOW INSTANCE
+
+Every workflow execution should create a workflow instance.
+
+Track:
+
+- Workflow
+- Version
+- Entity
+- Entity ID
+- Started by
+- Started at
+- Current step
+- Status
+- Completed at
+- Failure state
+
+Statuses:
+
+- Running
+- Waiting
+- Completed
+- Rejected
+- Cancelled
+- Failed
+
+---
+
+# 57. WORKFLOW HISTORY
+
+Display complete workflow timeline:
+
+Created
+→ Submitted
+→ Assigned
+→ Reviewed
+→ Approved
+→ Notification Sent
+→ Completed
+
+Record:
+
+- User
+- Action
+- Timestamp
+- Comments
+- Status
+- Relevant metadata
+
+---
+
+# 58. WORKFLOW RETRY
+
+If a technical failure occurs:
+
+- Retry safely.
+- Do not duplicate business transactions.
+- Do not duplicate financial records.
+- Do not duplicate certificates.
+- Do not duplicate notifications.
+
+Business operations must be idempotent.
+
+---
+
+# 59. WORKFLOW CANCELLATION
+
+Authorized users can cancel a workflow.
+
+Cancellation should:
+
+- Stop future automated actions
+- Preserve history
+- Record reason
+- Notify relevant users if configured
+
+Already completed business transactions must not be silently reversed.
+
+---
+
+# 60. WORKFLOW REASSIGNMENT
+
+Authorized users can reassign tasks.
+
+Record:
+
+- Previous assignee
+- New assignee
+- Reason
+- Date
+- User
+
+---
+
+# 61. APPROVAL COMMENTS
+
+Approvers should be able to:
+
+- Approve
+- Reject
+- Request changes
+- Delegate if authorized
+
+For rejection:
+
+Require reason where configured.
+
+For request changes:
+
+Require comments.
+
+---
+
+# 62. BULK APPROVAL
+
+Allow bulk approval only for low-risk configurable workflows.
+
+Examples:
+
+- Routine administrative requests
+
+Do NOT allow unrestricted bulk approval for:
+
+- Financial refunds
+- Salary changes
+- Official result publication
+- Student withdrawal
+- Major disciplinary actions
+
+---
+
+# 63. WORKFLOW SEARCH
+
+Search by:
+
+- Workflow
+- Module
+- Entity
+- User
+- School
+- Status
+- Date
+- Priority
+
+---
+
+# 64. WORKFLOW REPORTS
+
+Create:
+
+- Pending approvals
+- Approval turnaround
+- Overdue tasks
+- SLA compliance
+- Escalation report
+- Workflow success/failure
+- Automation execution report
+- Notification execution report
+- Department workload
+- User workload
+- Bottleneck analysis
+
+---
+
+# 65. MANAGEMENT DASHBOARD
+
+Create:
+
+# Workflow & Operations Dashboard
+
+Display:
+
+- Pending approvals
+- Overdue tasks
+- Critical tasks
+- SLA breaches
+- Escalations
+- Active workflows
+- Failed workflows
+- Department workload
+- Average approval time
+- Average task completion time
+
+---
+
+# 66. DEPARTMENT WORKLOAD
+
+Show workload by:
+
+- Academic
+- Accounts
+- HR
+- Transport
+- Hostel
+- Library
+- Inventory
+- Administration
+
+Do not expose sensitive information to unauthorized departments.
+
+---
+
+# 67. USER WORKLOAD
+
+Authorized managers can see:
+
+- Open tasks
+- Overdue tasks
+- Completed tasks
+- Average completion time
+
+Do not use raw task counts as the sole basis for employee performance decisions.
+
+---
+
+# 68. SMART BOTTLENECK DETECTION
+
+Use analytics/AI to identify:
+
+- Repeated approval delays
+- Frequent workflow failures
+- High task backlog
+- Notification failures
+- Departments with recurring bottlenecks
+
+Present these as insights, not automatic judgments.
+
+---
+
+# 69. AUTOMATION LOG
+
+Create:
+
+# Automation Execution Log
+
+Record:
+
+- Rule
+- Trigger
+- Entity
+- Execution time
+- Result
+- Actions executed
+- Errors
+- Retry count
+
+---
+
+# 70. AI AUDIT
+
+AI-generated workflow suggestions should record:
+
+- User
+- AI feature
+- Request type
+- Time
+- Relevant workflow
+- Human decision
+
+Do not unnecessarily store sensitive prompts containing student/employee information.
+
+---
+
+# 71. SECURITY
+
+Protect against:
+
+- Unauthorized workflow execution
+- IDOR
+- Cross-school workflow access
+- Privilege escalation
+- Unauthorized approvals
+- Workflow manipulation
+- Rule injection
+- Arbitrary code execution
+- Arbitrary SQL
+- Malicious file upload
+- Notification abuse
+- Automation loops
+
+---
+
+# 72. AUTOMATION LOOP PROTECTION
+
+Prevent:
+
+Rule A
+→ Rule B
+→ Rule A
+→ Rule B
+
+Use:
+
+- Execution IDs
+- Trigger depth
+- Recursion limits
+- Cooldowns
+- Duplicate detection
+
+---
+
+# 73. RATE LIMITING
+
+Protect:
+
+- AI actions
+- Notifications
+- SMS
+- WhatsApp
+- Email
+- Workflow triggers
+- Public service requests
+
+Use appropriate rate limits.
+
+---
+
+# 74. MULTI-SCHOOL ISOLATION
+
+Every workflow must be school-aware.
+
+School A must never:
+
+- Trigger School B workflows
+- See School B tasks
+- Approve School B requests
+- Receive School B notifications
+
+unless the user's role explicitly has authorized multi-school access.
+
+---
+
+# 75. DATABASE DESIGN
+
+Inspect existing schema before creating anything.
+
+Potential entities if genuinely required:
+
+- WorkflowDefinition
+- WorkflowVersion
+- WorkflowStep
+- WorkflowCondition
+- WorkflowAction
+- WorkflowInstance
+- WorkflowExecution
+- WorkflowHistory
+- ApprovalRequest
+- ApprovalStep
+- ApprovalDelegation
+- Task
+- TaskComment
+- TaskAttachment
+- TaskEscalation
+- AutomationRule
+- AutomationExecution
+- SLAConfiguration
+- WorkflowNotification
+- WorkflowSetting
+
+Do NOT create these blindly.
+
+Reuse existing task/approval structures if already available.
+
+---
+
+# 76. DATABASE INTEGRITY
+
+Use:
+
+- Foreign keys
+- Unique constraints
+- Proper indexes
+- Transactions
+- Optimistic locking where needed
+- Idempotency keys
+- Versioning
+
+Ensure workflow data cannot become orphaned.
+
+---
+
+# 77. API / SERVICE DESIGN
+
+Create controlled backend services for:
+
+- Workflow definitions
+- Workflow instances
+- Rule evaluation
+- Tasks
+- Approvals
+- Escalations
+- Automation execution
+- Scheduler
+- Workflow history
+
+Do not expose unrestricted generic workflow mutation APIs.
+
+---
+
+# 78. RBAC
+
+Potential permissions:
+
+- workflow.view
+- workflow.create
+- workflow.edit
+- workflow.activate
+- workflow.deactivate
+- workflow.execute
+- workflow.cancel
+- approval.view
+- approval.approve
+- approval.reject
+- approval.delegate
+- task.view
+- task.create
+- task.assign
+- task.edit
+- task.complete
+- automation.view
+- automation.create
+- automation.edit
+- automation.activate
+- automation.execute
+- automation.audit
+
+Integrate with existing RBAC.
+
+---
+
+# 79. ADMIN SETTINGS
+
+Create:
+
+# Workflow Settings
+
+Configure:
+
+- Approval policies
+- SLA
+- Escalation rules
+- Reminder frequency
+- Business days
+- Holidays
+- Notification channels
+- Automation limits
+- AI approval policy
+- Task priorities
+- Delegation settings
+
+---
+
+# 80. MOBILE EXPERIENCE
+
+Integrate with Phase 16.
+
+Mobile users should be able to:
+
+- View tasks
+- Complete tasks
+- Approve requests
+- Reject requests
+- Request changes
+- Comment
+- View workflow history
+- Receive notifications
+- Start authorized workflows
+
+Use secure authentication.
+
+---
+
+# 81. PARENT/STUDENT EXPERIENCE
+
+Do not expose internal workflow systems unnecessarily.
+
+Parents/students should only see workflows relevant to them.
+
+Examples:
+
+Parent:
+
+Leave request
+Certificate request
+Service request
+Complaint
+
+Student:
+
+Service request
+Academic support information where permitted
+
+Never expose internal administrative comments.
+
+---
+
+# 82. TEACHER EXPERIENCE
+
+Teacher portal should show:
+
+- My Tasks
+- Pending approvals if applicable
+- Academic workflows
+- Attendance tasks
+- Lesson plan tasks
+- Academic intervention tasks
+- Parent communication tasks
+
+Integrate with Phase 20 and Phase 21.
+
+---
+
+# 83. PRINCIPAL EXPERIENCE
+
+Principal dashboard should show:
+
+- Approval Center
+- Critical tasks
+- Escalations
+- Workflow bottlenecks
+- School operational briefing
+- AI-generated daily briefing if enabled
+
+---
+
+# 84. COMMUNICATION INTEGRATION
+
+Use Phase 14.
+
+Do not build another communication system.
+
+Workflow notifications should use existing:
+
+- In-app
+- Email
+- SMS
+- WhatsApp
+- Push
+
+---
+
+# 85. MIS INTEGRATION
+
+Integrate workflow analytics into Phase 17.
+
+Add:
+
+- Approval turnaround
+- Task completion
+- SLA compliance
+- Automation success
+- Escalation trends
+- Department workload
+- Workflow bottlenecks
+
+---
+
+# 86. AI INTEGRATION
+
+Use Phase 22 AI layer for:
+
+### Daily briefing
+
+Summarize operational status.
+
+### Approval summary
+
+Summarize relevant request details.
+
+### Task prioritization
+
+Suggest priorities.
+
+### Bottleneck analysis
+
+Identify patterns.
+
+### Draft communication
+
+Draft notices/reminders.
+
+### Workflow recommendation
+
+Suggest possible automation.
+
+All AI suggestions must be clearly identified as AI-generated.
+
+---
+
+# 87. AI PRIVACY
+
+Before sending data to AI:
+
+- Apply role authorization.
+- Minimize data.
+- Remove unnecessary PII.
+- Do not send passwords.
+- Do not send payment credentials.
+- Do not send sensitive employee data unless explicitly required and authorized.
+- Do not expose data from other schools.
+
+---
+
+# 88. HUMAN-IN-THE-LOOP
+
+Implement explicit confirmation for AI-generated actions.
+
+Example:
+
+AI suggests:
+
+"Create parent attendance reminder."
+
+Display:
+
+[Review]
+
+Then:
+
+[Approve & Execute]
+
+Never silently execute high-impact AI actions.
+
+---
+
+# 89. AUTOMATION SAFETY LEVELS
+
+Create three levels:
+
+## Level 1 — Automatic
+
+Low-risk actions:
+
+- Internal reminder
+- Task creation
+- Dashboard alert
+- Non-sensitive notification
+
+## Level 2 — Confirmed
+
+Human confirmation required:
+
+- Parent communication
+- Bulk notifications
+- Workflow escalation
+- Academic intervention
+
+## Level 3 — Restricted
+
+Explicit authorized approval required:
+
+- Financial changes
+- Salary
+- Results
+- Admissions
+- Student withdrawal
+- Certificates
+- Employee status
+- Disciplinary action
+
+---
+
+# 90. AUTOMATION CENTER
+
+Create:
+
+# Automation Center
+
+Sections:
+
+- Rules
+- Templates
+- Active Automations
+- Scheduled Jobs
+- Execution History
+- Failed Jobs
+- Pending Approvals
+- Escalations
+- AI Suggestions
+
+---
+
+# 91. WORKFLOW BUILDER UX
+
+Build a professional visual workflow builder if practical.
+
+Nodes may include:
+
+- Trigger
+- Condition
+- Task
+- Approval
+- Notification
+- Delay
+- Escalation
+- Action
+- End
+
+Example:
+
+Attendance < 75%
+↓
+Create Teacher Task
+↓
+Notify Parent
+↓
+Wait 7 Days
+↓
+Check Progress
+↓
+Escalate if unresolved
+
+If a visual builder is too complex for the existing architecture, implement a reliable structured workflow builder rather than an incomplete visual editor.
+
+---
+
+# 92. WORKFLOW TEMPLATE LIBRARY
+
+Create templates for:
+
+- Admission
+- Student withdrawal
+- Certificate
+- Fee concession
+- Fee reminder
+- Staff leave
+- Payroll
+- Purchase
+- Inventory
+- Academic support
+- Attendance
+- Transport documents
+- Hostel leave
+- Library overdue
+- Visitor approval
+- Complaint/grievance
+
+Templates must be configurable per school.
+
+---
+
+# 93. IMPORT / EXPORT
+
+If appropriate:
+
+Export:
+
+- Workflow definitions
+- Automation rules
+- Task reports
+- Approval reports
+
+Import:
+
+- Workflow templates
+
+Never allow importing executable code.
+
+Validate all imported configuration.
+
+---
+
+# 94. BACKGROUND JOBS
+
+Use existing scheduler/worker infrastructure.
+
+If none exists, implement one centralized job-processing mechanism.
+
+Do NOT create separate schedulers for each module.
+
+---
+
+# 95. FAILURE HANDLING
+
+If a workflow action fails:
+
+- Record error
+- Retry according to policy
+- Notify administrator if required
+- Do not lose workflow state
+- Do not duplicate previous successful actions
+
+Provide:
+
+# Failed Automation Queue
+
+for authorized administrators.
+
+---
+
+# 96. DISASTER / RECOVERY CONSIDERATIONS
+
+Workflow state should be recoverable.
+
+Do not rely on in-memory state.
+
+Persist important workflow state in the database.
+
+---
+
+# 97. AUDIT LOGGING
+
+Audit:
+
+- Workflow creation
+- Workflow activation
+- Workflow modification
+- Workflow execution
+- Approval
+- Rejection
+- Delegation
+- Task assignment
+- Task completion
+- Escalation
+- Automation rule change
+- Automation execution
+- Manual override
+- AI recommendation approval
+- AI recommendation rejection
+
+---
+
+# 98. MANUAL OVERRIDE
+
+Authorized administrators should be able to:
+
+- Pause workflow
+- Resume workflow
+- Cancel workflow
+- Reassign task
+- Retry failed action
+- Skip a non-critical step where permitted
+
+Every override must require:
+
+- Reason
+- User
+- Timestamp
+
+---
+
+# 99. REPORTING
+
+Create reports:
+
+### Workflow Report
+
+- Active
+- Completed
+- Failed
+- Cancelled
+
+### Approval Report
+
+- Pending
+- Approved
+- Rejected
+- Average turnaround
+
+### Task Report
+
+- Open
+- Completed
+- Overdue
+- Escalated
+
+### Automation Report
+
+- Executed
+- Successful
+- Failed
+- Retried
+
+### SLA Report
+
+- Met
+- Breached
+- Escalated
+
+---
+
+# 100. END-TO-END ACCEPTANCE TEST
+
+Perform the following real workflow:
+
+1. Create an attendance automation rule.
+2. Configure attendance threshold.
+3. Configure parent notification.
+4. Configure teacher task.
+5. Configure escalation.
+6. Activate rule.
+7. Record a real attendance event.
+8. Verify rule execution.
+9. Verify task creation.
+10. Verify notification.
+11. Verify audit log.
+12. Allow task to remain pending.
+13. Verify reminder.
+14. Verify escalation.
+15. Complete task.
+16. Verify workflow completion.
+
+Then test:
+
+17. Create certificate request.
+18. Start approval workflow.
+19. Approver receives task.
+20. Approver requests changes.
+21. Requester updates.
+22. Approver approves.
+23. Certificate workflow continues.
+24. Verify certificate generation.
+
+Then test:
+
+25. Create purchase request.
+26. Send for approval.
+27. Verify multi-level approval.
+28. Approve first level.
+29. Approve second level.
+30. Verify procurement workflow.
+31. Verify Accounts integration.
+32. Verify audit history.
+
+Then test:
+
+33. Trigger academic support workflow.
+34. Verify teacher task.
+35. Verify coordinator escalation.
+36. Verify parent/student visibility according to policy.
+
+Then test:
+
+37. Verify AI suggests an action.
+38. Verify human approval is required.
+39. Approve suggestion.
+40. Verify workflow executes.
+
+Finally:
+
+41. Test School A.
+42. Attempt School B access.
+43. Verify complete isolation.
+
+---
+
+# 101. SECURITY ACCEPTANCE TEST
+
+Explicitly test:
+
+- Unauthorized workflow execution
+- Unauthorized approval
+- Cross-school workflow access
+- Cross-user task access
+- Role escalation
+- IDOR
+- Rule injection
+- SQL injection
+- Arbitrary code execution
+- Notification abuse
+- Automation loops
+- Duplicate execution
+- Duplicate financial transaction
+- Duplicate notification
+- Unauthorized AI action
+
+All critical security issues must be fixed before completion.
+
+---
+
+# 102. REGRESSION TESTING
+
+Verify all previous modules still work:
+
+- Authentication
+- Users
+- RBAC
+- Schools
+- Academic Sessions
+- Students
+- Parents
+- Admissions
+- Teachers
+- Attendance
+- Fees
+- Accounts
+- Exams
+- Results
+- Timetable
+- Homework
+- Transport
+- Library
+- Hostel
+- HR
+- Inventory
+- Communication
+- Administration
+- MIS
+- Student Lifecycle
+- Certificates
+- Parent Portal
+- Student Portal
+- Teacher Portal
+- Curriculum
+- LMS
+- AI Assistant
+- Mobile/PWA
+
+Do not mark Phase 23 complete if previous functionality is broken.
+
+---
+
+# 103. DATABASE MIGRATIONS
+
+Before migration:
+
+- Inspect existing schema.
+- Identify existing workflow/task/approval tables.
+- Reuse existing structures.
+- Add only missing structures.
+
+Never:
+
+- Reset database
+- Drop production tables
+- Truncate production data
+- Delete existing records
+
+Use safe migrations.
+
+---
+
+# 104. PERFORMANCE
+
+The workflow system must scale to:
+
+- Multiple schools
+- Thousands of students
+- Hundreds of teachers
+- Large numbers of tasks
+- Large notification queues
+- Multiple concurrent workflows
+
+Use:
+
+- Indexing
+- Pagination
+- Queue processing
+- Background jobs
+- Efficient queries
+- Idempotency
+- Batch processing
+
+---
+
+# 105. OBSERVABILITY
+
+Provide operational monitoring for:
+
+- Workflow failures
+- Job failures
+- Notification failures
+- AI failures
+- Long-running workflows
+- SLA breaches
+- Automation loops
+- Queue backlog
+
+Provide meaningful logs without exposing sensitive data.
+
+---
+
+# 106. CODE QUALITY
+
+Use:
+
+- Strong TypeScript types
+- Reusable services
+- Modular architecture
+- Validation
+- Error handling
+- Secure authorization
+- Testable business logic
+
+Avoid:
+
+- duplicated workflows
+- duplicated notifications
+- duplicated task systems
+- hardcoded rules
+- arbitrary code execution
+- unsafe dynamic SQL
+- fake automation
+- fake AI responses
+
+---
+
+# 107. NO MOCK PRODUCTION DATA
+
+Do not populate production with fake:
+
+- Students
+- Parents
+- Fees
+- Employees
+- Attendance
+- Workflow executions
+- Financial transactions
+
+Use controlled test fixtures only in test environments.
+
+---
+
+# 108. FINAL IMPLEMENTATION REPORT
+
+At the end provide:
+
+## Implemented Features
+
+List every feature actually implemented.
+
+## Workflow Engine
+
+List:
+
+- Triggers
+- Conditions
+- Actions
+- Approvals
+- Escalations
+- Tasks
+
+## Database Changes
+
+List:
+
+- Tables
+- Fields
+- Indexes
+- Relationships
+- Migrations
+
+## APIs / Services
+
+List all new services/endpoints.
+
+## Permissions
+
+List all new permissions.
+
+## Automation Templates
+
+List implemented templates.
+
+## AI Integration
+
+List:
+
+- AI features
+- Human approval points
+- Privacy controls
+
+## Testing
+
+Report:
+
+- Typecheck
+- Lint
+- Unit tests
+- Integration tests
+- E2E tests
+- Security tests
+- Multi-school tests
+- Regression tests
+- Production build
+
+## Known Limitations
+
+Clearly identify anything not implemented.
+
+Never claim incomplete features are complete.
+
+---
+
+# 109. FINAL QUALITY STANDARD
+
+Phase 23 should transform the ERP from a collection of modules into a coordinated operational platform.
+
+The desired architecture is:
+
+ERP EVENTS
+↓
+RULE ENGINE
+↓
+WORKFLOW ENGINE
+↓
+TASK ENGINE
+↓
+APPROVAL ENGINE
+↓
+NOTIFICATION ENGINE
+↓
+ESCALATION ENGINE
+↓
+AUDIT
+↓
+MIS + AI INSIGHTS
+
+The system should proactively help school management operate the institution.
+
+Examples:
+
+Student absent
+→ Parent notified
+→ Teacher task
+→ Follow-up
+→ Escalation if required
+
+Fee overdue
+→ Reminder
+→ Follow-up
+→ Accountant task
+→ Escalation
+
+Certificate requested
+→ Verification
+→ Approval
+→ Generation
+→ Delivery
+
+Purchase requested
+→ Approval
+→ Procurement
+→ Goods receipt
+→ Accounts
+
+Syllabus delayed
+→ Alert
+→ Teacher task
+→ Coordinator review
+→ Intervention
+
+Document expiring
+→ Reminder
+→ Task
+→ Escalation
+
+The ERP should become:
+
+# PROACTIVE, AUTOMATED, AUDITABLE AND INTELLIGENT
+
+But automation must always remain:
+
+- Secure
+- Explainable
+- Configurable
+- Role-controlled
+- School-isolated
+- Auditable
+- Human-supervised for high-impact decisions
+
+MOST IMPORTANT:
+
+**DO NOT REBUILD THE EXISTING ERP. EXTEND IT.**
+
+**DO NOT CREATE DUPLICATE WORKFLOW, TASK, NOTIFICATION OR APPROVAL SYSTEMS.**
+
+**DO NOT GIVE AI DIRECT DATABASE ACCESS.**
+
+**DO NOT ALLOW ARBITRARY CODE OR SQL EXECUTION.**
+
+**DO NOT ALLOW AI OR AUTOMATION TO MAKE HIGH-IMPACT DECISIONS WITHOUT AUTHORIZED HUMAN APPROVAL.**
+
+**DO NOT DELETE OR RESET EXISTING DATA.**
+
+**DO NOT USE FAKE PRODUCTION DATA OR FAKE AUTOMATION.**
+
+**DO NOT CLAIM FEATURES ARE COMPLETE UNTIL THEY ACTUALLY WORK.**
